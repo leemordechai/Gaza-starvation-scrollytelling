@@ -1,0 +1,9 @@
+[
+  { "color": "red", "label": "Northern Gaza — Proposed Zone A", "top": 22, "left": 38, "delay": 0, "showLabel": true, "displayLabel": "Northern Gaza" },
+  { "color": "gold", "label": "Beit Hanoun — Former settlement site", "top": 28, "left": 42, "delay": 0.4, "showLabel": false },
+  { "color": "red", "label": "Netzarim Corridor — Military zone", "top": 38, "left": 35, "delay": 0.9, "showLabel": false },
+  { "color": "gold", "label": "Deir al-Balah — Proposed Zone B", "top": 55, "left": 40, "delay": 0.2, "showLabel": true, "displayLabel": "Deir al-Balah" },
+  { "color": "red", "label": "Khan Yunis outskirts — Buffer zone", "top": 65, "left": 44, "delay": 1.2, "showLabel": false },
+  { "color": "gold", "label": "Khan Yunis — Proposed Zone C", "top": 72, "left": 50, "delay": 0.6, "showLabel": true, "displayLabel": "Khan Yunis" },
+  { "color": "red", "label": "Rafah / Gush Katif — Pre-2005 settlements", "top": 80, "left": 47, "delay": 1.5, "showLabel": true, "displayLabel": "Rafah / Gush Katif" }
+]

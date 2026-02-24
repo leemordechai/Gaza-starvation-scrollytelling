@@ -1,0 +1,72 @@
+[
+  {
+    "date": "Oct 7, 2023",
+    "title": "Hamas attacks Israel; 1,200 killed, 250 taken hostage",
+    "detailTitle": "Hamas attacks Israel — the catalyst",
+    "detail": "The deadliest single-day attack on Jewish people since the Holocaust. Hamas-led forces breached the Gaza border fence at multiple points, killing approximately 1,200 people and taking 251 hostages. The event triggered an immediate Israeli military response and within weeks opened public space for settler movement leaders to advocate for a new Jewish civilian presence in the Strip.",
+    "dotColor": "red"
+  },
+  {
+    "date": "Oct 28, 2023",
+    "title": "Israel launches ground invasion of Gaza",
+    "detailTitle": "IDF ground operation begins",
+    "detail": "Israeli ground forces entered northern Gaza in a large-scale operation aimed at dismantling Hamas military and governmental infrastructure. Military operations intensified the international debate about post-war governance and gave settler advocates a concrete political opening to argue that a permanent Israeli presence was both achievable and necessary.",
+    "dotColor": "red"
+  },
+  {
+    "date": "Dec 2023",
+    "title": "First \"Return to Gaza\" petition circulates; 50,000+ signatures",
+    "detailTitle": "\"Return to Gaza\" petition launched",
+    "detail": "A petition calling for Jewish settlement of Gaza circulated widely in Israeli society, gathering over 50,000 signatures within weeks. Key organizers included former Gush Katif residents displaced during the 2005 disengagement, many of whom framed resettlement as historical rectification and a national security imperative that the 2005 withdrawal had proved prescient in opposing.",
+    "dotColor": "gold"
+  },
+  {
+    "date": "Jan 28, 2024",
+    "title": "Major settler conference in Jerusalem; 900 attendees, 6 cabinet ministers",
+    "detailTitle": "Jerusalem settler conference draws 900",
+    "detail": "The \"Settlement Brings Security\" conference in Jerusalem attracted around 900 participants, including six Israeli cabinet ministers. Speakers presented detailed resettlement maps and called for immediate legislative action. International condemnation followed, with US and EU officials calling the event inflammatory and contrary to the prospects for a two-state solution.",
+    "dotColor": "gold"
+  },
+  {
+    "date": "Mar 2024",
+    "title": "Knesset hearing on post-war governance; resettlement debated openly",
+    "detailTitle": "Knesset committee takes up resettlement",
+    "detail": "A Knesset committee heard testimony from settler leaders, government advisors, and security officials on the question of post-war governance in Gaza. For the first time, Jewish resettlement was debated in an official legislative forum, with some coalition members suggesting it should become explicit government policy once military operations concluded.",
+    "dotColor": "gold"
+  },
+  {
+    "date": "Jun 2024",
+    "title": "US warns Israel resettlement would \"fundamentally undermine\" peace",
+    "detailTitle": "Washington issues formal warning",
+    "detail": "Secretary of State Antony Blinken stated that Jewish resettlement of Gaza would \"fundamentally undermine\" any viable peace process and would violate international law. The statement reflected growing alarm in Washington at the movement's mainstream traction within the Netanyahu coalition and the participation of sitting ministers in settler-organized events.",
+    "dotColor": "red"
+  },
+  {
+    "date": "Sep 2024",
+    "title": "Second major conference; former Gush Katif residents present resettlement maps",
+    "detailTitle": "Second conference — maps and momentum",
+    "detail": "A second high-profile conference drew former Gush Katif residents, settler leaders, and Knesset members. Participants unveiled detailed maps of proposed settlement blocs across northern and central Gaza and pledged to lobby the government systematically. Organizers reported that the movement had grown significantly compared to the January event.",
+    "dotColor": "gold"
+  },
+  {
+    "date": "Jan 2025",
+    "title": "Ceasefire agreement; movement debates whether deal forecloses resettlement",
+    "detailTitle": "Ceasefire deal — movement recalibrates",
+    "detail": "A phased ceasefire agreement between Israel and Hamas paused the fighting and began releasing hostages in exchange for Palestinian prisoners. Settler movement leaders publicly debated whether the agreement foreclosed resettlement or merely deferred it, with most vowing to continue lobbying regardless of any deal terms, framing the ceasefire as a tactical pause rather than a strategic endpoint.",
+    "dotColor": "gold"
+  },
+  {
+    "date": "Feb 2025",
+    "title": "Trump administration floats population relocation plan; settler groups express support",
+    "detailTitle": "Trump administration endorses relocation concept",
+    "detail": "The Trump administration publicly floated a plan to displace Gaza's Palestinian population to neighboring Arab states, framing it as an opportunity for reconstruction on a \"clean slate.\" Israeli settler groups expressed enthusiastic public support, calling it the most significant diplomatic opening they had obtained since October 7. Arab states and international bodies rejected the proposal.",
+    "dotColor": "red"
+  },
+  {
+    "date": "2025–2026",
+    "title": "Ongoing political and legal developments",
+    "detailTitle": "Ongoing legal and political developments",
+    "detail": "International courts, diplomatic pressure from the US and EU, and shifting battlefield conditions continue to shape the parameters of any potential governance arrangement. Settler movement organizations remain active, lobbying the Israeli government, seeking US backing for resettlement legislation, and holding periodic rallies and conferences to maintain political momentum. The ICJ advisory opinion remains a focal point of international legal debate.",
+    "dotColor": "gold"
+  }
+]

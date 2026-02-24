@@ -1,0 +1,17 @@
+{
+  "brand": "Visual Desk",
+  "links": [
+    { "label": "Background", "href": "#background" },
+    { "label": "Timeline", "href": "#timeline" },
+    { "label": "Data", "href": "#data" },
+    { "label": "Analysis", "href": "#analysis" }
+  ],
+  "indicators": [
+    { "label": "Background", "target": "#background" },
+    { "label": "Timeline", "target": "#timeline" },
+    { "label": "Data", "target": "#data" },
+    { "label": "Gallery", "target": "#gallery" },
+    { "label": "Map", "target": "#map" },
+    { "label": "Analysis", "target": "#analysis" }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "sectionLabel": "Data & Analysis",
+  "sectionTitle": "The Movement in Numbers",
+  "sectionSub": "Figures compiled from advocacy reports, news coverage, and parliamentary records",
+  "bar": {
+    "title": "Settler Movement Activity by Quarter",
+    "labels": ["Q4'23", "Q1'24", "Q2'24", "Q3'24", "Q4'24", "Q1'25", "Q2'25", "Q3'25", "Q4'25"],
+    "datasets": [
+      { "label": "Settler Events", "color": "gold", "values": [3, 8, 5, 7, 6, 4, 9, 11, 8] },
+      { "label": "Legislative Actions", "color": "red", "values": [1, 3, 4, 2, 5, 3, 6, 7, 5] }
+    ],
+    "yMax": 12,
+    "yStep": 2,
+    "footer": "Source: Compiled from settler advocacy group records, Israeli Knesset archives, and monitoring of public events. · Visual Desk, 2026"
+  },
+  "doughnut": {
+    "title": "Israeli Jewish Public: Resettlement Views",
+    "segments": [
+      { "label": "Support", "value": 28, "color": "gold" },
+      { "label": "Oppose", "value": 54, "color": "red" },
+      { "label": "Undecided", "value": 18, "color": "gray" }
+    ],
+    "centerLabel": "54% OPPOSE",
+    "footer": "Israeli Jewish public opinion on Gaza resettlement — Israel Democracy Institute survey data, 2024"
+  },
+  "line": {
+    "title": "Media Coverage Index — Settler Resettlement",
+    "labels": ["Oct'23", "Dec'23", "Feb'24", "Apr'24", "Jun'24", "Aug'24", "Oct'24", "Dec'24", "Feb'25", "Apr'25", "Jun'25"],
+    "values": [18, 52, 78, 58, 42, 68, 62, 48, 88, 72, 65],
+    "yMax": 100,
+    "yStep": 25,
+    "footer": "International media coverage volume on settler resettlement — article index by month, LexisNexis and GDELT analysis"
+  }
+}

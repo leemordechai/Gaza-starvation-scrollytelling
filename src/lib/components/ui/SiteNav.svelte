@@ -1,0 +1,116 @@
+<script lang="ts">
+  import { navVisible, mobileMenuOpen } from '$lib/stores/nav';
+  import { activeSection } from '$lib/stores/nav';
+  import { scrollProgress } from '$lib/stores/scroll';
+  import navData from '$lib/data/nav.json';
+
+  function toggleMenu() {
+    mobileMenuOpen.update(v => !v);
+  }
+
+  // Reading time estimate
+  const totalMinutes = 14;
+  let minsLeft = $derived(Math.max(0, Math.round(totalMinutes * (1 - $scrollProgress))));
+  let timeText = $derived(minsLeft > 0 ? `~${minsLeft} min left` : 'End');
+  let showTime = $derived($scrollProgress > 0.05);
+</script>
+
+<nav class="site-nav" class:visible={$navVisible}>
+  <div class="nav-logo">{navData.brand}</div>
+  <ul class="nav-links">
+    {#each navData.links as link}
+      <li><a href={link.href} class:active={$activeSection === link.href.slice(1)}>{link.label}</a></li>
+    {/each}
+  </ul>
+  <span class="nav-time" class:visible={showTime}>{timeText}</span>
+  <button class="nav-burger" class:open={$mobileMenuOpen} aria-label="Open menu" onclick={toggleMenu}>
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<style>
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 990;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 54px;
+    background: rgba(12, 11, 8, 0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(196, 162, 74, 0.12);
+    transform: translateY(-100%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .site-nav.visible { transform: translateY(2px); }
+
+  .nav-logo {
+    font-family: var(--font-ui);
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--gold); }
+  @media (max-width: 600px) { .nav-links { display: none; } }
+
+  .nav-time {
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.4s;
+    white-space: nowrap;
+  }
+  .nav-time.visible { opacity: 1; }
+
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+  }
+  .nav-burger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text-muted);
+    transition: transform 0.3s, opacity 0.3s, background 0.2s;
+  }
+  .nav-burger:hover span { background: var(--gold); }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  @media (max-width: 768px) { .nav-burger { display: flex; } }
+</style>
