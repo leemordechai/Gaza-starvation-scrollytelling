@@ -71,7 +71,11 @@
       stopsGEl.appendChild(inner);
     });
 
-    gsap.set(truckIconEl, { x: stopPoints[0].x, y: stopPoints[0].y });
+    // Set initial position AND rotation so first frame faces the road
+    const pt0 = routePathEl.getPointAtLength(0);
+    const pt8 = routePathEl.getPointAtLength(8);
+    const initAngle = Math.atan2(pt8.y - pt0.y, pt8.x - pt0.x) * (180 / Math.PI);
+    gsap.set(truckIconEl, { x: pt0.x, y: pt0.y, rotation: initAngle, transformOrigin: '50% 50%' });
 
     const st = ScrollTrigger.create({
       trigger: scrollContainer,
@@ -224,10 +228,10 @@
           <line x1="-50" y1="9"  x2="0" y2="9"  stroke="#3d2a22" stroke-width="0.9"/>
           <!-- Cab (shorter, on right / front side) -->
           <rect x="0" y="-9" width="18" height="20" rx="3" fill="#3a2820" stroke="#dc3030" stroke-width="1.3"/>
-          <!-- Windshield (front-facing glass panel, wider) -->
-          <rect x="2" y="-7" width="14" height="8" rx="1.5" fill="rgba(160,210,240,0.38)"/>
+          <!-- Windshield (tall, narrow — covers most of cabin height) -->
+          <rect x="7" y="-8" width="8" height="17" rx="1.5" fill="rgba(160,210,240,0.38)"/>
           <!-- Windshield glare -->
-          <line x1="3" y1="-6" x2="5" y2="-1" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+          <line x1="8" y1="-7" x2="9" y2="4" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
           <!-- Front bumper -->
           <rect x="16" y="-7" width="4" height="16" rx="1" fill="#dc3030" opacity="0.85"/>
           <!-- Headlights -->

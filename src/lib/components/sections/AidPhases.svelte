@@ -267,25 +267,21 @@
 
   /* ── Truck grid ────────────────────────────────────────────────────────── */
   .ap-grid {
-    display: block;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 38px);
+    gap: 0;
     padding: 0.3rem 0.2rem;
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-radius: 3px;
     min-height: 28px;
-    line-height: 0;
-    font-size: 0;
-    overflow: hidden;
   }
 
   .ap-truck {
-    display: inline-block;
+    display: block;
     width: 38px;
     height: 24px;
     object-fit: contain;
-    vertical-align: top;
-    margin: 0;
-    padding: 0;
     opacity: 0;
     transform: scale(0.5);
     transition: opacity 0.12s ease, transform 0.12s ease;

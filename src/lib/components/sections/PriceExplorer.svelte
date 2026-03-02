@@ -16,6 +16,8 @@
   type HoverPoint = { svgX: number; svgY: number; price: number; period: string } | null;
   let hoverPoint = $state<HoverPoint>(null);
   let svgEl = $state<SVGSVGElement | null>(null);
+  let baselineHover = $state(false);
+  let baselineTooltipStyle = $state('');
 
   // ── Derived data ────────────────────────────────────────────────────────────
   const hebrewNames = explorerData.hebrewNames as Record<string, string>;
@@ -143,32 +145,46 @@
 
   // ── Hover logic ─────────────────────────────────────────────────────────────
   function handleMouseMove(e: MouseEvent) {
-    if (!currentItem?.series?.length || !svgEl) return;
+    if (!svgEl) return;
     const rect   = svgEl.getBoundingClientRect();
     const scaleX = W / rect.width;
+    const scaleY = H / rect.height;
     const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top)  * scaleY;
     const mp     = maxPrice();
-    const visible = visibleSeries();
 
-    let nearest: SeriesPoint | null = null;
-    let minDist = Infinity;
-    for (const pt of visible) {
-      const dist = Math.abs(xPos(pt.period) - mouseX);
-      if (dist < minDist) { minDist = dist; nearest = pt; }
-    }
-    if (nearest && minDist < 30) {
-      hoverPoint = {
+    // Data point hover
+    if (currentItem?.series?.length) {
+      const visible = visibleSeries();
+      let nearest: SeriesPoint | null = null;
+      let minDist = Infinity;
+      for (const pt of visible) {
+        const dist = Math.abs(xPos(pt.period) - mouseX);
+        if (dist < minDist) { minDist = dist; nearest = pt; }
+      }
+      hoverPoint = (nearest && minDist < 30) ? {
         svgX: xPos(nearest.period),
         svgY: yPos(nearest.price, mp),
         price: nearest.price,
         period: nearest.period,
-      };
-    } else {
-      hoverPoint = null;
+      } : null;
+    }
+
+    // Baseline hover
+    if (baselinePrice > 0) {
+      const by = yPos(baselinePrice, mp);
+      if (Math.abs(mouseY - by) < 10 && mouseX >= PAD.left && mouseX <= PAD.left + CW) {
+        baselineHover = true;
+        const tooltipX = e.clientX - rect.left;
+        const tooltipY = (by / H) * rect.height;
+        baselineTooltipStyle = `left:${tooltipX}px; top:${tooltipY}px;`;
+      } else {
+        baselineHover = false;
+      }
     }
   }
 
-  function handleMouseLeave() { hoverPoint = null; }
+  function handleMouseLeave() { hoverPoint = null; baselineHover = false; }
 
   // ── Format period ───────────────────────────────────────────────────────────
   function formatPeriod(p: string): string {
@@ -275,10 +291,6 @@
                   stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.55"
                   clip-path="url(#pe-clip)"
                 />
-                <text
-                  x={PAD.left + 4} y={by - 3}
-                  class="pe-baseline-label"
-                >מחיר טרם המלחמה</text>
               {/if}
 
               <!-- Area fill -->
@@ -323,6 +335,13 @@
               <div class="pe-tooltip" style={tooltipStyle()}>
                 <span class="pe-tooltip-period">{formatPeriod(hoverPoint.period)}</span>
                 <span class="pe-tooltip-price">₪{hoverPoint.price.toLocaleString('he-IL', { maximumFractionDigits: 2 })}</span>
+              </div>
+            {/if}
+
+            <!-- Baseline hover tooltip -->
+            {#if baselineHover && baselinePrice > 0}
+              <div class="pe-baseline-tooltip" style={baselineTooltipStyle}>
+                מחיר טרם המלחמה · ₪{baselinePrice.toLocaleString('he-IL', { maximumFractionDigits: 2 })}
               </div>
             {/if}
           </div>
@@ -471,9 +490,27 @@
     color: var(--accent);
   }
 
-  .pe-axis-label     { font-family: var(--font-ui); font-size: 9px; fill: var(--text-muted); }
-  .pe-axis-unit      { font-family: var(--font-ui); font-size: 10px; fill: var(--accent); opacity: 0.7; }
-  .pe-baseline-label { font-family: var(--font-ui); font-size: 8px; fill: var(--accent); opacity: 0.65; font-weight: 600; }
+  .pe-axis-label { font-family: var(--font-ui); font-size: 9px; fill: var(--text-muted); }
+  .pe-axis-unit  { font-family: var(--font-ui); font-size: 10px; fill: var(--accent); opacity: 0.7; }
+
+  /* ── Baseline hover tooltip ── */
+  .pe-baseline-tooltip {
+    position: absolute;
+    transform: translateX(-50%) translateY(calc(-100% - 6px));
+    font-family: var(--font-ui);
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(247,242,240,0.97);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.12rem 0.4rem;
+    white-space: nowrap;
+    pointer-events: none;
+    direction: rtl;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    z-index: 5;
+  }
 
   .pe-source {
     font-family: var(--font-ui);

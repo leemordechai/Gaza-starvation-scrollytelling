@@ -23,6 +23,8 @@
   let svgEl = $state<SVGSVGElement | null>(null);
   let isTouchDevice = $state(false);
   let showTapHint = $derived(isTouchDevice && pinnedPoint === null);
+  let baselineHover = $state(false);
+  let baselineHoverStyle = $state('');
 
   // ── Current commodity series ──────────────────────────────────────────────
   const commodityKeys = foodPricesText.steps.map(s => s.commodity) as string[];
@@ -180,11 +182,30 @@
   function handlePointerMove(e: PointerEvent) {
     if (isTouchDevice) return;
     hoverPoint = findNearest(e.clientX);
+    // Detect proximity to baseline
+    const c = currentCommodity;
+    if (c && svgEl) {
+      const rect = svgEl.getBoundingClientRect();
+      const scaleY = H / rect.height;
+      const mouseY = (e.clientY - rect.top) * scaleY;
+      const maxP = Math.max(...c.series.map(p => p.price)) * 1.1;
+      const by = yPos(c.baselinePrice, maxP);
+      if (Math.abs(mouseY - by) < 10) {
+        baselineHover = true;
+        // Position tooltip: px coords relative to svg-wrap
+        const tooltipX = e.clientX - rect.left;
+        const tooltipY = (by / H) * rect.height;
+        baselineHoverStyle = `left:${tooltipX}px; top:${tooltipY}px;`;
+      } else {
+        baselineHover = false;
+      }
+    }
   }
 
   function handlePointerLeave() {
     if (isTouchDevice) return;
     hoverPoint = null;
+    baselineHover = false;
   }
 
   function handlePointerDown(e: PointerEvent) {
@@ -311,7 +332,8 @@
                 <rect x={PAD.left} y={by} width={CW} height={PAD.top + CH - by}
                   fill="rgba(196,162,74,0.05)" pointer-events="none"/>
                 <line x1={PAD.left} y1={by} x2={PAD.left + CW} y2={by}
-                  stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7"/>
+                  stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7"
+                  pointer-events="none"/>
               {/if}
 
               <!-- Fill area (clipped to domain) -->
@@ -358,23 +380,21 @@
               </div>
             {/if}
 
-            <!-- Event band labels — positioned above the chart area -->
+            <!-- Event band labels — staggered to avoid overlap at shared boundaries -->
             {#each events as ev, ei}
-              {@const midXPct  = ((ev.x1 + ev.x2) / 2 / W * 100).toFixed(1)}
-              {@const topPct   = (PAD.top / H * 100).toFixed(1)}
+              {@const midXPct = ((ev.x1 + ev.x2) / 2 / W * 100).toFixed(1)}
+              {@const topPct  = (PAD.top / H * 100).toFixed(1)}
               <div
                 class="fp-band-label"
+                class:fp-band-label--low={ei % 2 === 1}
                 style="left:{midXPct}%; top:{topPct}%;"
               >{ev.label}</div>
             {/each}
 
-            <!-- Baseline label — left-anchored at start of dashed line, shown as a legend pill -->
-            {#if currentCommodity}
-              {@const maxP = Math.max(...currentCommodity.series.map(p => p.price)) * 1.1}
-              {@const byPct = (yPos(currentCommodity.baselinePrice, maxP) / H * 100).toFixed(1)}
-              {@const lxPct = (PAD.left / W * 100).toFixed(1)}
-              <div class="fp-baseline-pill" style="left:{lxPct}%; top:{byPct}%;">
-                מחיר טרם המלחמה
+            <!-- Baseline hover tooltip -->
+            {#if baselineHover && currentCommodity}
+              <div class="fp-baseline-tooltip" style={baselineHoverStyle}>
+                מחיר טרם המלחמה · ₪{currentCommodity.baselinePrice.toLocaleString('he-IL', { maximumFractionDigits: 2 })}
               </div>
             {/if}
           </div>
@@ -452,10 +472,11 @@
     cursor: crosshair;
   }
 
-  /* ── Event band labels (HTML, above the chart area) ─── */
+  /* ── Event band labels (HTML, just above chart top edge) ─── */
   .fp-band-label {
     position: absolute;
-    transform: translateX(-50%) translateY(-100%);
+    /* translateY(-100%) moves up by own height; then -3px gives a tiny gap */
+    transform: translateX(-50%) translateY(calc(-100% - 3px));
     font-family: var(--font-ui);
     font-size: 0.52rem;
     font-weight: 700;
@@ -463,22 +484,30 @@
     color: var(--text-muted);
     white-space: nowrap;
     pointer-events: none;
-    padding-bottom: 3px;
     direction: rtl;
   }
+  /* Stagger: odd labels go one extra line up to avoid overlap at shared boundaries */
+  .fp-band-label--low {
+    transform: translateX(-50%) translateY(calc(-200% - 6px));
+  }
 
-  /* ── Baseline label — text only, no box ─── */
-  .fp-baseline-pill {
+  /* ── Baseline hover tooltip ─── */
+  .fp-baseline-tooltip {
     position: absolute;
-    transform: translateY(-100%) translateY(-4px);
+    transform: translateX(-50%) translateY(calc(-100% - 6px));
     font-family: var(--font-ui);
     font-size: 0.5rem;
     font-weight: 600;
     color: var(--accent);
+    background: rgba(247,242,240,0.97);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.12rem 0.4rem;
     white-space: nowrap;
     pointer-events: none;
     direction: rtl;
-    opacity: 0.8;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    z-index: 5;
   }
 
   /* ── HTML tooltip (RTL-native) ─── */
