@@ -380,21 +380,13 @@
               height={CH}
               class="at-ceasefire-band"
             />
-            <!-- Labels above chart area, staggered by row for middle band to avoid overlap -->
+            <!-- Label above chart area — name only, no date sub-label -->
             <text
               x={labelX}
-              y={bi === 1 ? PAD.top - 30 : PAD.top - 18}
+              y={bi === 1 ? PAD.top - 22 : PAD.top - 12}
               class="at-ceasefire-label"
               text-anchor="middle"
             >{band.label}</text>
-            {#if bandW > 28}
-              <text
-                x={labelX}
-                y={bi === 1 ? PAD.top - 18 : PAD.top - 6}
-                class="at-ceasefire-label at-ceasefire-label--sub"
-                text-anchor="middle"
-              >{band.sub}</text>
-            {/if}
             <!-- Tick line connecting label to band top -->
             <line
               x1={band.midX} y1={PAD.top - 3}
@@ -481,13 +473,7 @@
               y={PAD.top + 14}
               class="at-gap-label"
               text-anchor="middle"
-            >חסימה מוחלטת</text>
-            <text
-              x={gapIndices.midX}
-              y={PAD.top + 28}
-              class="at-gap-label at-gap-label--small"
-              text-anchor="middle"
-            >מרץ – 19 במאי 2025</text>
+            >מצור מוחלט</text>
           {/if}
 
           <!-- Tooltip vertical rule -->

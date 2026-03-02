@@ -64,6 +64,19 @@
 
   .analysis-body { font-size: 1.02rem; line-height: 1.82; color: var(--text); }
   .analysis-body :global(p) { margin-bottom: 1.6rem; }
+  .analysis-body :global(p:last-of-type) {
+    background: rgba(140, 30, 22, 0.82);
+    color: #fff;
+    padding: 0.65rem 1rem;
+    border-radius: 2px;
+    font-family: var(--font-disp);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    display: inline-block;
+    width: auto;
+    margin-bottom: 0;
+  }
 
   .sidebar-card {
     background: var(--bg-card);

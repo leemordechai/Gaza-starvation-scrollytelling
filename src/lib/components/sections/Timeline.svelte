@@ -40,7 +40,7 @@
 
 <style>
   .timeline-section { padding: 5rem 0; }
-  .timeline-head { margin-bottom: 3rem; }
+  .timeline-head { margin-bottom: 1.25rem; }
 
   .timeline-track {
     position: relative;

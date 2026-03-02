@@ -263,13 +263,15 @@
             <span class="fp-step-tag">{step.tag}</span>
             <h3 class="fp-step-title">{step.title}</h3>
             <p class="fp-step-body">{step.body}</p>
-            <div class="fp-delta">
-              <span class="fp-delta-before">{step.beforePrice} <small>ש"ח</small></span>
-              <span class="fp-delta-arrow">&#8592;</span>
-              <span class="fp-delta-after">{step.afterPrice} <small>ש"ח</small></span>
-              <span class="fp-delta-mult">{step.multiplier}</span>
+            <div class="fp-delta-box">
+              <div class="fp-delta">
+                <span class="fp-delta-before">{step.beforePrice} <small>ש"ח</small></span>
+                <span class="fp-delta-arrow">&#8592;</span>
+                <span class="fp-delta-after">{step.afterPrice} <small>ש"ח</small></span>
+                <span class="fp-delta-mult">{step.multiplier}</span>
+              </div>
+              <div class="fp-unit-note">{step.unit}</div>
             </div>
-            <div class="fp-unit-note">{step.unit}</div>
           </div>
         {/each}
       </div>
@@ -625,6 +627,17 @@
     margin-bottom: 1.25rem;
   }
 
+  /* ── Price delta box ─── */
+  .fp-delta-box {
+    background: rgba(247, 242, 237, 0.07);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.85rem 1rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
   /* ── Price delta ─── */
   .fp-delta {
     display: flex;
@@ -687,7 +700,6 @@
     font-family: var(--font-ui);
     font-size: 0.6rem;
     color: var(--text-muted);
-    margin-top: 0.4rem;
     letter-spacing: 0.06em;
   }
 </style>

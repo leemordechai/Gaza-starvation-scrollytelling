@@ -90,7 +90,7 @@
           data-idx={i}
         >
           <div class="container">
-            <p>{item}</p>
+            <p>{@html item}</p>
           </div>
         </div>
       {/each}
@@ -101,9 +101,26 @@
 
   <Timeline />
 
+  <Divider variant="fade" />
+
+  <!-- GHF narrative (both paragraphs) -->
+  <NarrativeBlock title={ghfNarrative.title} paragraphs={[ghfNarrative.paragraphBefore, ghfNarrative.paragraphAfter]} />
+
+  <Divider variant="fade" />
+
+  <PullQuote quote={pullQuote2.quote} attribution={pullQuote2.attribution} />
+
+  <Divider variant="fade" />
+
+  <GhfVideos />
+
+  <Divider variant="gem" />
+
+  <StatsBar />
+
   <Divider variant="topo" />
 
-  <!-- How we measure hunger — immediately after Timeline -->
+  <!-- How we measure hunger -->
   <MeasureSection />
 
   <Divider variant="topo" />
@@ -131,7 +148,9 @@
   <Divider variant="topo" />
 
   <!-- Famine deaths narrative -->
-  <NarrativeBlock title={famineDeaths.title} paragraphs={famineDeaths.paragraphs} />
+  <div class="famine-block">
+    <NarrativeBlock title={famineDeaths.title} paragraphs={famineDeaths.paragraphs} />
+  </div>
 
   <Divider variant="fade" />
 
@@ -145,22 +164,7 @@
     </div>
   </section>
 
-  <Divider variant="fade" />
-
-  <!-- GHF narrative (both paragraphs) -->
-  <NarrativeBlock title={ghfNarrative.title} paragraphs={[ghfNarrative.paragraphBefore, ghfNarrative.paragraphAfter]} />
-
-  <Divider variant="fade" />
-
-  <PullQuote quote={pullQuote2.quote} attribution={pullQuote2.attribution} />
-
-  <Divider variant="fade" />
-
-  <GhfVideos />
-
   <Divider variant="gem" />
-
-  <StatsBar />
 
   <div class="section-wipe" use:reveal aria-hidden="true"></div>
 
@@ -207,12 +211,14 @@
   }
 
   .witness-section {
-    padding: 3rem 0;
+    padding: 4rem 0;
+    background: rgba(155, 42, 33, 0.07);
+    border-top: 1px solid rgba(155, 42, 33, 0.18);
+    border-bottom: 1px solid rgba(155, 42, 33, 0.18);
   }
   .witness-quote {
-    margin: 0;
-    padding: 1.75rem 2rem 1.75rem 0;
-    border-inline-end: 4px solid var(--accent);
+    margin: 0 auto;
+    padding: 0;
     max-width: 68ch;
   }
   .witness-quote p {
@@ -230,5 +236,26 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent);
+  }
+
+  /* ── Inverted highlight: white text on dull red ─── */
+  :global(mark.inv) {
+    background: rgba(140, 30, 22, 0.82);
+    color: #fff;
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
+    font-style: normal;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* famineDeaths title gets full inverted treatment */
+  .famine-block :global(.nb-title) {
+    background: rgba(140, 30, 22, 0.82);
+    color: #fff;
+    padding: 0.35rem 0.85rem;
+    border-right: none;
+    display: inline-block;
+    border-radius: 2px;
   }
 </style>

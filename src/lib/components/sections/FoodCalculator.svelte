@@ -20,13 +20,13 @@
       <div class="fc-card" dir="rtl">
         <div class="fc-header">
           <span class="fc-chip">מחשבון</span>
-          <h2 class="fc-title">מה זה אומר עליך?</h2>
+          <h2 class="fc-title">מה זה בעצם אומר?</h2>
           <p class="fc-sub">חשבו כמה היה עולה סל המזון שלכם במחירי עזה 2025</p>
         </div>
 
         <div class="fc-body">
           <label class="fc-label" for="fc-input">
-            כמה שקלים משפחתך מוציאה על מזון בחודש?
+            כמה שקלים מוציאה משפחתך על מזון בחודש?
           </label>
           <div class="fc-input-row">
             <span class="fc-currency">₪</span>

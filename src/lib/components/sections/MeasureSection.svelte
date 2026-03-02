@@ -15,7 +15,7 @@
     </div>
     <div class="measure-body">
       {#each measureSection.paragraphs as paragraph}
-        <p class="reveal" use:reveal>{paragraph}</p>
+        <p class="reveal" use:reveal>{@html paragraph}</p>
       {/each}
     </div>
   </div>

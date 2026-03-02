@@ -314,7 +314,7 @@
     font-size: 0.97rem;
     line-height: 1.7;
     color: var(--text-muted);
-    max-width: 60ch;
+    white-space: nowrap;
     margin: 0;
   }
 
