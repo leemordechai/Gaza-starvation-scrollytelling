@@ -7,7 +7,9 @@
 
   let monthly = $state(0);
   let result = $derived(Math.round(monthly * MULTIPLIER));
-  let ratio = $derived(Math.min((monthly * MULTIPLIER) / Math.max(monthly, 1), 20)); // cap at 20×
+  let rawRatio = $derived((monthly * MULTIPLIER) / Math.max(monthly, 1));
+  let ratio = $derived(Math.min(rawRatio, 20));
+  let isCapped = $derived(rawRatio > 20);
 
   function formatNumber(n: number): string {
     return n.toLocaleString('he-IL');
@@ -58,8 +60,11 @@
                 <div class="fc-bar-track">
                   <div class="fc-bar-gz" style="width: 100%"></div>
                 </div>
-                <span class="fc-bar-label fc-bar-label--gz">עזה</span>
+                <span class="fc-bar-label fc-bar-label--gz">עזה{isCapped ? ' ›20×' : ''}</span>
               </div>
+              {#if isCapped}
+                <p class="fc-cap-note">הפער גבוה מ-20× — הגרף קוצץ לטובת קריאות</p>
+              {/if}
             </div>
           {/if}
         </div>
@@ -262,6 +267,15 @@
 
   .fc-bar-label--il { color: var(--text-muted); }
   .fc-bar-label--gz { color: var(--accent); }
+
+  .fc-cap-note {
+    font-family: var(--font-ui);
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
 
   .fc-source {
     font-family: var(--font-ui);

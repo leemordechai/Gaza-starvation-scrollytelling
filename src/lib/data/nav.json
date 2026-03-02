@@ -6,7 +6,7 @@
     { "label": "משאיות סיוע", "href": "#aid-trucks" },
     { "label": "מסע המשאית", "href": "#truck-route" },
     { "label": "מחירי מזון", "href": "#food-prices" },
-    { "label": "סייר מחירים", "href": "#price-explorer" },
+    { "label": "מחירים במלחמה", "href": "#price-explorer" },
     { "label": "מגוון מזון", "href": "#food-diversity" },
     { "label": "וידאו", "href": "#video" },
     { "label": "ניתוח", "href": "#analysis" }
@@ -18,7 +18,7 @@
     { "label": "משאיות סיוע", "target": "#aid-trucks" },
     { "label": "מסע המשאית", "target": "#truck-route" },
     { "label": "מחירי מזון", "target": "#food-prices" },
-    { "label": "סייר מחירים", "target": "#price-explorer" },
+    { "label": "מחירים במלחמה", "target": "#price-explorer" },
     { "label": "מגוון מזון", "target": "#food-diversity" },
     { "label": "GHF וידאו", "target": "#video" },
     { "label": "ניתוח", "target": "#analysis" }

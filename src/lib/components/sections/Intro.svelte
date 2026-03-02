@@ -17,9 +17,7 @@
 
 <style>
   .intro-section {
-    height: calc(var(--vh, 1vh) * 100);
-    display: flex;
-    align-items: center;
+    padding: 5rem 0;
     scroll-snap-align: center;
   }
 

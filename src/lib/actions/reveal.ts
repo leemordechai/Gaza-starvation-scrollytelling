@@ -1,8 +1,9 @@
 /**
  * Svelte action: scroll-reveal via IntersectionObserver.
- * Adds `.shown` class when element enters viewport (one-shot).
+ * - once: true  (default) — adds `.shown` on enter, one-shot
+ * - once: false — adds `.shown` on enter, removes it on exit (re-triggers each pass)
  *
- * Usage: <div use:reveal> or <div use:reveal={{ threshold: 0.2 }}>
+ * Usage: <div use:reveal> or <div use:reveal={{ threshold: 0.2, once: false }}>
  */
 
 interface RevealOptions {
@@ -15,42 +16,62 @@ const defaultOptions: RevealOptions = {
   once: true,
 };
 
-export function reveal(node: HTMLElement, opts?: RevealOptions) {
-  const { threshold, once } = { ...defaultOptions, ...opts };
-
-  const observer = new IntersectionObserver(
+function makeObserver(node: HTMLElement, opts: Required<RevealOptions>): IntersectionObserver {
+  return new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
           entry.target.classList.add('shown');
-          if (once) observer.unobserve(entry.target);
+          if (opts.once) observer.unobserve(entry.target);
+        } else if (!opts.once) {
+          // Remove so the animation can re-trigger next time
+          entry.target.classList.remove('shown');
         }
       }
     },
-    { threshold }
+    { threshold: opts.threshold }
+  );
+  // Note: `observer` is hoisted by the closure below
+}
+
+export function reveal(node: HTMLElement, opts?: RevealOptions) {
+  const merged = { ...defaultOptions, ...opts } as Required<RevealOptions>;
+
+  let observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('shown');
+          if (merged.once) observer.unobserve(entry.target);
+        } else if (!merged.once) {
+          entry.target.classList.remove('shown');
+        }
+      }
+    },
+    { threshold: merged.threshold }
   );
 
   observer.observe(node);
 
   return {
     update(newOpts?: RevealOptions) {
-      // If options change, reconnect
-      observer.unobserve(node);
-      node.classList.remove('shown');
-      const merged = { ...defaultOptions, ...newOpts };
       observer.disconnect();
-      const newObserver = new IntersectionObserver(
+      node.classList.remove('shown');
+      const next = { ...defaultOptions, ...newOpts } as Required<RevealOptions>;
+      observer = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             if (entry.isIntersecting) {
               entry.target.classList.add('shown');
-              if (merged.once) newObserver.unobserve(entry.target);
+              if (next.once) observer.unobserve(entry.target);
+            } else if (!next.once) {
+              entry.target.classList.remove('shown');
             }
           }
         },
-        { threshold: merged.threshold }
+        { threshold: next.threshold }
       );
-      newObserver.observe(node);
+      observer.observe(node);
     },
     destroy() {
       observer.disconnect();

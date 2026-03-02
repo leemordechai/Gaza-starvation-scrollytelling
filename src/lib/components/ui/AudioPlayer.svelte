@@ -4,10 +4,10 @@
   import { browser } from '$app/environment';
 
   let audioEl: HTMLAudioElement | undefined = $state(undefined);
-  let canPlay = $state(false);
 
   $effect(() => {
     if (!audioEl) return;
+    audioEl.volume = 0.12;
     if ($audioEnabled) {
       audioEl.play().catch(() => { audioEnabled.set(false); });
     } else {
@@ -21,20 +21,18 @@
   }
 </script>
 
-<!-- AudioPlayer: appears after hero, bottom-inline-start corner.
-     Requires static/audio/gaza-ambient.mp3 (CC0 ambient sound).
-     Recommended source: Freesound.org — search "market crowd ambient" filtered CC0.
--->
 <div class="ap-wrap" class:ap-wrap--visible={$navVisible}>
-  <!-- preload="none" — only loads when user clicks play -->
   <audio
     bind:this={audioEl}
     src="/audio/gaza-ambient.mp3"
     loop
-    preload="none"
-    volume="0.18"
-    oncanplay={() => { canPlay = true; }}
+    preload="auto"
+    oncanplay={() => { if ($audioEnabled) audioEl?.play().catch(() => {}); }}
   ></audio>
+
+  {#if $audioEnabled}
+    <div class="ap-hint">לחצו להשתקה</div>
+  {/if}
 
   <button
     class="ap-btn"
@@ -68,12 +66,26 @@
     transform: translateY(8px);
     transition: opacity 0.4s ease, transform 0.4s ease;
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .ap-wrap--visible {
     opacity: 1;
     transform: translateY(0);
     pointer-events: all;
+  }
+
+  .ap-hint {
+    font-family: var(--font-ui);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: rgba(196, 162, 74, 0.75);
+    white-space: nowrap;
+    text-align: center;
   }
 
   .ap-btn {

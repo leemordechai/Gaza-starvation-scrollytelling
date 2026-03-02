@@ -3,10 +3,23 @@
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import timelineData from '$lib/data/timeline.json';
 
-  let activeIndex = $state(-1);
+  let openSet = $state(new Set<number>());
+  let everOpenedFirst = $state(false);
 
   function toggle(i: number) {
-    activeIndex = activeIndex === i ? -1 : i;
+    const next = new Set(openSet);
+    if (next.has(i)) {
+      next.delete(i);
+    } else {
+      next.add(i);
+      if (i === 0) {
+        everOpenedFirst = true;
+      } else if (i === 1 && everOpenedFirst) {
+        // User opened card 0 at some point, now opens card 1 — expand all
+        for (let j = 0; j < timelineData.length; j++) next.add(j);
+      }
+    }
+    openSet = next;
   }
 </script>
 
@@ -19,18 +32,18 @@
     <div class="timeline-track">
       <div class="timeline-spine" aria-hidden="true"></div>
       {#each timelineData as event, i}
-        <div class="t-event reveal" class:t-active={activeIndex === i} use:reveal>
+        <div class="t-event reveal" class:t-active={openSet.has(i)} use:reveal>
           <div class="t-dot" class:red={event.dotColor === 'red'}></div>
-          <div class="t-card" role="button" tabindex="0" aria-expanded={activeIndex === i} onclick={() => toggle(i)} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}>
+          <div class="t-card" role="button" tabindex="0" aria-expanded={openSet.has(i)} onclick={() => toggle(i)} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}>
             <div class="t-date">{event.date}</div>
             <div class="t-title">{event.title}</div>
-            <span class="t-expand-hint">{activeIndex === i ? 'סגור' : 'קרא עוד'}</span>
-          </div>
-          <div class="t-detail" class:open={activeIndex === i}>
-            <div class="t-detail-inner">
-              <strong>{event.detailTitle}</strong>
-              <p>{event.detail}</p>
+            <div class="t-detail" class:open={openSet.has(i)}>
+              <div class="t-detail-inner">
+                <strong>{event.detailTitle}</strong>
+                <p>{event.detail}</p>
+              </div>
             </div>
+            <span class="t-expand-hint">{openSet.has(i) ? 'סגור' : 'לקריאה נוספת'}</span>
           </div>
         </div>
       {/each}
@@ -145,29 +158,22 @@
   .t-expand-hint::before { content: '\25B8 '; }
 
   .t-detail {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s;
     opacity: 0;
   }
   .t-detail.open {
-    max-height: 320px;
+    grid-template-rows: 1fr;
     opacity: 1;
   }
-
   .t-detail-inner {
+    overflow: hidden;
+    padding: 0.75rem 0 0.1rem;
+    border-top: 1px solid var(--border-mid);
     margin-top: 0.75rem;
-    padding: 0.85rem 1rem;
-    background: var(--bg-section);
-    border-right: 3px solid var(--accent);
-    border-radius: 2px;
-    /* Animate the border width on expand for a subtle entrance effect */
-    transition: border-right-width 0.3s ease;
   }
 
-  .t-event.t-active .t-detail-inner {
-    border-right-width: 4px;
-  }
   .t-detail-inner strong {
     display: block;
     font-family: var(--font-ui);

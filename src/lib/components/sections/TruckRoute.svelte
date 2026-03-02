@@ -20,7 +20,9 @@
     { x: 650, y: 1560, w: 290, h: 170 },
   ];
 
-  const STOP_FRACS = [0.06, 0.24, 0.42, 0.60, 0.78, 0.94];
+  // Gaps of 1/7 ≈ 0.143 so each stop-to-stop is exactly one page-down
+  // at the default scroll height of 7 × window.innerHeight
+  const STOP_FRACS = [0.10, 0.243, 0.386, 0.529, 0.671, 0.814];
 
   let svgEl: SVGSVGElement;
   let routePathEl: SVGPathElement;
@@ -204,6 +206,50 @@
           <ellipse cx="510" cy="1600" rx="9" ry="5.5" fill="#d4aa7a" stroke="rgba(160,90,30,0.65)" stroke-width="0.9" transform="rotate(4,510,1600)"/>
         </g>
 
+        <!-- Debris piles — scattered in the destroyed zone (y≥1180) -->
+        <g class="tr-debris" opacity="0.78">
+          <!-- Cluster A: left side, y≈1210 -->
+          <polygon points="95,1208 118,1200 132,1212 125,1228 100,1225" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="105,1220 122,1215 130,1226 115,1233" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="110" y="1228" width="8" height="5" rx="1" fill="#7a6050" transform="rotate(15,114,1230)"/>
+          <rect x="96" y="1215" width="5" height="9" rx="1" fill="#6a5040" transform="rotate(-8,98,1219)"/>
+          <!-- Cluster B: right side, y≈1260 -->
+          <polygon points="860,1252 885,1244 900,1258 888,1272 862,1268" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="870,1265 888,1260 895,1272 875,1278" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="862" y="1268" width="9" height="5" rx="1" fill="#7a6050" transform="rotate(-12,866,1270)"/>
+          <circle cx="895" cy="1255" r="4" fill="#7a6050" opacity="0.7"/>
+          <circle cx="860" cy="1260" r="3" fill="#6a5040" opacity="0.65"/>
+          <!-- Cluster C: left side, y≈1360 -->
+          <polygon points="80,1355 108,1346 122,1362 110,1378 82,1374" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="92,1370 112,1364 118,1376 96,1382" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="82" y="1372" width="11" height="5" rx="1" fill="#7a6050" transform="rotate(10,87,1374)"/>
+          <rect x="105" y="1358" width="6" height="10" rx="1" fill="#6a5040" transform="rotate(-6,108,1363)"/>
+          <circle cx="118" cy="1368" r="3.5" fill="#7a6050" opacity="0.7"/>
+          <!-- Cluster D: right side, y≈1430 -->
+          <polygon points="860,1424 890,1415 906,1430 893,1446 862,1442" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="872,1438 894,1432 900,1444 876,1450" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="863" y="1440" width="10" height="5" rx="1" fill="#7a6050" transform="rotate(-14,868,1442)"/>
+          <circle cx="900" cy="1428" r="4" fill="#7a6050" opacity="0.65"/>
+          <!-- Cluster E: left side, y≈1510 -->
+          <polygon points="85,1505 112,1496 128,1512 115,1528 88,1524" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="96,1518 116,1512 123,1525 100,1531" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="88" y="1520" width="9" height="6" rx="1" fill="#7a6050" transform="rotate(8,92,1523)"/>
+          <rect x="108" y="1506" width="6" height="10" rx="1" fill="#6a5040" transform="rotate(-10,111,1511)"/>
+          <!-- Cluster F: right side, y≈1580 -->
+          <polygon points="858,1574 886,1565 902,1580 889,1596 860,1592" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="870,1588 890,1582 897,1594 873,1600" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="860" y="1590" width="10" height="5" rx="1" fill="#7a6050" transform="rotate(-16,865,1592)"/>
+          <circle cx="896" cy="1577" r="3.5" fill="#7a6050" opacity="0.65"/>
+          <!-- Cluster G: centre area, y≈1650 -->
+          <polygon points="440,1642 468,1634 482,1648 468,1664 442,1660" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <polygon points="452,1656 470,1650 478,1662 455,1668" fill="#9a8070" stroke="#5a4030" stroke-width="0.5"/>
+          <rect x="442" y="1658" width="8" height="5" rx="1" fill="#7a6050" transform="rotate(6,446,1660)"/>
+          <!-- Cluster H: right side, y≈1700 -->
+          <polygon points="855,1692 882,1683 898,1698 884,1714 857,1710" fill="#8a7060" stroke="#5a4030" stroke-width="0.6"/>
+          <rect x="858" y="1708" width="9" height="5" rx="1" fill="#7a6050" transform="rotate(-12,862,1710)"/>
+          <circle cx="894" cy="1695" r="3" fill="#7a6050" opacity="0.6"/>
+        </g>
+
         <!-- Trail (animated by GSAP) -->
         <path bind:this={trailPathEl} d={ROUTE_D} fill="none" stroke="#dc3030" stroke-width="3.5" stroke-linecap="round" opacity="0.8"/>
 
@@ -314,7 +360,6 @@
     font-size: 0.97rem;
     line-height: 1.7;
     color: var(--text-muted);
-    white-space: nowrap;
     margin: 0;
   }
 
@@ -412,14 +457,30 @@
       bottom: 0;
       left: 0;
       right: 0;
+      display: flex;
+      align-items: flex-end;
     }
     .tr-card {
       border-radius: 0;
-      position: relative;
-      inset: auto;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
       width: 100%;
-      display: none;
-      top: auto;
+      background: rgba(7, 6, 4, 0.93);
+      border-top: 2px solid var(--accent);
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      padding: 1rem 1.25rem 1.25rem;
+      color: #e8dbd8;
+    }
+    .tr-card .tr-card-title { color: #f5ece8; font-size: 1rem; }
+    .tr-card .tr-card-body  { color: rgba(232, 219, 216, 0.8); font-size: 0.8rem; }
+    .tr-card--right, .tr-card--left {
+      left: 0;
+      right: 0;
+      inset-inline: 0;
     }
     .tr-card--active { display: block; }
   }

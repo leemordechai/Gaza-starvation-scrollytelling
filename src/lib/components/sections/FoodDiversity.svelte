@@ -594,6 +594,16 @@
     transition: opacity 0.5s ease;
   }
 
+  @media (max-width: 768px) {
+    .fd-step {
+      min-height: 0;
+      opacity: 1;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .fd-step:last-child { border-bottom: none; }
+  }
+
   .fd-step.active {
     opacity: 1;
   }

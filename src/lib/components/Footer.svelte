@@ -11,7 +11,7 @@
       </div>
       <ul class="footer-links">
         {#each footerData.links as link}
-          <li>{link}</li>
+          <li><a href={link.href} class="footer-link">{link.label}</a></li>
         {/each}
       </ul>
     </div>
@@ -56,17 +56,18 @@
   }
 
   .footer-links { list-style: none; }
-  .footer-links li {
+  .footer-links li { padding: 0.28rem 0; }
+  .footer-link {
     font-family: var(--font-ui);
     font-size: 0.68rem;
     color: var(--text-muted);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 0.28rem 0;
-    cursor: pointer;
+    text-decoration: none;
     transition: color 0.2s;
+    display: block;
   }
-  .footer-links li:hover { color: var(--accent); }
+  .footer-link:hover { color: var(--accent); }
 
   .footer-bottom {
     border-top: 1px solid var(--border);

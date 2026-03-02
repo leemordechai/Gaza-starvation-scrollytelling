@@ -1,9 +1,9 @@
 <script lang="ts">
   import { reveal } from '$lib/actions/reveal';
-  let { title, paragraphs }: { title: string; paragraphs: string[] } = $props();
+  let { title, paragraphs, id }: { title: string; paragraphs: string[]; id?: string } = $props();
 </script>
 
-<section class="nb-section">
+<section class="nb-section" {id}>
   <div class="container">
     <h2 class="nb-title reveal" use:reveal>{title}</h2>
     {#each paragraphs as p}

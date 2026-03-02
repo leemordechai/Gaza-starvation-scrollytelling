@@ -23,7 +23,7 @@
     {/each}
   </ul>
   <span class="nav-time" class:visible={showTime}>{timeText}</span>
-  <button class="nav-burger" class:open={$mobileMenuOpen} aria-label="Open menu" onclick={toggleMenu}>
+  <button class="nav-burger" class:open={$mobileMenuOpen} aria-label={$mobileMenuOpen ? 'סגור תפריט' : 'פתח תפריט'} aria-expanded={$mobileMenuOpen} onclick={toggleMenu}>
     <span></span><span></span><span></span>
   </button>
 </nav>
