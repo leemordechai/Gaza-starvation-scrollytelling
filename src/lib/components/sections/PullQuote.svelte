@@ -21,7 +21,7 @@
 
 <style>
   .pullquote-section {
-    padding: 5.5rem 0;
+    padding: 7rem 0;
     background: var(--bg-card);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
@@ -38,27 +38,29 @@
     font-size: 22rem;
     line-height: 1;
     color: var(--accent);
-    opacity: 0.05;
+    opacity: 0.08;
     pointer-events: none;
     user-select: none;
   }
 
   .pullquote {
-    max-width: 780px;
+    max-width: 680px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 clamp(1.1rem, 5vw, 2.5rem);
     text-align: center;
     position: relative;
   }
 
   .pullquote blockquote {
     font-family: var(--font-disp);
-    font-size: clamp(1.35rem, 2.8vw, 2.1rem);
+    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.4rem);
     font-style: italic;
     font-weight: 400;
-    line-height: 1.5;
+    line-height: 1.45;
     color: var(--sand);
     margin-bottom: 1.75rem;
+    max-width: 26ch;
+    margin-inline: auto;
   }
 
   .pullquote cite {

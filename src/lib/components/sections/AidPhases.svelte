@@ -172,8 +172,8 @@
                 {#each order as t}
                   <img
                     class="ap-truck"
-                    style="--delay: {Math.min(t * 3, 800)}ms; color: {phase.color};"
-                    src="/images/truck-hand-{(t % 5) + 1}.png"
+                    style="--delay: {Math.min(t * 3, 800)}ms;"
+                    src="/images/truck-hand-1.png"
                     width="38" height="24"
                     alt=""
                     aria-hidden="true"
@@ -267,21 +267,24 @@
 
   /* ── Truck grid ────────────────────────────────────────────────────────── */
   .ap-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 38px);
+    display: flex;
+    flex-wrap: wrap;
     gap: 0;
     padding: 0.3rem 0.2rem;
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-radius: 3px;
     min-height: 28px;
+    line-height: 0;
+    font-size: 0;
   }
 
   .ap-truck {
-    display: block;
+    display: inline-block;
+    vertical-align: top;
     width: 38px;
     height: 24px;
-    object-fit: contain;
+    object-fit: fill;
     opacity: 0;
     transform: scale(0.5);
     transition: opacity 0.12s ease, transform 0.12s ease;

@@ -51,11 +51,16 @@
 
   .analysis-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: clamp(1.5rem, 4vw, 3.5rem);
     align-items: start;
   }
-  @media (max-width: 768px) { .analysis-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  /* On wider screens, give body more weight than sidebar */
+  @media (min-width: 900px) {
+    .analysis-grid {
+      grid-template-columns: 3fr 2fr;
+    }
+  }
 
   .analysis-body { font-size: 1.02rem; line-height: 1.82; color: var(--text); }
   .analysis-body :global(p) { margin-bottom: 1.6rem; }

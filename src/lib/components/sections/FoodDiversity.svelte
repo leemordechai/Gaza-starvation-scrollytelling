@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
+  import { fade } from 'svelte/transition';
   import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
   import { reveal } from '$lib/actions/reveal';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
@@ -11,6 +12,13 @@
   // Only "scored" groups count toward the diversity score (excludes oil & sugar)
   const scoredGroups = (foodGroups as any[]).filter(g => g.scored !== false);
   const maxScore = maxDays * scoredGroups.length; // 42
+
+  // Compute the step with the lowest diversity score (nadir)
+  function _stepScore(step: typeof steps[0]): number {
+    return scoredGroups.reduce((s: number, g: any) => s + ((step.values as any)[g.key] ?? 0), 0);
+  }
+  const nadirStepIndex = steps.reduce((minI, step, i, arr) =>
+    _stepScore(step) < _stepScore(arr[minI]) ? i : minI, 0);
 
   let activeStep = $state(0);
   let triggers: any[] = [];
@@ -119,6 +127,13 @@
             {/if}
           </div>
 
+          <!-- Nadir annotation — shown only on the worst step -->
+          {#if activeStep === nadirStepIndex}
+            <div class="fd-nadir-badge" transition:fade={{ duration: 400 }}>
+              <span class="fd-nadir-label">⚠ השפל המוחלט — יוני 2025</span>
+            </div>
+          {/if}
+
           <!-- Food group grid -->
           <div class="fd-grid">
             {#each foodGroups as group, rowIdx}
@@ -191,6 +206,24 @@
 </section>
 
 <style>
+  /* ===== Nadir badge ===== */
+  .fd-nadir-badge {
+    background: rgba(139, 26, 16, 0.08);
+    border: 1px solid #c04030;
+    border-inline-start: 3px solid #c04030;
+    padding: 0.3rem 0.65rem;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .fd-nadir-label {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #c04030;
+  }
+
   /* ===== Section ===== */
   .fd-section {
     padding: 5rem 0 2rem;

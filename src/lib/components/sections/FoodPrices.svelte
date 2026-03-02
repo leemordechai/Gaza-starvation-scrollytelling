@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
+  import { viewport } from '$lib/actions/viewport';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import priceData from '$lib/data/foodPrices.json';
   import { foodPrices as foodPricesText } from '$lib/data/story.js';
@@ -25,6 +26,7 @@
   let showTapHint = $derived(isTouchDevice && pinnedPoint === null);
   let baselineHover = $state(false);
   let baselineHoverStyle = $state('');
+  let baselineDrawn = $state(false);
 
   // ── Current commodity series ──────────────────────────────────────────────
   const commodityKeys = foodPricesText.steps.map(s => s.commodity) as string[];
@@ -274,7 +276,7 @@
 
       <!-- Sticky chart — second in DOM = left column in RTL -->
       <div class="fp-sticky">
-        <div class="fp-chart-wrap">
+        <div class="fp-chart-wrap" use:viewport={{ onEnter: () => { baselineDrawn = true; }, once: true, threshold: 0.4 }}>
           <div class="fp-commodity-meta">
             <span class="fp-commodity-name">{currentCommodity?.labelHe}</span>
             <span class="fp-commodity-unit">{currentCommodity?.unit}</span>
@@ -325,15 +327,17 @@
                 <text x={x} y={PAD.top + CH + 19} class="fp-axis-label" text-anchor="middle">{tick.label}</text>
               {/each}
 
-              <!-- Baseline (Sep 2023 price) dashed reference -->
+              <!-- Baseline (Sep 2023 price) dashed reference — draws left-to-right on scroll reveal -->
               {#if currentCommodity}
                 {@const maxP = Math.max(...currentCommodity.series.map(p => p.price)) * 1.1}
                 {@const by = yPos(currentCommodity.baselinePrice, maxP)}
-                <rect x={PAD.left} y={by} width={CW} height={PAD.top + CH - by}
-                  fill="rgba(196,162,74,0.05)" pointer-events="none"/>
-                <line x1={PAD.left} y1={by} x2={PAD.left + CW} y2={by}
-                  stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7"
-                  pointer-events="none"/>
+                <g style="clip-path: {baselineDrawn ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)'}; transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);">
+                  <rect x={PAD.left} y={by} width={CW} height={PAD.top + CH - by}
+                    fill="rgba(196,162,74,0.05)" pointer-events="none"/>
+                  <line x1={PAD.left} y1={by} x2={PAD.left + CW} y2={by}
+                    stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7"
+                    pointer-events="none"/>
+                </g>
               {/if}
 
               <!-- Fill area (clipped to domain) -->
@@ -427,8 +431,8 @@
   /* ── Sticky chart ─── */
   .fp-sticky {
     position: sticky;
-    top: 50%;
-    transform: translateY(-50%);
+    top: clamp(4rem, 15vh, 8rem);
+    align-self: start;
   }
 
   .fp-chart-wrap {
@@ -462,11 +466,13 @@
   /* ── SVG wrapper for tooltip positioning ─── */
   .fp-svg-wrap {
     position: relative;
+    min-height: 200px;
   }
 
   .fp-svg {
     width: 100%;
     height: auto;
+    min-height: 180px;
     display: block;
     overflow: visible;
     cursor: crosshair;

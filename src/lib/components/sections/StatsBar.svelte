@@ -54,10 +54,28 @@
   .stat-item {
     text-align: center;
     padding: 1.5rem;
-    border-right: 1px solid var(--border);
+    border-inline-end: 1px solid var(--border);
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .stat-item:last-child { border-right: none; }
+  .stat-item:last-child { border-inline-end: none; }
+
+  @media (max-width: 600px) {
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .stat-item {
+      border-inline-end: none;
+      border-bottom: 1px solid var(--border);
+      padding: 1.75rem 1rem;
+    }
+    /* Remove bottom border from last two items (bottom row) */
+    .stat-item:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+    .stat-num {
+      font-size: 2rem;
+    }
+  }
   :global(.stat-item.shown) {
     animation: statPop 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }

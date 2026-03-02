@@ -29,7 +29,7 @@
   let showTapHint = $derived(isTouchDevice && pinnedMonth === null);
 
   // ── Derived ────────────────────────────────────────────────────────────────
-  let subSeries = $derived(mode === 'classification' ? byClassification : byOrg);
+  let subSeries = $derived(mode === 'classification' ? byClassificationMerged : byOrg);
 
   let maxVal = $derived(
     Math.max(...totals.map(d => d[metric]))
@@ -41,7 +41,7 @@
   // ── Chart geometry ─────────────────────────────────────────────────────────
   const W = 880;
   const H = 340;
-  const PAD = { top: 24, right: 24, bottom: 44, left: 62 };
+  const PAD = { top: 38, right: 24, bottom: 44, left: 62 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top  - PAD.bottom;
 
@@ -148,18 +148,45 @@
     if (browser) isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
   });
 
+  // ── Keys to collapse into "אחר" ────────────────────────────────────────────
+  const OTHER_KEYS = new Set([
+    'Essential infrastructure equipment',
+    'Medical equipment - for field hospital',
+    'UN and International organizations equipment',
+    'Water',
+  ]);
+
+  // Build a merged byClassification where the four "other" series are summed
+  // into a single synthetic "אחר" series, keeping the rest unchanged.
+  const byClassificationMerged: SubSeries[] = (() => {
+    const months = rawData.months as { key: string }[];
+    // Sum the four series per month
+    const otherSeries: SeriesPoint[] = months.map(m => ({
+      key: m.key, trucks: 0, trucksPerDay: 0, tons: 0, tonsPerDay: 0
+    }));
+    for (const sub of byClassification) {
+      if (!OTHER_KEYS.has(sub.key)) continue;
+      for (let i = 0; i < sub.series.length; i++) {
+        const p = sub.series[i];
+        otherSeries[i].trucks      += p.trucks;
+        otherSeries[i].trucksPerDay = +((otherSeries[i].trucksPerDay + p.trucksPerDay).toFixed(1));
+        otherSeries[i].tons        += p.tons;
+        otherSeries[i].tonsPerDay   = +((otherSeries[i].tonsPerDay   + p.tonsPerDay).toFixed(1));
+      }
+    }
+    const kept = byClassification.filter(s => !OTHER_KEYS.has(s.key));
+    return [...kept, { key: '__other__', series: otherSeries }];
+  })();
+
   // ── Color palettes ─────────────────────────────────────────────────────────
   const classColors: Record<string, string> = {
-    'Food':                                    '#9b2a21',
-    'Medical supplies':                        '#7ec8a0',
-    'Shelter equipment':                       '#7ab3d4',
-    'Fuel':                                    '#e07040',
-    'Mixed aid':                               '#b07acc',
-    'Water':                                   '#5ab8d6',
-    'Medical equipment - for field hospital':  '#a0c878',
-    'Gas':                                     '#d4904a',
-    'Essential infrastructure equipment':      '#88a0b8',
-    'UN and International organizations equipment': '#888078',
+    'Food':            '#9b2a21',
+    'Medical supplies':'#7ec8a0',
+    'Shelter equipment':'#7ab3d4',
+    'Fuel':            '#e07040',
+    'Mixed aid':       '#b07acc',
+    'Gas':             '#d4904a',
+    '__other__':       '#7a8898',
   };
   const orgColors: Record<string, string> = {
     'International Organizations & NGOs':  '#9b2a21',
@@ -173,6 +200,56 @@
     const map = mode === 'classification' ? classColors : orgColors;
     return map[key] ?? '#888';
   }
+
+  // ── Ceasefire bands ────────────────────────────────────────────────────────
+  // Given a month key + fractional day (1-based), return an SVG x coordinate.
+  function xPosFrac(monthKey: string, day: number): number {
+    const idx = monthKeys.indexOf(monthKey);
+    if (idx < 0) return -1;
+    const daysInMonth = months[idx].days;
+    const frac = (day - 1) / daysInMonth;            // 0 = start, 1 = end
+    // Interpolate between this month's centre and adjacent centres
+    // by using the raw position of the month index + fractional step
+    const prev = idx > 0 ? xPos(idx - 1) : xPos(idx);
+    const next = idx < months.length - 1 ? xPos(idx + 1) : xPos(idx);
+    // Each month's x covers half-step to the left and right
+    const halfStepL = (xPos(idx) - prev) / 2;
+    const halfStepR = (next - xPos(idx)) / 2;
+    return xPos(idx) - halfStepL + frac * (halfStepL + halfStepR);
+  }
+
+  type CeasefireBand = { x1: number; x2: number; midX: number; label: string; sub: string };
+
+  const ceasefireBands: CeasefireBand[] = (() => {
+    const bands: CeasefireBand[] = [];
+
+    // 1. First ceasefire: Nov 23 – Dec 1, 2023
+    const cf1x1 = xPosFrac('2023-11', 23);
+    const cf1x2 = xPosFrac('2023-12', 1);
+    if (cf1x1 > 0 && cf1x2 > 0) {
+      bands.push({ x1: cf1x1, x2: cf1x2, midX: (cf1x1 + cf1x2) / 2,
+        label: 'הפסקת האש הראשונה', sub: '23 נוב – 1 דצמ 2023' });
+    }
+
+    // 2. Second ceasefire: Jan 18 – Mar 18, 2025
+    const cf2x1 = xPosFrac('2025-01', 18);
+    const cf2x2 = xPosFrac('2025-03', 18);
+    if (cf2x1 > 0 && cf2x2 > 0) {
+      bands.push({ x1: cf2x1, x2: cf2x2, midX: (cf2x1 + cf2x2) / 2,
+        label: 'הפסקת האש השנייה', sub: '18 ינו – 18 מרץ 2025' });
+    }
+
+    // 3. Third ceasefire: Oct 10, 2025 onwards (to end of chart)
+    const cf3x1 = xPosFrac('2025-10', 10);
+    const cf3x2 = xPos(monthKeys.length - 1) + (xPos(1) - xPos(0)) * 0.5; // to right edge
+    if (cf3x1 > 0) {
+      bands.push({ x1: cf3x1, x2: Math.min(cf3x2, W - PAD.right),
+        midX: (cf3x1 + Math.min(cf3x2, W - PAD.right)) / 2,
+        label: 'הפסקת האש השלישית', sub: 'מ-10 אוק 2025' });
+    }
+
+    return bands;
+  })();
 
   // ── Gap annotation: shading covers March + April (zero months) ────────────
   // Extended by a full column-step on each side for visual clarity.
@@ -203,22 +280,19 @@
   // ── Hebrew display labels ──────────────────────────────────────────────────
   const hebrewLabels: Record<string, string> = {
     // Classification keys
-    'Food':                                    'מזון',
-    'Medical supplies':                        'ציוד רפואי',
-    'Shelter equipment':                       'ציוד מחסה',
-    'Fuel':                                    'דלק',
-    'Mixed aid':                               'סיוע מעורב',
-    'Water':                                   'מים',
-    'Medical equipment - for field hospital':  'ציוד בית חולים שדה',
-    'Gas':                                     'גז',
-    'Essential infrastructure equipment':      'תשתיות חיוניות',
-    'UN and International organizations equipment': 'ציוד ארגונים בינ"ל',
+    'Food':             'מזון',
+    'Medical supplies': 'ציוד רפואי',
+    'Shelter equipment':'ציוד מחסה',
+    'Fuel':             'דלק',
+    'Mixed aid':        'סיוע מעורב',
+    'Gas':              'גז לבישול',
+    '__other__':        'אחר',
     // Org keys
-    'International Organizations & NGOs':  'ארגונים בינ"ל ועמותות',
-    'UN Agencies':                         'סוכנויות האו"ם',
-    'Private sector':                      'מגזר פרטי',
-    'Countries':                           'מדינות',
-    'Mixed donors':                        'תורמים מעורבים',
+    'International Organizations & NGOs': 'ארגונים בינ"ל ועמותות',
+    'UN Agencies':   'סוכנויות האו"ם',
+    'Private sector':'מגזר פרטי',
+    'Countries':     'מדינות',
+    'Mixed donors':  'תורמים מעורבים',
   };
   function label(key: string): string {
     return hebrewLabels[key] ?? key;
@@ -294,6 +368,29 @@
           onpointerleave={onPointerLeave}
           onpointerdown={onPointerDown}
         >
+          <!-- Ceasefire highlight bands (rendered first, behind everything) -->
+          {#each ceasefireBands as band}
+            <rect
+              x={band.x1}
+              y={PAD.top}
+              width={band.x2 - band.x1}
+              height={CH}
+              class="at-ceasefire-band"
+            />
+            <text
+              x={band.midX}
+              y={PAD.top + 11}
+              class="at-ceasefire-label"
+              text-anchor="middle"
+            >{band.label}</text>
+            <text
+              x={band.midX}
+              y={PAD.top + 22}
+              class="at-ceasefire-label at-ceasefire-label--sub"
+              text-anchor="middle"
+            >{band.sub}</text>
+          {/each}
+
           <!-- Y axis grid lines + labels -->
           {#each yTicks() as tick}
             {@const y = yPos(tick)}
@@ -535,6 +632,7 @@
   .at-chart-container {
     position: relative;
     width: 100%;
+    min-height: 240px;
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-radius: 3px;
@@ -545,6 +643,7 @@
     display: block;
     width: 100%;
     height: auto;
+    min-height: 220px;
     cursor: crosshair;
     touch-action: pan-y;
   }
@@ -611,6 +710,29 @@
     pointer-events: none;
     transition: d 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     filter: drop-shadow(0 0 6px rgba(196,162,74,0.4));
+  }
+
+  /* Ceasefire bands */
+  .at-ceasefire-band {
+    fill: #2a6b3a;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
+  .at-ceasefire-label {
+    font-family: var(--font-ui);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    fill: #4aaa6a;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .at-ceasefire-label--sub {
+    font-size: 7px;
+    font-weight: 400;
+    opacity: 0.6;
   }
 
   /* Gap band */

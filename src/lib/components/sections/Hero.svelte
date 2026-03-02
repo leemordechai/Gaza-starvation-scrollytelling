@@ -92,10 +92,11 @@
     <div class="hero-fade" aria-hidden="true"></div>
 
     <div class="hero-content" id="hero-content">
-      <span class="section-label">{meta.sectionLabel}</span>
+      <div class="section-label-wrap">
+        <span class="section-label">{meta.sectionLabel}</span>
+      </div>
       <div class="hero-title-wrap">
-        <h1 class="hero-title hero-title-line1">{meta.titleLine1}</h1>
-        <h1 class="hero-title hero-title-line2">{meta.titleLine2}</h1>
+        <h1 class="hero-title">{meta.titleLine1} {meta.titleLine2}</h1>
       </div>
       <p class="hero-dek">{meta.dek}</p>
       <div class="hero-meta">
@@ -126,7 +127,7 @@
     height: calc(var(--vh, 1vh) * 100);
     min-height: 640px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     overflow: hidden;
   }
@@ -179,29 +180,42 @@
 
   .hero-content {
     position: relative; z-index: 2;
-    text-align: center; padding: 0 2rem 5.5rem;
+    text-align: center; padding: 0 2rem;
     max-width: 920px; will-change: opacity, transform;
+    /* Shift slightly upward from center to account for the fade gradient at bottom */
+    margin-bottom: 8vh;
+  }
+  .section-label-wrap {
+    margin-bottom: 1.5rem;
   }
   .section-label {
     font-family: var(--font-ui); font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent);
-    display: block; margin-bottom: 1.5rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(196, 162, 74, 0.95);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.28);
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    border: 1px solid rgba(196, 162, 74, 0.35);
   }
   .hero-title-wrap { display: flex; flex-direction: column; align-items: center; }
   .hero-title {
-    font-family: var(--font-disp); font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 900; line-height: 0.98; color: #fff;
+    font-family: var(--font-disp); font-size: clamp(3.5rem, 10vw, 7.5rem);
+    font-weight: 900; line-height: 1; color: #fff;
     margin-bottom: 1.4rem; text-shadow: 0 4px 60px rgba(0,0,0,0.5);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
   .hero-title :global(em) { font-style: italic; color: var(--accent-light); }
-  .hero-title-line1 { margin-bottom: 0; will-change: transform; }
-  .hero-title-line2 { will-change: transform; }
 
   .hero-dek {
     font-family: var(--font-body); font-size: clamp(0.95rem, 1.8vw, 1.2rem);
     font-weight: 300; line-height: 1.65; color: var(--sand);
     max-width: 620px; margin: 0 auto 2.5rem;
+    text-align: justify;
+    text-align-last: center;
+    hyphens: auto;
   }
   .hero-meta {
     display: flex; align-items: center; justify-content: center;

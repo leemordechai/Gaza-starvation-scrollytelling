@@ -1,8 +1,8 @@
 <script lang="ts">
   import { reveal } from '$lib/actions/reveal';
+  import { viewport } from '$lib/actions/viewport';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import { browser } from '$app/environment';
-  import { onMount } from 'svelte';
 
   const videos = [
     { url: 'https://x.com/i/status/1966609171929022780', id: '1966609171929022780' },
@@ -13,16 +13,17 @@
 
   // Track which iframes Twitter has finished rendering
   let rendered = $state<Record<string, boolean>>({});
+  let widgetsLoaded = false;
 
-  onMount(() => {
-    if (!browser) return;
+  // Lazily inject Twitter widget script only when section scrolls into view
+  function loadWidgets() {
+    if (!browser || widgetsLoaded) return;
+    widgetsLoaded = true;
 
     function runWidgets() {
       (window as any).twttr.widgets.load(document.getElementById('ghf-grid'));
-      // Listen for each tweet to finish rendering
       (window as any).twttr.events.bind('rendered', (e: any) => {
         const iframe = e.target as HTMLIFrameElement;
-        // Find which video this belongs to by closest wrapper
         const wrapper = iframe.closest('[data-vid-id]');
         if (wrapper) rendered[wrapper.getAttribute('data-vid-id')!] = true;
       });
@@ -38,7 +39,7 @@
       s.onload = runWidgets;
       document.head.appendChild(s);
     }
-  });
+  }
 </script>
 
 <section class="ghf-section section-topo" id="video">
@@ -51,7 +52,7 @@
       />
     </div>
 
-    <div class="ghf-grid" id="ghf-grid">
+    <div class="ghf-grid" id="ghf-grid" use:viewport={{ onEnter: loadWidgets, once: true, threshold: 0.1 }}>
       {#each videos as video}
         <div class="ghf-item" data-vid-id={video.id} use:reveal>
           <!-- Skeleton shown until Twitter renders the iframe -->
