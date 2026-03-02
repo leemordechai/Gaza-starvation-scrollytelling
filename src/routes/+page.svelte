@@ -30,8 +30,30 @@
   import NarrativeBlock from '$lib/components/sections/NarrativeBlock.svelte';
   import Analysis from '$lib/components/sections/Analysis.svelte';
   import Footer from '$lib/components/Footer.svelte';
-  import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric, famineDeaths, ghfNarrative } from '$lib/data/story.js';
+  import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric, famineDeaths, ghfNarrative, witnessTestimony } from '$lib/data/story.js';
+  import { onMount, onDestroy } from 'svelte';
   const bridge = bridgeBeforeTimeline;
+
+  let activeIdx = $state(-1);
+  let observer: IntersectionObserver | null = null;
+
+  onMount(() => {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            activeIdx = Number((entry.target as HTMLElement).dataset.idx);
+          }
+        });
+      },
+      { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
+    );
+    document.querySelectorAll('.bridge-step').forEach(el => observer!.observe(el));
+  });
+
+  onDestroy(() => {
+    observer?.disconnect();
+  });
 </script>
 
 <SkipLink />
@@ -55,15 +77,23 @@
 
   <Divider variant="topo" />
 
-  <!-- Bridging paragraph: sets up the timeline (structured list) -->
+  <!-- Bridging paragraphs: scroll-driven, one at a time -->
   <section class="bridge-section">
     <div class="container">
       <p class="bridge-intro reveal" use:reveal>{bridge.intro}</p>
-      <ol class="bridge-list reveal" use:reveal>
-        {#each bridge.items as item}
-          <li>{item}</li>
-        {/each}
-      </ol>
+    </div>
+    <div class="bridge-steps">
+      {#each bridge.items as item, i}
+        <div
+          class="bridge-step"
+          class:active={activeIdx === i}
+          data-idx={i}
+        >
+          <div class="container">
+            <p>{item}</p>
+          </div>
+        </div>
+      {/each}
     </div>
   </section>
 
@@ -92,16 +122,28 @@
 
   <FoodPrices />
 
-  <FoodCalculator />
-
   <Divider variant="topo" />
 
   <PriceExplorer />
+
+  <FoodCalculator />
 
   <Divider variant="topo" />
 
   <!-- Famine deaths narrative -->
   <NarrativeBlock title={famineDeaths.title} paragraphs={famineDeaths.paragraphs} />
+
+  <Divider variant="fade" />
+
+  <!-- Witness testimony -->
+  <section class="witness-section reveal" use:reveal>
+    <div class="container">
+      <blockquote class="witness-quote">
+        <p>{witnessTestimony.quote}</p>
+        <footer class="witness-attribution">{witnessTestimony.attribution}</footer>
+      </blockquote>
+    </div>
+  </section>
 
   <Divider variant="fade" />
 
@@ -139,19 +181,54 @@
   .bridge-intro {
     font-size: 1.02rem;
     line-height: 1.82;
-    color: var(--text);
-    margin-bottom: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
   }
-  .bridge-list {
-    font-size: 1.02rem;
-    line-height: 1.82;
-    color: var(--text);
-    padding-inline-start: 1.4rem;
+  .bridge-steps {
+    margin-top: 0;
+  }
+  .bridge-step {
+    padding: 3rem 0;
+    height: calc(var(--vh, 1vh) * 100);
     display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
+    align-items: center;
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
   }
-  .bridge-list li {
-    padding-inline-start: 0.4rem;
+  .bridge-step.active {
+    opacity: 1;
+  }
+  .bridge-step p {
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.72;
+    color: var(--sand);
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+
+  .witness-section {
+    padding: 3rem 0;
+  }
+  .witness-quote {
+    margin: 0;
+    padding: 1.75rem 2rem 1.75rem 0;
+    border-inline-end: 4px solid var(--accent);
+    max-width: 68ch;
+  }
+  .witness-quote p {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    font-style: italic;
+    line-height: 1.82;
+    color: var(--sand);
+    margin: 0 0 1.25rem;
+  }
+  .witness-attribution {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
 </style>

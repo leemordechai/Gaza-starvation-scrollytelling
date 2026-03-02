@@ -213,8 +213,8 @@
     font-family: var(--font-body); font-size: clamp(0.95rem, 1.8vw, 1.2rem);
     font-weight: 300; line-height: 1.65; color: var(--sand);
     max-width: 620px; margin: 0 auto 2.5rem;
-    text-align: justify;
-    text-align-last: center;
+    text-align: center;
+    text-wrap: balance;
     hyphens: auto;
   }
   .hero-meta {

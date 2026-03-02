@@ -5,7 +5,7 @@
   // Based on Jan 2025 WFP Market Monitor data (peak blockade period)
   const MULTIPLIER = 8.4;
 
-  let monthly = $state(2000);
+  let monthly = $state(0);
   let result = $derived(Math.round(monthly * MULTIPLIER));
   let ratio = $derived(Math.min((monthly * MULTIPLIER) / Math.max(monthly, 1), 20)); // cap at 20×
 
@@ -21,7 +21,7 @@
         <div class="fc-header">
           <span class="fc-chip">מחשבון</span>
           <h2 class="fc-title">מה זה אומר עליך?</h2>
-          <p class="fc-sub">חשב כמה היה עולה סל המזון שלך במחירי עזה 2025</p>
+          <p class="fc-sub">חשבו כמה היה עולה סל המזון שלכם במחירי עזה 2025</p>
         </div>
 
         <div class="fc-body">

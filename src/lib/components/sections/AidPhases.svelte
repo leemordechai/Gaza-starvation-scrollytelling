@@ -173,7 +173,7 @@
                   <img
                     class="ap-truck"
                     style="--delay: {Math.min(t * 3, 800)}ms;"
-                    src="/images/truck-hand-1.png"
+                    src="/images/truck-hand-3.png"
                     width="38" height="24"
                     alt=""
                     aria-hidden="true"

@@ -40,8 +40,8 @@
 
   // ── Chart geometry ─────────────────────────────────────────────────────────
   const W = 880;
-  const H = 340;
-  const PAD = { top: 38, right: 24, bottom: 44, left: 62 };
+  const H = 360;
+  const PAD = { top: 58, right: 24, bottom: 44, left: 62 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top  - PAD.bottom;
 
@@ -362,6 +362,7 @@
           bind:this={svgEl}
           viewBox="0 0 {W} {H}"
           class="at-chart"
+          overflow="visible"
           role="img"
           aria-label="משאיות סיוע שנכנסו לעזה לפי חודש"
           onpointermove={onPointerMove}
@@ -369,26 +370,37 @@
           onpointerdown={onPointerDown}
         >
           <!-- Ceasefire highlight bands (rendered first, behind everything) -->
-          {#each ceasefireBands as band}
+          {#each ceasefireBands as band, bi}
+            {@const bandW = band.x2 - band.x1}
+            {@const labelX = Math.max(PAD.left + bandW / 2, Math.min(band.midX, W - PAD.right - bandW / 2))}
             <rect
               x={band.x1}
               y={PAD.top}
-              width={band.x2 - band.x1}
+              width={bandW}
               height={CH}
               class="at-ceasefire-band"
             />
+            <!-- Labels above chart area, staggered by row for middle band to avoid overlap -->
             <text
-              x={band.midX}
-              y={PAD.top + 11}
+              x={labelX}
+              y={bi === 1 ? PAD.top - 30 : PAD.top - 18}
               class="at-ceasefire-label"
               text-anchor="middle"
             >{band.label}</text>
-            <text
-              x={band.midX}
-              y={PAD.top + 22}
-              class="at-ceasefire-label at-ceasefire-label--sub"
-              text-anchor="middle"
-            >{band.sub}</text>
+            {#if bandW > 28}
+              <text
+                x={labelX}
+                y={bi === 1 ? PAD.top - 18 : PAD.top - 6}
+                class="at-ceasefire-label at-ceasefire-label--sub"
+                text-anchor="middle"
+              >{band.sub}</text>
+            {/if}
+            <!-- Tick line connecting label to band top -->
+            <line
+              x1={band.midX} y1={PAD.top - 3}
+              x2={band.midX} y2={PAD.top}
+              class="at-ceasefire-tick"
+            />
           {/each}
 
           <!-- Y axis grid lines + labels -->
@@ -549,7 +561,7 @@
       </div>
     </div>
 
-    <p class="at-source">Source: {rawData.source}</p>
+    <p class="at-source">מקור: {aidBlockade.source}</p>
   </div>
 </section>
 
@@ -636,7 +648,8 @@
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-radius: 3px;
-    overflow: hidden;
+    overflow: visible;
+    padding-top: 2rem;
   }
 
   .at-chart {
@@ -646,6 +659,7 @@
     min-height: 220px;
     cursor: crosshair;
     touch-action: pan-y;
+    overflow: visible;
   }
 
   /* ── SVG elements ──────────────────────────────────────────────────────── */
@@ -733,6 +747,13 @@
     font-size: 7px;
     font-weight: 400;
     opacity: 0.6;
+  }
+
+  .at-ceasefire-tick {
+    stroke: #4aaa6a;
+    stroke-width: 1;
+    opacity: 0.4;
+    pointer-events: none;
   }
 
   /* Gap band */

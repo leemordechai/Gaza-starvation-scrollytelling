@@ -178,18 +178,30 @@
         <path clip-path="url(#tr-clip-t3)" d={ROUTE_D} fill="none" stroke="#b89070" stroke-width="26" stroke-linecap="round" opacity="0.5"/>
 
         <!-- Potholes / craters — on the road path -->
-        <g opacity="0.78">
+        <g opacity="0.82">
           <!-- Zone 1 (crumbling, y≈630–945): road curves left ~x=200, right ~x=800 -->
           <ellipse cx="215" cy="660" rx="6" ry="4" fill="#3a2e28" stroke="rgba(220,60,50,0.45)" stroke-width="0.8" transform="rotate(-10,215,660)"/>
+          <ellipse cx="200" cy="700" rx="4" ry="2.5" fill="#3a2e28" stroke="rgba(220,60,50,0.35)" stroke-width="0.7"/>
+          <ellipse cx="790" cy="790" rx="4" ry="2.5" fill="#3a2e28" stroke="rgba(220,60,50,0.35)" stroke-width="0.7" transform="rotate(12,790,790)"/>
           <ellipse cx="790" cy="840" rx="5" ry="3.5" fill="#3a2e28" stroke="rgba(220,60,50,0.4)" stroke-width="0.7" transform="rotate(18,790,840)"/>
+          <ellipse cx="220" cy="880" rx="5" ry="3" fill="#3a2e28" stroke="rgba(220,60,50,0.4)" stroke-width="0.7" transform="rotate(-6,220,880)"/>
           <!-- Zone 2 (dirt-track, y≈945–1260): road curves left ~x=220, right ~x=790 -->
           <ellipse cx="795" cy="970" rx="8" ry="5" fill="#b07040" stroke="rgba(200,100,50,0.55)" stroke-width="0.8" transform="rotate(-8,795,970)"/>
+          <ellipse cx="790" cy="1010" rx="5" ry="3" fill="#b07040" stroke="rgba(200,100,50,0.45)" stroke-width="0.7" transform="rotate(10,790,1010)"/>
+          <ellipse cx="225" cy="1050" rx="6" ry="3.5" fill="#b07040" stroke="rgba(200,100,50,0.45)" stroke-width="0.7" transform="rotate(-8,225,1050)"/>
           <ellipse cx="225" cy="1090" rx="7" ry="4.5" fill="#b07040" stroke="rgba(200,100,50,0.5)" stroke-width="0.7" transform="rotate(12,225,1090)"/>
+          <ellipse cx="800" cy="1140" rx="6" ry="4" fill="#b07040" stroke="rgba(200,100,50,0.5)" stroke-width="0.7" transform="rotate(-14,800,1140)"/>
+          <ellipse cx="230" cy="1200" rx="7" ry="4" fill="#b07040" stroke="rgba(200,100,50,0.5)" stroke-width="0.7" transform="rotate(8,230,1200)"/>
           <!-- Zone 3 (destroyed, y≈1260+): road curves through centre, left, right -->
           <ellipse cx="205" cy="1290" rx="10" ry="6" fill="#c8a070" stroke="rgba(160,90,30,0.6)" stroke-width="0.9" transform="rotate(14,205,1290)"/>
+          <ellipse cx="820" cy="1330" rx="7" ry="4.5" fill="#c8a070" stroke="rgba(160,90,30,0.55)" stroke-width="0.8" transform="rotate(-10,820,1330)"/>
           <ellipse cx="820" cy="1370" rx="9" ry="5.5" fill="#c8a070" stroke="rgba(160,90,30,0.6)" stroke-width="0.9" transform="rotate(-16,820,1370)"/>
+          <ellipse cx="500" cy="1420" rx="8" ry="5" fill="#c8a070" stroke="rgba(160,90,30,0.6)" stroke-width="0.8" transform="rotate(3,500,1420)"/>
           <ellipse cx="500" cy="1440" rx="11" ry="7" fill="#c8a070" stroke="rgba(160,90,30,0.65)" stroke-width="1" transform="rotate(5,500,1440)"/>
+          <ellipse cx="210" cy="1490" rx="9" ry="5.5" fill="#d4aa7a" stroke="rgba(160,90,30,0.65)" stroke-width="0.9" transform="rotate(7,210,1490)"/>
           <ellipse cx="220" cy="1520" rx="12" ry="7" fill="#d4aa7a" stroke="rgba(160,90,30,0.7)" stroke-width="1" transform="rotate(10,220,1520)"/>
+          <ellipse cx="825" cy="1560" rx="8" ry="5" fill="#d4aa7a" stroke="rgba(160,90,30,0.65)" stroke-width="0.9" transform="rotate(-12,825,1560)"/>
+          <ellipse cx="510" cy="1600" rx="9" ry="5.5" fill="#d4aa7a" stroke="rgba(160,90,30,0.65)" stroke-width="0.9" transform="rotate(4,510,1600)"/>
         </g>
 
         <!-- Trail (animated by GSAP) -->
@@ -242,8 +254,8 @@
           <!-- Wheels (top-down rectangles — rear pair, mid pair, front pair) -->
           <rect x="-44" y="-13" width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
           <rect x="-44" y="9"   width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
-          <rect x="-24" y="-13" width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
-          <rect x="-24" y="9"   width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
+          <rect x="-34" y="-13" width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
+          <rect x="-34" y="9"   width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
           <rect x="5"   y="-13" width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
           <rect x="5"   y="9"   width="7" height="5" rx="1.5" fill="#111" stroke="#555" stroke-width="0.8"/>
         </g>
