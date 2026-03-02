@@ -31,12 +31,14 @@
   import Analysis from '$lib/components/sections/Analysis.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric, famineDeaths, ghfNarrative, witnessTestimony, introBackground } from '$lib/data/story.js';
+  import { sanitizeText } from '$lib/utils/sanitize';
   import { onMount, onDestroy } from 'svelte';
   const bridge = bridgeBeforeTimeline;
 
-  let activeIdx = $state(-1);
   let activeIntroIdx = $state(-1);
   let observer: IntersectionObserver | null = null;
+  let famineHighlighted = $state(false);
+  let famineTitleEl: HTMLElement;
 
   onMount(() => {
     observer = new IntersectionObserver(
@@ -44,17 +46,19 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const el = entry.target as HTMLElement;
-            if (el.classList.contains('intro-bg-step')) {
-              activeIntroIdx = Number(el.dataset.idx);
-            } else {
-              activeIdx = Number(el.dataset.idx);
-            }
+            activeIntroIdx = Number(el.dataset.idx);
           }
         });
       },
       { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
     );
-    document.querySelectorAll('.bridge-step, .intro-bg-step').forEach(el => observer!.observe(el));
+    document.querySelectorAll('.intro-bg-step').forEach(el => observer!.observe(el));
+
+    const famineObs = new IntersectionObserver(
+      ([entry]) => { famineHighlighted = entry.isIntersecting; },
+      { threshold: 0.3 }
+    );
+    famineObs.observe(famineTitleEl);
   });
 
   onDestroy(() => {
@@ -86,7 +90,7 @@
         data-idx={i}
       >
         <div class="container">
-          <p>{@html item}</p>
+          <p>{@html sanitizeText(item)}</p>
         </div>
       </div>
     {/each}
@@ -99,20 +103,12 @@
 
   <Divider variant="topo" />
 
-  <!-- Bridging paragraphs: scroll-driven, one at a time (intro text is step 0) -->
-  <div class="bridge-steps">
-    {#each [bridge.intro, ...bridge.items] as item, i}
-      <div
-        class="bridge-step"
-        class:active={activeIdx === i}
-        data-idx={i}
-      >
-        <div class="container">
-          <p>{@html item}</p>
-        </div>
-      </div>
+  <!-- Bridging paragraphs: section anchor so page-down from quote above lands here -->
+  <section id="food-characteristics" class="bridge-block container">
+    {#each [bridge.intro, ...bridge.items] as item}
+      <p>{@html sanitizeText(item)}</p>
     {/each}
-  </div>
+  </section>
 
   <Divider variant="fade" />
 
@@ -121,7 +117,7 @@
   <Divider variant="fade" />
 
   <!-- GHF narrative (both paragraphs) -->
-  <NarrativeBlock title={ghfNarrative.title} paragraphs={[ghfNarrative.paragraphBefore, ghfNarrative.paragraphAfter]} />
+  <NarrativeBlock id="ghf-narrative" title={ghfNarrative.title} paragraphs={[ghfNarrative.paragraphBefore, ghfNarrative.paragraphAfter]} />
 
   <Divider variant="fade" />
 
@@ -165,9 +161,16 @@
   <Divider variant="topo" />
 
   <!-- Famine deaths narrative -->
-  <div class="famine-block">
-    <NarrativeBlock title={famineDeaths.title} paragraphs={famineDeaths.paragraphs} />
-  </div>
+  <section class="famine-block nb-section">
+    <div class="container">
+      <h2 class="famine-title">
+        <span class="famine-inner" class:famineHighlighted bind:this={famineTitleEl}>{famineDeaths.title}</span>
+      </h2>
+      {#each famineDeaths.paragraphs as p}
+        <p class="nb-p reveal" use:reveal>{p}</p>
+      {/each}
+    </div>
+  </section>
 
   <Divider variant="fade" />
 
@@ -209,6 +212,14 @@
     transition: opacity 0.5s ease;
     scroll-snap-align: center;
   }
+
+  @media (max-width: 600px) {
+    .intro-bg-step {
+      height: auto;
+      min-height: 60vh;
+      padding: 4rem 0;
+    }
+  }
   .intro-bg-step.active {
     opacity: 1;
   }
@@ -220,22 +231,38 @@
     font-weight: 400;
   }
 
-  .bridge-steps {
-    margin-top: 0;
+  /* mark.inv inside intro steps: RTL clip-path wipe driven by .active on parent */
+  .intro-bg-step :global(mark.inv) {
+    position: relative;
+    display: inline;
+    background: transparent;
+    color: var(--sand);
+    padding: 0.1em 0 0.1em 0.3em;
+    border-radius: 2px;
+    transition: color 0.3s ease 0.6s;
+    animation: none;
   }
-  .bridge-step {
+  .intro-bg-step :global(mark.inv::before) {
+    content: '';
+    position: absolute;
+    inset: -0.1em 0 -0.1em -0.3em;
+    background: rgba(140, 30, 22, 0.82);
+    border-radius: 2px;
+    clip-path: inset(0 0 0 100%);
+    transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    z-index: -1;
+  }
+  .intro-bg-step.active :global(mark.inv::before) {
+    clip-path: inset(0 0 0 0%);
+  }
+  .intro-bg-step.active :global(mark.inv) {
+    color: #fff;
+  }
+
+  .bridge-block {
     padding: 3rem 0;
-    height: calc(var(--vh, 1vh) * 100);
-    display: flex;
-    align-items: center;
-    opacity: 0.2;
-    transition: opacity 0.5s ease;
-    scroll-snap-align: center;
   }
-  .bridge-step.active {
-    opacity: 1;
-  }
-  .bridge-step p {
+  .bridge-block p {
     font-size: clamp(1.15rem, 2vw, 1.45rem);
     line-height: 1.72;
     color: var(--sand);
@@ -252,7 +279,8 @@
   .witness-quote {
     margin: 0 auto;
     padding: 0;
-    max-width: 68ch;
+    max-width: 52ch;
+    text-align: center;
   }
   .witness-quote p {
     font-family: var(--font-body);
@@ -261,6 +289,7 @@
     line-height: 1.82;
     color: var(--sand);
     margin: 0 0 1.25rem;
+    text-wrap: balance;
   }
   .witness-attribution {
     font-family: var(--font-ui);
@@ -271,24 +300,48 @@
     color: var(--accent);
   }
 
-  /* ── Inverted highlight: white text on dull red ─── */
-  :global(mark.inv) {
-    background: rgba(140, 30, 22, 0.82);
-    color: #fff;
-    padding: 0.1em 0.3em;
-    border-radius: 2px;
-    font-style: normal;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
+  /* mark.inv styles and animation live in app.css (global) */
+
+  /* Famine block layout */
+  .famine-block.nb-section { padding: 3rem 0 2rem; }
+  .famine-block .nb-p {
+    font-size: 1.02rem;
+    line-height: 1.82;
+    color: var(--text);
+    margin-bottom: 1.4rem;
   }
 
-  /* famineDeaths title gets full inverted treatment */
-  .famine-block :global(.nb-title) {
-    background: rgba(140, 30, 22, 0.82);
-    color: #fff;
-    padding: 0.35rem 0.85rem;
-    border-right: none;
+  .famine-title {
+    font-family: var(--font-disp);
+    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 1.6rem;
+  }
+
+  .famine-inner {
+    position: relative;
     display: inline-block;
+    padding: 0.35rem 0.85rem;
     border-radius: 2px;
+    color: var(--text);
+    transition: color 0.3s ease 0.6s;
+    z-index: 0;
+  }
+  .famine-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(140, 30, 22, 0.82);
+    border-radius: 2px;
+    clip-path: inset(0 0 0 100%);
+    transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    z-index: -1;
+  }
+  .famine-inner.famineHighlighted::before {
+    clip-path: inset(0 0 0 0%);
+  }
+  .famine-inner.famineHighlighted {
+    color: #fff;
   }
 </style>

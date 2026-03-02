@@ -28,22 +28,31 @@
     }
     setVhUnit();
 
-    // Scroll + resize handler
-    function onScroll() {
-      scrollY.set(window.scrollY);
-      docHeight.set(document.documentElement.scrollHeight - window.innerHeight);
+    // Cache hero element once — avoids a DOM query on every scroll event
+    let heroEl: Element | null = document.querySelector('.hero-scroll-container') || document.querySelector('.hero');
+    let rafPending = false;
 
-      // Nav visibility: show after 65% of hero
-      const hero = document.querySelector('.hero-scroll-container') || document.querySelector('.hero');
-      const hh = hero ? hero.clientHeight : 600;
-      heroHeight.set(hh);
-      navVisible.set(window.scrollY > hh * 0.65);
+    function onScroll() {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(() => {
+        rafPending = false;
+        scrollY.set(window.scrollY);
+        docHeight.set(document.documentElement.scrollHeight - window.innerHeight);
+
+        // Nav visibility: show after 65% of hero
+        const hh = heroEl ? (heroEl as HTMLElement).clientHeight : 600;
+        heroHeight.set(hh);
+        navVisible.set(window.scrollY > hh * 0.65);
+      });
     }
 
     function onResize() {
       setVhUnit();
       windowHeight.set(window.innerHeight);
       windowWidth.set(window.innerWidth);
+      // Re-cache hero ref on resize in case it mounted late
+      heroEl = document.querySelector('.hero-scroll-container') || document.querySelector('.hero');
     }
 
     // Initialize

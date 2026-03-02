@@ -86,19 +86,24 @@
     return c.series.filter(p => periodToDate(p.period) >= domainStart);
   });
 
+  // ── Single maxPrice computation — shared by all chart elements ────────────
+  let maxPrice = $derived(
+    currentCommodity?.series?.length
+      ? Math.max(...currentCommodity.series.map(p => p.price)) * 1.1
+      : 100
+  );
+
   // ── Build SVG paths from visible series only ──────────────────────────────
   let chartPolyline = $derived(() => {
     const pts = visibleSeries();
     if (!pts.length) return '';
-    const maxP = Math.max(...currentCommodity.series.map(p => p.price)) * 1.1;
-    return pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxP).toFixed(1)}`).join(' ');
+    return pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
   });
 
   let chartFill = $derived(() => {
     const pts = visibleSeries();
     if (!pts.length) return '';
-    const maxP = Math.max(...currentCommodity.series.map(p => p.price)) * 1.1;
-    const coords = pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxP).toFixed(1)}`).join(' ');
+    const coords = pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
     const firstX = xPos(pts[0].period).toFixed(1);
     const lastX  = xPos(pts[pts.length - 1].period).toFixed(1);
     const base   = (PAD.top + CH).toFixed(1);
@@ -158,13 +163,14 @@
   });
 
   // ── Pointer handling (unified mouse + touch) ──────────────────────────────
+  let _rafPending = false;
+
   function findNearest(clientX: number): HoverPoint {
     const c = currentCommodity;
     if (!c?.series?.length || !svgEl) return null;
     const rect = svgEl.getBoundingClientRect();
     const scaleX = W / rect.width;
     const posX = (clientX - rect.left) * scaleX;
-    const maxP = Math.max(...c.series.map(p => p.price)) * 1.1;
     const vis = visibleSeries();
     let nearest: SeriesPoint | null = null;
     let minDist = Infinity;
@@ -175,7 +181,7 @@
     if (!nearest || minDist >= 28) return null;
     return {
       svgX: xPos(nearest.period),
-      svgY: yPos(nearest.price, maxP),
+      svgY: yPos(nearest.price, maxPrice),
       price: nearest.price,
       period: nearest.period,
     };
@@ -183,25 +189,29 @@
 
   function handlePointerMove(e: PointerEvent) {
     if (isTouchDevice) return;
-    hoverPoint = findNearest(e.clientX);
-    // Detect proximity to baseline
-    const c = currentCommodity;
-    if (c && svgEl) {
-      const rect = svgEl.getBoundingClientRect();
-      const scaleY = H / rect.height;
-      const mouseY = (e.clientY - rect.top) * scaleY;
-      const maxP = Math.max(...c.series.map(p => p.price)) * 1.1;
-      const by = yPos(c.baselinePrice, maxP);
-      if (Math.abs(mouseY - by) < 10) {
-        baselineHover = true;
-        // Position tooltip: px coords relative to svg-wrap
-        const tooltipX = e.clientX - rect.left;
-        const tooltipY = (by / H) * rect.height;
-        baselineHoverStyle = `left:${tooltipX}px; top:${tooltipY}px;`;
-      } else {
-        baselineHover = false;
+    if (_rafPending) return;
+    _rafPending = true;
+    const cx = e.clientX, cy = e.clientY;
+    requestAnimationFrame(() => {
+      _rafPending = false;
+      hoverPoint = findNearest(cx);
+      // Detect proximity to baseline
+      const c = currentCommodity;
+      if (c && svgEl) {
+        const rect = svgEl.getBoundingClientRect();
+        const scaleY = H / rect.height;
+        const mouseY = (cy - rect.top) * scaleY;
+        const by = yPos(c.baselinePrice, maxPrice);
+        if (Math.abs(mouseY - by) < 10) {
+          baselineHover = true;
+          const tooltipX = cx - rect.left;
+          const tooltipY = (by / H) * rect.height;
+          baselineHoverStyle = `left:${tooltipX}px; top:${tooltipY}px;`;
+        } else {
+          baselineHover = false;
+        }
       }
-    }
+    });
   }
 
   function handlePointerLeave() {
@@ -315,10 +325,9 @@
               <!-- Y gridlines -->
               {#each [0, 0.25, 0.5, 0.75, 1.0] as frac}
                 {@const y = PAD.top + CH * (1 - frac)}
-                {@const maxP = currentCommodity ? Math.max(...currentCommodity.series.map(p => p.price)) * 1.1 : 100}
                 <line x1={PAD.left} y1={y} x2={PAD.left + CW} y2={y} stroke="var(--border)" stroke-width="0.5"/>
                 <text x={PAD.left - 7} y={y + 4} class="fp-axis-label" text-anchor="end">
-                  {Math.round(maxP * frac)}
+                  {Math.round(maxPrice * frac)}
                 </text>
               {/each}
 
@@ -331,8 +340,7 @@
 
               <!-- Baseline (Sep 2023 price) dashed reference — draws left-to-right on scroll reveal -->
               {#if currentCommodity}
-                {@const maxP = Math.max(...currentCommodity.series.map(p => p.price)) * 1.1}
-                {@const by = yPos(currentCommodity.baselinePrice, maxP)}
+                {@const by = yPos(currentCommodity.baselinePrice, maxPrice)}
                 <g style="clip-path: {baselineDrawn ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)'}; transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1);">
                   <rect x={PAD.left} y={by} width={CW} height={PAD.top + CH - by}
                     fill="rgba(196,162,74,0.05)" pointer-events="none"/>
@@ -355,11 +363,10 @@
 
               <!-- Data dots -->
               {#if currentCommodity}
-                {@const maxP = Math.max(...currentCommodity.series.map(p => p.price)) * 1.1}
                 {#each visibleSeries() as pt}
                   <circle
                     cx={xPos(pt.period)}
-                    cy={yPos(pt.price, maxP)}
+                    cy={yPos(pt.price, maxPrice)}
                     r="1.5"
                     fill="var(--accent)"
                     opacity="0.65"
@@ -433,8 +440,14 @@
   /* ── Sticky chart ─── */
   .fp-sticky {
     position: sticky;
-    top: clamp(4rem, 15vh, 8rem);
+    top: 4rem;
     align-self: start;
+  }
+
+  @media (max-width: 800px) {
+    .fp-sticky {
+      position: static;
+    }
   }
 
   .fp-chart-wrap {
@@ -556,19 +569,6 @@
     fill: var(--text-muted);
   }
 
-  .fp-baseline-label {
-    font-family: var(--font-ui);
-    font-size: 9px;
-    fill: var(--accent);
-    font-weight: 600;
-  }
-
-  .fp-event-label {
-    font-family: var(--font-ui);
-    fill: var(--text-muted);
-    font-weight: 700;
-  }
-
   .fp-source {
     font-family: var(--font-ui);
     font-size: 0.55rem;
@@ -589,6 +589,16 @@
     justify-content: center;
     opacity: 0.3;
     transition: opacity 0.45s ease;
+  }
+
+  @media (max-width: 800px) {
+    .fp-step {
+      min-height: 0;
+      opacity: 1;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .fp-step:last-child { border-bottom: none; }
   }
 
   .fp-step--active { opacity: 1; }
@@ -633,9 +643,10 @@
     border: 1px solid var(--border);
     border-radius: 3px;
     padding: 0.85rem 1rem 0.7rem;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: 0.35rem;
+    width: fit-content;
   }
 
   /* ── Price delta ─── */

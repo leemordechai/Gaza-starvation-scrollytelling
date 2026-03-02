@@ -91,23 +91,22 @@
   });
 
   // ── Derived chart paths ─────────────────────────────────────────────────────
-  let maxPrice = $derived(() => {
-    if (!currentItem?.series?.length) return 100;
-    return Math.max(...currentItem.series.map(p => p.price)) * 1.15;
-  });
+  let maxPrice = $derived(
+    currentItem?.series?.length
+      ? Math.max(...currentItem.series.map(p => p.price)) * 1.15
+      : 100
+  );
 
   let polylinePoints = $derived(() => {
     const pts = visibleSeries();
     if (!pts.length) return '';
-    const mp = maxPrice();
-    return pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, mp).toFixed(1)}`).join(' ');
+    return pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
   });
 
   let fillPoints = $derived(() => {
     const pts = visibleSeries();
     if (!pts.length) return '';
-    const mp = maxPrice();
-    const coords = pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, mp).toFixed(1)}`).join(' ');
+    const coords = pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
     const firstX = xPos(pts[0].period).toFixed(1);
     const lastX  = xPos(pts[pts.length - 1].period).toFixed(1);
     const base   = (PAD.top + CH).toFixed(1);
@@ -144,44 +143,52 @@
   });
 
   // ── Hover logic ─────────────────────────────────────────────────────────────
+  let _rafPending = false;
+
   function handleMouseMove(e: MouseEvent) {
     if (!svgEl) return;
-    const rect   = svgEl.getBoundingClientRect();
-    const scaleX = W / rect.width;
-    const scaleY = H / rect.height;
-    const mouseX = (e.clientX - rect.left) * scaleX;
-    const mouseY = (e.clientY - rect.top)  * scaleY;
-    const mp     = maxPrice();
+    if (_rafPending) return;
+    _rafPending = true;
+    const cx = e.clientX, cy = e.clientY;
+    requestAnimationFrame(() => {
+      _rafPending = false;
+      if (!svgEl) return;
+      const rect   = svgEl.getBoundingClientRect();
+      const scaleX = W / rect.width;
+      const scaleY = H / rect.height;
+      const mouseX = (cx - rect.left) * scaleX;
+      const mouseY = (cy - rect.top)  * scaleY;
 
-    // Data point hover
-    if (currentItem?.series?.length) {
-      const visible = visibleSeries();
-      let nearest: SeriesPoint | null = null;
-      let minDist = Infinity;
-      for (const pt of visible) {
-        const dist = Math.abs(xPos(pt.period) - mouseX);
-        if (dist < minDist) { minDist = dist; nearest = pt; }
+      // Data point hover
+      if (currentItem?.series?.length) {
+        const visible = visibleSeries();
+        let nearest: SeriesPoint | null = null;
+        let minDist = Infinity;
+        for (const pt of visible) {
+          const dist = Math.abs(xPos(pt.period) - mouseX);
+          if (dist < minDist) { minDist = dist; nearest = pt; }
+        }
+        hoverPoint = (nearest && minDist < 30) ? {
+          svgX: xPos(nearest.period),
+          svgY: yPos(nearest.price, maxPrice),
+          price: nearest.price,
+          period: nearest.period,
+        } : null;
       }
-      hoverPoint = (nearest && minDist < 30) ? {
-        svgX: xPos(nearest.period),
-        svgY: yPos(nearest.price, mp),
-        price: nearest.price,
-        period: nearest.period,
-      } : null;
-    }
 
-    // Baseline hover
-    if (baselinePrice > 0) {
-      const by = yPos(baselinePrice, mp);
-      if (Math.abs(mouseY - by) < 10 && mouseX >= PAD.left && mouseX <= PAD.left + CW) {
-        baselineHover = true;
-        const tooltipX = e.clientX - rect.left;
-        const tooltipY = (by / H) * rect.height;
-        baselineTooltipStyle = `left:${tooltipX}px; top:${tooltipY}px;`;
-      } else {
-        baselineHover = false;
+      // Baseline hover
+      if (baselinePrice > 0) {
+        const by = yPos(baselinePrice, maxPrice);
+        if (Math.abs(mouseY - by) < 10 && mouseX >= PAD.left && mouseX <= PAD.left + CW) {
+          baselineHover = true;
+          const tooltipX = cx - rect.left;
+          const tooltipY = (by / H) * rect.height;
+          baselineTooltipStyle = `left:${tooltipX}px; top:${tooltipY}px;`;
+        } else {
+          baselineHover = false;
+        }
       }
-    }
+    });
   }
 
   function handleMouseLeave() { hoverPoint = null; baselineHover = false; }
@@ -198,7 +205,7 @@
 <section class="pe-section section-topo" id="price-explorer">
   <div class="container-wide">
     <SectionHead
-      label="סייר מחירים"
+      label="מחירים במלחמה"
       title="ומה לגבי מוצרים אחרים?"
       sub="בחרו קטגוריה ומוצר לצפייה במגמת המחיר מאז מאי 2024. העבירו את העכבר על הגרף בשביל נתונים מדויקים."
     />
@@ -265,11 +272,10 @@
 
               <!-- Grid lines + Y labels -->
               {#if currentItem}
-                {@const mp = maxPrice()}
                 {#each [0, 0.25, 0.5, 0.75, 1.0] as frac}
                   {@const y = PAD.top + CH * (1 - frac)}
                   <line x1={PAD.left} y1={y} x2={PAD.left + CW} y2={y} stroke="var(--border)" stroke-width="0.5"/>
-                  <text x={PAD.left - 6} y={y + 4} class="pe-axis-label" text-anchor="end">{Math.round(mp * frac)}</text>
+                  <text x={PAD.left - 6} y={y + 4} class="pe-axis-label" text-anchor="end">{Math.round(maxPrice * frac)}</text>
                 {/each}
               {/if}
 
@@ -284,8 +290,7 @@
 
               <!-- Baseline reference line (first / pre-war price) -->
               {#if currentItem && baselinePrice > 0}
-                {@const mp = maxPrice()}
-                {@const by = yPos(baselinePrice, mp)}
+                {@const by = yPos(baselinePrice, maxPrice)}
                 <line
                   x1={PAD.left} y1={by} x2={PAD.left + CW} y2={by}
                   stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.55"
@@ -313,9 +318,8 @@
 
               <!-- Data dots -->
               {#if currentItem}
-                {@const mp = maxPrice()}
                 {#each visibleSeries() as pt}
-                  <circle cx={xPos(pt.period)} cy={yPos(pt.price, mp)} r="1.5" fill="var(--accent)" opacity="0.6"/>
+                  <circle cx={xPos(pt.period)} cy={yPos(pt.price, maxPrice)} r="1.5" fill="var(--accent)" opacity="0.6"/>
                 {/each}
               {/if}
 
@@ -522,9 +526,11 @@
   }
 
   @media (max-width: 640px) {
-    .pe-layout { grid-template-columns: 1fr; }
+    .pe-layout { grid-template-columns: 1fr; gap: 1rem; }
     .pe-selector-col { position: static; width: 100%; }
-    .pe-pills { flex-direction: row; flex-wrap: wrap; }
-    .pe-pill { flex-direction: row; }
+    .pe-pills { flex-direction: row; flex-wrap: wrap; gap: 0.3rem; }
+    .pe-pill { flex-direction: row; padding: 0.38rem 0.65rem; font-size: 0.68rem; }
+    .pe-section { padding: 2.5rem 0 1.5rem; }
+    .pe-chart-wrap { padding: 0.85rem 0.85rem 0.6rem; }
   }
 </style>
