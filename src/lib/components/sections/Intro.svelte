@@ -16,7 +16,12 @@
 </section>
 
 <style>
-  .intro-section { padding: 5rem 0 3.5rem; }
+  .intro-section {
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    scroll-snap-align: center;
+  }
 
   .lede {
     font-family: var(--font-body);
@@ -24,7 +29,7 @@
     font-weight: 400;
     line-height: 1.62;
     color: var(--sand);
-    margin-bottom: 2.5rem;
+    margin-bottom: 0;
     border-inline-start: 2px solid var(--accent);
     padding-inline-start: 1.4rem;
   }

@@ -26,55 +26,47 @@
       gsap.set(spotlight, { opacity: 1 });
     }
 
-    const tl = gsap.timeline({
+    // Phase 1: zoom-out + spotlight fade, completes in one Page Down (~85vh)
+    const tlZoom = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero-scroll-container',
         start: 'top top',
-        end: 'bottom bottom',
+        end: '+=85vh',
         scrub: 1.2,
       }
     });
 
-    // Phase 1 (0→0.6): Zoom out from face to full scene
+    if (scrollCue) {
+      tlZoom.to(scrollCue, { opacity: 0, duration: 0.05, ease: 'none' }, 0);
+    }
+    if (spotlight) {
+      tlZoom.to(spotlight, { opacity: 0, duration: 0.8, ease: 'power1.in' }, 0.1);
+    }
     if (heroBg) {
-      tl.to(heroBg, {
+      tlZoom.to(heroBg, {
         scale: 0.78,
         xPercent: 0,
         yPercent: 0,
-        duration: 0.6,
+        duration: 1,
         ease: 'power2.inOut'
       }, 0);
     }
 
-    // Spotlight fades as we zoom out
-    if (spotlight) {
-      tl.to(spotlight, {
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power1.in'
-      }, 0.1);
-    }
+    // Phase 2: hero content fades as user scrolls from 85vh → 170vh
+    const tlFade = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.hero-scroll-container',
+        start: '+=85vh',
+        end: '+=170vh',
+        scrub: 1.2,
+      }
+    });
 
-    // Scroll cue fades immediately
-    if (scrollCue) {
-      tl.to(scrollCue, {
-        opacity: 0,
-        duration: 0.1,
-        ease: 'none'
-      }, 0);
-    }
-
-    // Phase 2 (0.6→1.0): Hero content fades out as user continues
     if (heroContent) {
-      tl.to(heroContent, {
-        opacity: 0,
-        y: -40,
-        duration: 0.35,
-        ease: 'power1.in'
-      }, 0.65);
+      tlFade.to(heroContent, { opacity: 0, y: -40, duration: 1, ease: 'power1.in' }, 0);
     }
 
-    triggers.push(tl.scrollTrigger);
+    triggers.push(tlZoom.scrollTrigger, tlFade.scrollTrigger);
   });
 
   onDestroy(() => {
@@ -118,7 +110,7 @@
 <style>
   .hero-scroll-container {
     position: relative;
-    height: calc(var(--vh, 1vh) * 350);
+    height: calc(var(--vh, 1vh) * 200);
   }
   .hero-scroll-container .hero { position: sticky; top: 0; }
 

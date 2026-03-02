@@ -30,11 +30,12 @@
   import NarrativeBlock from '$lib/components/sections/NarrativeBlock.svelte';
   import Analysis from '$lib/components/sections/Analysis.svelte';
   import Footer from '$lib/components/Footer.svelte';
-  import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric, famineDeaths, ghfNarrative, witnessTestimony } from '$lib/data/story.js';
+  import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric, famineDeaths, ghfNarrative, witnessTestimony, introBackground } from '$lib/data/story.js';
   import { onMount, onDestroy } from 'svelte';
   const bridge = bridgeBeforeTimeline;
 
   let activeIdx = $state(-1);
+  let activeIntroIdx = $state(-1);
   let observer: IntersectionObserver | null = null;
 
   onMount(() => {
@@ -42,13 +43,18 @@
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            activeIdx = Number((entry.target as HTMLElement).dataset.idx);
+            const el = entry.target as HTMLElement;
+            if (el.classList.contains('intro-bg-step')) {
+              activeIntroIdx = Number(el.dataset.idx);
+            } else {
+              activeIdx = Number(el.dataset.idx);
+            }
           }
         });
       },
       { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
     );
-    document.querySelectorAll('.bridge-step').forEach(el => observer!.observe(el));
+    document.querySelectorAll('.bridge-step, .intro-bg-step').forEach(el => observer!.observe(el));
   });
 
   onDestroy(() => {
@@ -70,32 +76,43 @@
   <Hero />
 
   <Intro />
+
+  <!-- Background context paragraphs — scroll-driven, one at a time -->
+  <div class="intro-bg-steps">
+    {#each introBackground as item, i}
+      <div
+        class="intro-bg-step"
+        class:active={activeIntroIdx === i}
+        data-idx={i}
+      >
+        <div class="container">
+          <p>{@html item}</p>
+        </div>
+      </div>
+    {/each}
+  </div>
+
   <Divider variant="gem" />
 
-  <!-- Guterres quote moved here, right after Intro -->
+  <!-- Guterres quote -->
   <PullQuote quote={pullQuote.quote} attribution={pullQuote.attribution} />
 
   <Divider variant="topo" />
 
-  <!-- Bridging paragraphs: scroll-driven, one at a time -->
-  <section class="bridge-section">
-    <div class="container">
-      <p class="bridge-intro reveal" use:reveal>{bridge.intro}</p>
-    </div>
-    <div class="bridge-steps">
-      {#each bridge.items as item, i}
-        <div
-          class="bridge-step"
-          class:active={activeIdx === i}
-          data-idx={i}
-        >
-          <div class="container">
-            <p>{@html item}</p>
-          </div>
+  <!-- Bridging paragraphs: scroll-driven, one at a time (intro text is step 0) -->
+  <div class="bridge-steps">
+    {#each [bridge.intro, ...bridge.items] as item, i}
+      <div
+        class="bridge-step"
+        class:active={activeIdx === i}
+        data-idx={i}
+      >
+        <div class="container">
+          <p>{@html item}</p>
         </div>
-      {/each}
-    </div>
-  </section>
+      </div>
+    {/each}
+  </div>
 
   <Divider variant="fade" />
 
@@ -179,15 +196,30 @@
 <CopyToast />
 
 <style>
-  .bridge-section {
-    padding: 2.5rem 0;
+  /* ── Background context scroll steps (before PullQuote) ─── */
+  .intro-bg-steps {
+    margin-top: 0;
   }
-  .bridge-intro {
-    font-size: 1.02rem;
-    line-height: 1.82;
-    color: var(--text-muted);
-    margin-bottom: 0;
+  .intro-bg-step {
+    padding: 3rem 0;
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
+    scroll-snap-align: center;
   }
+  .intro-bg-step.active {
+    opacity: 1;
+  }
+  .intro-bg-step p {
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.72;
+    color: var(--sand);
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+
   .bridge-steps {
     margin-top: 0;
   }
@@ -198,6 +230,7 @@
     align-items: center;
     opacity: 0.2;
     transition: opacity 0.5s ease;
+    scroll-snap-align: center;
   }
   .bridge-step.active {
     opacity: 1;
