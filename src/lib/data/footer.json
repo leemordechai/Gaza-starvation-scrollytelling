@@ -1,12 +1,12 @@
 {
-  "brand": "Visual Desk",
-  "description": "Data-driven visual storytelling from a global network of journalists and visual reporters.",
+  "brand": "דסק הוויז׳ואל",
+  "description": "עיתונאות חזותית מונעת-נתונים — מביאה עובדות מורכבות לחיים באמצעות גרפיקה, מפות ופרויקטים אינטראקטיביים.",
   "links": [
-    "About this project",
-    "Corrections policy",
-    "Editorial guidelines",
-    "Contact the team"
+    "אודות הפרויקט",
+    "מדיניות תיקונים",
+    "קוד עיתונאי",
+    "צרו קשר עם הצוות"
   ],
-  "copyright": "© 2026 Visual Desk. All rights reserved. This is a proof-of-concept demonstration.",
-  "produced": "Produced by Visual Desk"
+  "copyright": "© 2026 דסק הוויז׳ואל. כל הזכויות שמורות.",
+  "produced": "הופק על ידי דסק הוויז׳ואל"
 }

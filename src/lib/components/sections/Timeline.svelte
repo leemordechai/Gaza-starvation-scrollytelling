@@ -13,7 +13,7 @@
 <section class="timeline-section section-topo" id="timeline">
   <div class="container">
     <div class="timeline-head">
-      <SectionHead label="Timeline" title="A Movement Emerges from the Rubble" sub="Key events in the settler resettlement campaign, October 2023 to present" />
+      <SectionHead label="ציר זמן" title="כרוניקה של רעב" sub="אירועים מרכזיים: מפרוץ המלחמה ועד אביב 2026" />
     </div>
 
     <div class="timeline-track">
@@ -24,7 +24,7 @@
           <div class="t-card" role="button" tabindex="0" aria-expanded={activeIndex === i} onclick={() => toggle(i)} onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}>
             <div class="t-date">{event.date}</div>
             <div class="t-title">{event.title}</div>
-            <span class="t-expand-hint">{activeIndex === i ? 'Close' : 'Read more'}</span>
+            <span class="t-expand-hint">{activeIndex === i ? 'סגור' : 'קרא עוד'}</span>
           </div>
           <div class="t-detail" class:open={activeIndex === i}>
             <div class="t-detail-inner">
@@ -39,7 +39,7 @@
 </section>
 
 <style>
-  .timeline-section { padding: 5rem 0; overflow: hidden; }
+  .timeline-section { padding: 5rem 0; }
   .timeline-head { margin-bottom: 3rem; }
 
   .timeline-track {
@@ -47,43 +47,49 @@
     max-width: 700px;
     margin: 0 auto;
     padding: 2rem 0;
+    /* Extra padding-right ensures dots/spine are never clipped */
+    padding-right: 2px;
   }
 
+  /* RTL: spine on the right side, at 30px from track right edge */
   .timeline-spine {
     position: absolute;
     top: 0; bottom: 0;
-    left: 24px;
-    width: 1px;
+    right: 30px;
+    width: 2px;
     background: linear-gradient(180deg, transparent 0%, var(--border-mid) 4%, var(--border-mid) 96%, transparent 100%);
     z-index: 0;
   }
 
+  /* Events: leave 64px on the right for dot + connector */
   .t-event {
     position: relative;
-    width: calc(100% - 60px);
-    margin-left: 60px;
+    width: calc(100% - 64px);
+    margin-right: 64px;
     margin-bottom: 2rem;
   }
 
+  /* Dot: sits centered on the spine (right: 30px from track = right: 30 - 64 = -34px from event right edge)
+     Center: dot is 14px wide, so shift by -7px → right: -34 - 7 = -41px, or simpler: use right: -41px with no transform */
   .t-dot {
     position: absolute;
     top: 1rem;
-    left: -36px;
-    width: 13px; height: 13px;
+    right: -41px;
+    width: 14px; height: 14px;
     border-radius: 50%;
-    background: var(--gold);
-    border: 2px solid var(--bg);
+    background: var(--accent);
+    border: 2.5px solid var(--bg-section);
     z-index: 2;
-    transform: translateX(-50%);
   }
-  .t-dot.red { background: var(--red-light); }
+  .t-dot.red { background: var(--accent-light); }
 
+  /* Horizontal connector line from card right edge to dot */
   .t-event::after {
     content: '';
     position: absolute;
-    top: calc(1rem + 5px);
-    left: -22px;
-    width: 22px;
+    top: calc(1rem + 6px);
+    right: -26px;
+    width: 26px;
     height: 1px;
     background: var(--border-mid);
     z-index: 1;
@@ -97,15 +103,14 @@
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .t-card:hover { border-color: rgba(196, 162, 74, 0.55); }
+  .t-card:hover { border-color: rgba(155, 42, 33, 0.45); }
 
   .t-date {
     font-family: var(--font-ui);
     font-size: 0.62rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold);
+    letter-spacing: 0.06em;
+    color: var(--accent);
     margin-bottom: 0.3rem;
   }
   .t-title {
@@ -117,11 +122,11 @@
   }
 
   .t-event.t-active .t-card {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 1px var(--gold), 0 0 14px rgba(196, 162, 74, 0.18);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), 0 0 14px rgba(155, 42, 33, 0.15);
   }
   .t-event.t-active .t-dot {
-    box-shadow: 0 0 0 4px rgba(196, 162, 74, 0.3);
+    box-shadow: 0 0 0 4px rgba(155, 42, 33, 0.25);
   }
 
   .t-expand-hint {
@@ -129,9 +134,8 @@
     margin-top: 0.4rem;
     font-size: 0.56rem;
     font-family: var(--font-ui);
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 0.08em;
     opacity: 0.65;
     transition: opacity 0.15s;
   }
@@ -147,7 +151,7 @@
     opacity: 0;
   }
   .t-detail.open {
-    max-height: 300px;
+    max-height: 320px;
     opacity: 1;
   }
 
@@ -155,8 +159,14 @@
     margin-top: 0.75rem;
     padding: 0.85rem 1rem;
     background: var(--bg-section);
-    border-left: 3px solid var(--gold);
+    border-right: 3px solid var(--accent);
     border-radius: 2px;
+    /* Animate the border width on expand for a subtle entrance effect */
+    transition: border-right-width 0.3s ease;
+  }
+
+  .t-event.t-active .t-detail-inner {
+    border-right-width: 4px;
   }
   .t-detail-inner strong {
     display: block;
@@ -173,9 +183,12 @@
   }
 
   @media (max-width: 700px) {
-    .timeline-spine { left: 16px; }
-    .t-event { width: calc(100% - 44px); margin-left: 44px; }
-    .t-dot { left: -28px; }
-    .t-event::after { left: -16px; width: 16px; }
+    .timeline-spine { right: 20px; }
+    .t-event { width: calc(100% - 48px); margin-right: 48px; }
+    /* Spine at 20px from right, event margin 48px → dot offset: 48 - 20 - 7 = 21px → right: -21px... recalc:
+       spine at 20px from track, event right edge at 48px → dot needs right edge at 20+7=27px from track
+       → dot on event: right = 48-27 = 21 → negate = -21px. Width 14px centered → right: -28px */
+    .t-dot { right: -28px; }
+    .t-event::after { right: -18px; width: 18px; }
   }
 </style>

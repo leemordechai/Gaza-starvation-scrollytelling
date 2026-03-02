@@ -1,11 +1,3 @@
 {
-  "sectionLabel": "Special Report · Conflict & Territory",
-  "titleLine1": "The Return",
-  "titleLine2": "to Gaza",
-  "dek": "Since the Hamas attacks of October 7, 2023, a movement within Israel has pursued the dream of rebuilding Jewish settlements inside a territory abandoned two decades ago — now reduced to rubble, yet newly coveted.",
-  "byline": "By Daniel Levinson & Sarah Khoury",
-  "date": "February 2026",
-  "readTime": "14 min read",
-  "settlementCaption": "An oasis built on ruins — where one community's dream becomes another's displacement.",
-  "pageTitle": "The Return to Gaza — Visual Desk"
+  "_note": "meta.json is no longer imported anywhere. Hero content is sourced from story.js. This file is kept as a reference placeholder."
 }

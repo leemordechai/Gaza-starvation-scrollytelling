@@ -11,7 +11,7 @@
   // Reading time estimate
   const totalMinutes = 14;
   let minsLeft = $derived(Math.max(0, Math.round(totalMinutes * (1 - $scrollProgress))));
-  let timeText = $derived(minsLeft > 0 ? `~${minsLeft} min left` : 'End');
+  let timeText = $derived(minsLeft > 0 ? `~${minsLeft} דקות קריאה` : 'סיום');
   let showTime = $derived($scrollProgress > 0.05);
 </script>
 
@@ -53,7 +53,7 @@
     font-weight: 800;
     font-size: 0.85rem;
     letter-spacing: 0.18em;
-    color: var(--gold);
+    color: var(--accent);
     text-transform: uppercase;
   }
 
@@ -72,8 +72,8 @@
     text-decoration: none;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-links a.active { color: var(--gold); }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
   @media (max-width: 600px) { .nav-links { display: none; } }
 
   .nav-time {
@@ -108,7 +108,7 @@
     background: var(--text-muted);
     transition: transform 0.3s, opacity 0.3s, background 0.2s;
   }
-  .nav-burger:hover span { background: var(--gold); }
+  .nav-burger:hover span { background: var(--accent); }
   .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-burger.open span:nth-child(2) { opacity: 0; }
   .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }

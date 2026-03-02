@@ -4,22 +4,26 @@
   import SiteNav from '$lib/components/ui/SiteNav.svelte';
   import MobileMenu from '$lib/components/ui/MobileMenu.svelte';
   import SectionIndicator from '$lib/components/ui/SectionIndicator.svelte';
-  import Lightbox from '$lib/components/ui/Lightbox.svelte';
   import CopyToast from '$lib/components/ui/CopyToast.svelte';
   import Divider from '$lib/components/ui/Divider.svelte';
   import Hero from '$lib/components/sections/Hero.svelte';
   import Intro from '$lib/components/sections/Intro.svelte';
-  import BeforeAfter from '$lib/components/sections/BeforeAfter.svelte';
+  import BodyText from '$lib/components/sections/BodyText.svelte';
   import StatsBar from '$lib/components/sections/StatsBar.svelte';
   import Timeline from '$lib/components/sections/Timeline.svelte';
+  import MeasureSection from '$lib/components/sections/MeasureSection.svelte';
   import Scrollytelling from '$lib/components/sections/Scrollytelling.svelte';
   import PullQuote from '$lib/components/sections/PullQuote.svelte';
-  import Charts from '$lib/components/sections/Charts.svelte';
-  import Gallery from '$lib/components/sections/Gallery.svelte';
-  import MapSection from '$lib/components/sections/MapSection.svelte';
-  import Video from '$lib/components/sections/Video.svelte';
+  import TruckRoute from '$lib/components/sections/TruckRoute.svelte';
+  import AidTrucks from '$lib/components/sections/AidTrucks.svelte';
+  import AidPhases from '$lib/components/sections/AidPhases.svelte';
+  import FoodPrices from '$lib/components/sections/FoodPrices.svelte';
+  import FoodDiversity from '$lib/components/sections/FoodDiversity.svelte';
+  import PriceExplorer from '$lib/components/sections/PriceExplorer.svelte';
+  import GhfVideos from '$lib/components/sections/GhfVideos.svelte';
   import Analysis from '$lib/components/sections/Analysis.svelte';
   import Footer from '$lib/components/Footer.svelte';
+  import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric } from '$lib/data/story.js';
 </script>
 
 <SkipLink />
@@ -34,9 +38,13 @@
   <Intro />
   <Divider variant="gem" />
 
-  <BeforeAfter />
+  <!-- Guterres quote moved here, right after Intro -->
+  <PullQuote quote={pullQuote.quote} attribution={pullQuote.attribution} />
 
-  <StatsBar />
+  <Divider variant="topo" />
+
+  <!-- Bridging paragraph: sets up the timeline -->
+  <BodyText text={bridgeBeforeTimeline} />
 
   <Divider variant="fade" />
 
@@ -44,23 +52,48 @@
 
   <Divider variant="topo" />
 
-  <Scrollytelling />
+  <!-- How we measure hunger — immediately after Timeline -->
+  <MeasureSection />
 
-  <PullQuote />
+  <!-- Bridging paragraph: trucks metric context, leads into AidTrucks -->
+  <BodyText text={bridgeTrucksMetric} />
+
+  <Divider variant="topo" />
+
+  <AidPhases />
+
+  <Divider variant="topo" />
+
+  <AidTrucks />
+
+  <Divider variant="topo" />
+
+  <TruckRoute />
+
+  <Divider variant="topo" />
+
+  <FoodPrices />
+
+  <Divider variant="topo" />
+
+  <PriceExplorer />
 
   <Divider variant="gem" />
 
-  <Charts />
+  <FoodDiversity />
 
   <Divider variant="fade" />
 
-  <Gallery />
+  <PullQuote quote={pullQuote2.quote} attribution={pullQuote2.attribution} />
 
   <Divider variant="gem" />
 
-  <MapSection />
+  <!-- Stats bar moved here, just before GHF videos -->
+  <StatsBar />
 
-  <Video />
+  <Divider variant="fade" />
+
+  <GhfVideos />
 
   <Divider variant="fade" />
 
@@ -68,5 +101,4 @@
 </main>
 
 <Footer />
-<Lightbox />
 <CopyToast />

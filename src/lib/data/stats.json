@@ -1,6 +1,4 @@
 [
-  { "target": 8, "suffix": "", "label": "Cabinet Ministers", "note": "Who attended or endorsed settler conferences in 2024" },
-  { "target": 21, "suffix": "", "label": "Documented Events", "note": "Conferences, rallies & hearings, Oct 2023 – Jan 2026" },
-  { "target": 2005, "suffix": "", "label": "Year of Disengagement", "note": "Israel dismantled 21 settlements and withdrew from Gaza" },
-  { "target": 50, "suffix": "K", "label": "Petition Signatures", "note": "First \"Return to Gaza\" petition gathered within weeks" }
+  { "target": 2600, "suffix": "", "label": "נהרגו", "note": "בזמן חיפוש סיוע הומניטרי" },
+  { "target": 19000, "suffix": "", "label": "נפצעו", "note": "בזמן חיפוש סיוע הומניטרי" }
 ]

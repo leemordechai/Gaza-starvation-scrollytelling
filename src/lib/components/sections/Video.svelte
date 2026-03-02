@@ -58,14 +58,14 @@
     -webkit-backdrop-filter: blur(6px);
   }
   .video-inner > :global(*) { position: relative; z-index: 1; }
-  .video-inner:hover .play-ring { background: var(--gold); }
+  .video-inner:hover .play-ring { background: var(--accent); }
   .video-inner:hover .play-tri { border-left-color: #000; }
 
   .play-ring {
     width: 68px;
     height: 68px;
     border-radius: 50%;
-    border: 2px solid var(--gold);
+    border: 2px solid var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,7 +82,7 @@
     height: 0;
     border-top: 11px solid transparent;
     border-bottom: 11px solid transparent;
-    border-left: 19px solid var(--gold);
+    border-left: 19px solid var(--accent);
     margin-left: 4px;
     transition: border-left-color 0.25s;
   }

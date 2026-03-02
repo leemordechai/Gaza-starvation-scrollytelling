@@ -1,26 +1,21 @@
 {
-  "sectionLabel": "Analysis",
-  "sectionTitle": "What the Movement Actually Wants",
+  "sectionLabel": "ניתוח",
+  "sectionTitle": "ההרעבה בעזה כאינדיקציה להתפרקות הסדר העולמי",
   "paragraphs": [
-    "The resettlement movement is not monolithic. It encompasses pragmatic land advocates who argue for Israeli military control without immediate civilian settlement; theological nationalists who believe Jewish settlement of the entire biblical land of Israel is a divine command; and former settlers who experienced the 2005 disengagement as a personal trauma and seek restoration.",
-    "Experts interviewed for this report describe the movement as politically influential beyond its numbers, capable of constraining Israeli government policy even when it cannot dictate it. Its advocates have successfully placed resettlement on the agenda of Knesset committees, secured government funding for feasibility studies, and built organizational infrastructure that did not exist before October 7.",
-    "The practical obstacles remain enormous. Gaza's physical infrastructure has been devastated by months of intensive warfare. The humanitarian situation is catastrophic. International consensus against resettlement is nearly universal. And polls suggest that even within Israel, a majority of Jewish Israelis oppose settling civilians in Gaza.",
-    "Yet the movement persists — and its advocates point to what they describe as changing facts on the ground: prolonged Israeli military presence, the collapse of Hamas governance, and a diplomatic environment in which the United States has shown greater tolerance for Israeli unilateral action. For a movement accustomed to the margins, these are not trivial openings."
+    "הרעבה היא פשע מלחמה על פי החוק הבינלאומי. הרעבה הייתה גם אחד הנימוקים בהם השתמש בית הדין הבינלאומי הפלילי הוציא צווי מעצר נגד ראש הממשלה בנימין נתניהו ושר הביטחון לשעבר יואב גלנט.",
+    "למרות ששורה ארוכה של ארגונים בינלאומיים התריעו לאורך השנתיים וחצי האחרונות כי עזה שרויה ברעב כבד, מדינות העולם הגיבו על פי רוב במשיכת כתפיים. אם המצור המוחלט שישראל הטילה בתחילת אוקטובר 2023 הותר במקצת תוך שבוע וחצי בעקבות לחץ בינלאומי, הרי שהמצור של אביב 2025 נמשך למעלה מחודשיים וחצי. היום, המחסור הממושך של מזון ברצועה בקושי מגיע לחדשות — הרי כבר ראינו דברים חמורים ממנה.",
+    "ההשלכות של מציאות זו חורגות מעבר לעזה. הסטנדרטים של התנהלות בעת מלחמה שהתגבשו בעקבות זוועות מלחמות העולם מתפוררים לאבק נגד עינינו. עזה הופכת להיות הסטנדרט החדש.",
+    "המציאות בעזה פוגעת בעתיד ובביטחון של כולנו"
   ],
   "keyVoices": [
-    "Bezalel Smotrich, Finance Minister, Religious Zionism party",
-    "Daniella Weiss, former Gush Katif resident and Nahala movement leader",
-    "Yossi Dagan, Samaria Regional Council head and advocacy organizer",
-    "Francesca Albanese, UN Special Rapporteur on the Palestinian territories",
-    "Yair Lapid, Israeli opposition leader, Yesh Atid party",
-    "Matthew Miller, US State Department spokesperson"
+    "מזכ\"ל האו\"ם אנטוניו גוטרש — \"אסון מעשי ידי-אדם, כתם מוסרי\"",
+    "רופאים ללא גבולות — \"זה לא מתן סיוע, זה הרג מתואם\"",
+    "בית הדין הבינלאומי הפלילי — הוצאת צווי מעצר, נובמבר 2024"
   ],
   "relatedCoverage": [
-    "Gaza's reconstruction: who decides the future?",
-    "The 2005 disengagement, two decades on",
-    "West Bank settlement expansion and international law",
-    "Palestinian Authority's diminished role",
-    "Trump administration and the two-state question"
+    "דוחות WFP FSA 13–22 (אפריל 2025 – פברואר 2026)",
+    "דוחות IPC לעזה — מאי 2024, ינואר 2025, יוני 2025",
+    "COGAT — נתוני כניסת משאיות סיוע לפי חודש"
   ],
-  "methodology": "This report is based on interviews conducted between October 2024 and January 2026, analysis of Israeli parliamentary records, advocacy organization documents, polling data from the Israel Democracy Institute, and monitoring of public statements by Israeli officials. All statistics are drawn from publicly available sources cited in each chart. Visual Desk editorial standards apply."
+  "methodology": "הנתונים מבוססים על 22 דוחות WFP שפורסמו בין מאי 2023 לפברואר 2026. הנתונים חולצו מקובצי PDF באמצעות pdfminer ועובדו בסקריפטים פייתון. מגוון המזון מחושב לפי ה-FCS (Food Consumption Score) של WFP."
 }

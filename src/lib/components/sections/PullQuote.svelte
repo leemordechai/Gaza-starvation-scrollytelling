@@ -3,19 +3,18 @@
   import { copyToClipboard } from '$lib/utils/clipboard';
   import { showToast } from '$lib/stores/copyToast';
 
-  const quoteText = `"We were expelled from this land twenty years ago. What happened on October 7 is the direct result of that expulsion. The only answer is to return — not as conquerors, but as people coming home."`;
-  const attribution = '— Yael Adler, former resident of Neve Dekalim, Gush Katif, speaking at a January 2024 conference in Jerusalem';
+  let { quote, attribution }: { quote: string; attribution: string } = $props();
 
   async function handleCopy() {
-    const ok = await copyToClipboard(quoteText);
+    const ok = await copyToClipboard(quote);
     if (ok) showToast();
   }
 </script>
 
 <section class="pullquote-section">
   <div class="pullquote reveal" use:reveal>
-    <button class="pq-copy" aria-label="Copy quote" onclick={handleCopy}>&#x2398;</button>
-    <blockquote>{quoteText}</blockquote>
+    <button class="pq-copy" aria-label="העתק ציטוט" onclick={handleCopy}>&#x2398;</button>
+    <blockquote>{quote}</blockquote>
     <cite>{attribution}</cite>
   </div>
 </section>
@@ -30,14 +29,15 @@
     overflow: hidden;
   }
   .pullquote-section::before {
-    content: '\201C';
+    content: '\201D';
     position: absolute;
     top: -3.5rem;
-    left: -1rem;
+    left: auto;
+    inset-inline-end: -1rem;
     font-family: var(--font-disp);
     font-size: 22rem;
     line-height: 1;
-    color: var(--gold);
+    color: var(--accent);
     opacity: 0.05;
     pointer-events: none;
     user-select: none;
@@ -67,14 +67,14 @@
     font-weight: 600;
     letter-spacing: 0.17em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--accent);
     font-style: normal;
   }
 
   .pq-copy {
     position: absolute;
     top: 0;
-    right: 0.5rem;
+    inset-inline-end: 0.5rem;
     background: none;
     border: 1px solid var(--border-mid);
     color: var(--text-muted);
@@ -89,5 +89,5 @@
     transition: color 0.2s, border-color 0.2s;
     line-height: 1;
   }
-  .pq-copy:hover { color: var(--gold); border-color: var(--gold); }
+  .pq-copy:hover { color: var(--accent); border-color: var(--accent); }
 </style>

@@ -6,7 +6,7 @@
     top: -100%;
     left: 1rem;
     z-index: 9999;
-    background: var(--gold);
+    background: var(--accent);
     color: #0c0b08;
     font-family: var(--font-ui);
     font-size: 0.72rem;

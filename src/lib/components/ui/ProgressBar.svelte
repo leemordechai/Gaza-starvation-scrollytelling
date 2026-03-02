@@ -11,7 +11,7 @@
     left: 0;
     height: 2px;
     width: 0%;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
     z-index: 1000;
     box-shadow: 0 0 8px rgba(196, 162, 74, 0.5);
     pointer-events: none;

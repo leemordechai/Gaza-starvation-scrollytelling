@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
-  import meta from '$lib/data/meta.json';
+  import { hero as meta } from '$lib/data/story.js';
 
   let triggers: any[] = [];
 
@@ -14,95 +14,64 @@
 
     const heroBg = document.getElementById('hero-bg');
     const spotlight = document.getElementById('hero-spotlight');
-    const media = document.getElementById('settlement-media');
-    const caption = document.getElementById('settlement-caption');
     const heroContent = document.getElementById('hero-content');
     const scrollCue = document.getElementById('scroll-cue');
+
+    // Start zoomed in tight on the girl's face (center of image)
+    // then slowly zoom out to reveal the full scene as user scrolls
+    if (heroBg) {
+      gsap.set(heroBg, { scale: 3.2, xPercent: 0, yPercent: -8 });
+    }
+    if (spotlight) {
+      gsap.set(spotlight, { opacity: 1 });
+    }
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero-scroll-container',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.8,
-        onUpdate: (self: any) => {
-          if (caption) {
-            caption.classList.toggle('visible', self.progress > 0.78);
-          }
-        }
+        scrub: 1.2,
       }
     });
 
-    // ── Phase 1a (0→0.4): Start on destroyed highrise, pan right to central figure ──
+    // Phase 1 (0→0.6): Zoom out from face to full scene
     if (heroBg) {
-      // Set initial position immediately (avoids flash before scroll)
-      gsap.set(heroBg, { scale: 2.2, xPercent: 45, yPercent: 5 });
-
-      tl.fromTo(heroBg, {
-        scale: 2.2,
-        xPercent: 45,
-        yPercent: 5,
-      }, {
-        scale: 2.0,
-        xPercent: 0,
-        yPercent: 0,
-        duration: 0.65,
-        ease: 'power1.inOut'
-      }, 0);
-
-      // ── Phase 1b (0.65→1.0): Zoom out to reveal full ruined cityscape ──
       tl.to(heroBg, {
-        scale: 1.0,
+        scale: 0.78,
         xPercent: 0,
         yPercent: 0,
-        duration: 0.35,
-        ease: 'power2.out'
-      }, 0.65);
+        duration: 0.6,
+        ease: 'power2.inOut'
+      }, 0);
     }
 
+    // Spotlight fades as we zoom out
     if (spotlight) {
-      // Spotlight stays strong through slow pan, fades during zoom-out
-      tl.fromTo(spotlight, {
-        opacity: 1,
-      }, {
-        opacity: 0.85,
-        duration: 0.65,
-        ease: 'none'
-      }, 0);
       tl.to(spotlight, {
         opacity: 0,
-        duration: 0.3,
+        duration: 0.5,
         ease: 'power1.in'
-      }, 0.65);
+      }, 0.1);
     }
 
-    // Scroll cue fades quickly
+    // Scroll cue fades immediately
     if (scrollCue) {
       tl.to(scrollCue, {
         opacity: 0,
-        duration: 0.12,
+        duration: 0.1,
         ease: 'none'
       }, 0);
     }
 
-    // ── Phase 2 (1→2): Settlement expand, text fades ──
-    if (media) {
-      tl.to(media, {
-        width: '100vw',
-        height: 'calc(var(--vh, 1vh) * 100)',
-        borderRadius: 0,
-        duration: 1,
-        ease: 'none'
-      }, 1);
-    }
-
+    // Phase 2 (0.6→1.0): Hero content fades out as user continues
     if (heroContent) {
       tl.to(heroContent, {
         opacity: 0,
-        y: -60,
-        duration: 0.4,
-        ease: 'none'
-      }, 1);
+        y: -40,
+        duration: 0.35,
+        ease: 'power1.in'
+      }, 0.65);
     }
 
     triggers.push(tl.scrollTrigger);
@@ -122,23 +91,15 @@
     <div class="hero-vignette" aria-hidden="true"></div>
     <div class="hero-fade" aria-hidden="true"></div>
 
-    <div class="settlement-media" id="settlement-media">
-      <img src="/images/settlement.jpg" alt="Israeli settlement compound surrounded by destruction in Gaza" />
-      <div class="settlement-overlay"></div>
-      <div class="settlement-caption" id="settlement-caption">
-        <p>{meta.settlementCaption}</p>
-      </div>
-    </div>
-
     <div class="hero-content" id="hero-content">
       <span class="section-label">{meta.sectionLabel}</span>
       <div class="hero-title-wrap">
-        <h1 class="hero-title hero-title-line1">The <em>Return</em></h1>
-        <h1 class="hero-title hero-title-line2">to Gaza</h1>
+        <h1 class="hero-title hero-title-line1">{meta.titleLine1}</h1>
+        <h1 class="hero-title hero-title-line2">{meta.titleLine2}</h1>
       </div>
       <p class="hero-dek">{meta.dek}</p>
       <div class="hero-meta">
-        <span>By <span class="byline">{meta.byline.replace('By ', '')}</span></span>
+        <span class="byline">{meta.byline}</span>
         <span class="sep">&middot;</span>
         <span>{meta.date}</span>
         <span class="sep">&middot;</span>
@@ -147,7 +108,7 @@
     </div>
 
     <div class="scroll-cue" id="scroll-cue">
-      <span>Scroll</span>
+      <span>גלול</span>
       <div class="cue-arrow"></div>
     </div>
   </section>
@@ -156,7 +117,7 @@
 <style>
   .hero-scroll-container {
     position: relative;
-    height: calc(var(--vh, 1vh) * 500);
+    height: calc(var(--vh, 1vh) * 350);
   }
   .hero-scroll-container .hero { position: sticky; top: 0; }
 
@@ -172,47 +133,46 @@
 
   .hero-bg {
     position: absolute; inset: -30%;
-    background-image: url('/images/hero.jpg');
+    background-image: url('/images/hero.jpeg');
     background-size: cover;
-    background-position: center 40%;
-    transform: scale(2.2);
-    transform-origin: 50% 50%;
+    background-position: center 35%;
+    transform-origin: 50% 38%;
     will-change: transform;
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: rgba(6, 5, 3, 0.45);
+    background: rgba(6, 5, 3, 0.38);
   }
 
-  /* Spotlight: tall vertical ellipse, slightly left to frame the far-left building */
+  /* Tight spotlight on face when zoomed in — fades as we zoom out */
   .hero-spotlight {
     position: absolute; inset: 0; z-index: 1;
     background: radial-gradient(
-      ellipse 24% 65% at 46% 46%,
+      ellipse 18% 24% at 50% 38%,
       transparent 0%,
-      rgba(3, 2, 1, 0.5) 50%,
-      rgba(3, 2, 1, 0.9) 100%
+      rgba(3, 2, 1, 0.55) 55%,
+      rgba(3, 2, 1, 0.92) 100%
     );
     pointer-events: none;
     will-change: opacity;
   }
 
   .hero-topo {
-    position: absolute; inset: 0; opacity: 0.14;
-    background-image: repeating-linear-gradient(125deg, var(--gold) 0px, transparent 1px, transparent 55px, var(--gold) 56px, transparent 57px, transparent 110px);
+    position: absolute; inset: 0; opacity: 0.12;
+    background-image: repeating-linear-gradient(125deg, var(--accent) 0px, transparent 1px, transparent 55px, var(--accent) 56px, transparent 57px, transparent 110px);
   }
   .hero-grain {
-    position: absolute; inset: 0; opacity: 0.4;
+    position: absolute; inset: 0; opacity: 0.38;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 300px; mix-blend-mode: overlay; pointer-events: none;
   }
   .hero-vignette {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.75) 100%);
+    background: radial-gradient(ellipse at center, transparent 28%, rgba(0,0,0,0.72) 100%);
     pointer-events: none;
   }
   .hero-fade {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 52%;
     background: linear-gradient(to bottom, transparent, var(--bg) 95%);
     pointer-events: none;
   }
@@ -224,7 +184,7 @@
   }
   .section-label {
     font-family: var(--font-ui); font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold);
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent);
     display: block; margin-bottom: 1.5rem;
   }
   .hero-title-wrap { display: flex; flex-direction: column; align-items: center; }
@@ -234,7 +194,7 @@
     margin-bottom: 1.4rem; text-shadow: 0 4px 60px rgba(0,0,0,0.5);
     letter-spacing: -0.01em;
   }
-  .hero-title :global(em) { font-style: italic; color: var(--gold-light); }
+  .hero-title :global(em) { font-style: italic; color: var(--accent-light); }
   .hero-title-line1 { margin-bottom: 0; will-change: transform; }
   .hero-title-line2 { will-change: transform; }
 
@@ -251,38 +211,8 @@
     font-family: var(--font-ui); font-size: 0.68rem; font-weight: 500;
     letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted);
   }
-  .hero-meta :global(.byline) { color: var(--gold); font-weight: 700; }
+  .hero-meta :global(.byline) { color: var(--accent); font-weight: 700; }
   .hero-meta :global(.sep) { color: var(--border-mid); }
-
-  .settlement-media {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%); z-index: 1;
-    width: 30px; height: 20px;
-    max-width: 95vw; max-height: calc(var(--vh, 1vh) * 85);
-    overflow: hidden; border-radius: 16px;
-    box-shadow: 0 0 50px rgba(0,0,0,0.4);
-    will-change: width, height, border-radius;
-  }
-  .settlement-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .settlement-overlay {
-    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
-    border-radius: inherit; pointer-events: none;
-  }
-  .settlement-caption {
-    position: absolute; bottom: 8%; left: 50%;
-    transform: translateX(-50%); text-align: center;
-    opacity: 0; transition: opacity 0.8s ease;
-    pointer-events: none; z-index: 2;
-  }
-  .settlement-caption.visible { opacity: 1; }
-  .settlement-caption p {
-    font-family: var(--font-body); font-size: clamp(0.95rem, 1.8vw, 1.25rem);
-    font-style: italic; font-weight: 300; color: #fff;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.7); max-width: 540px;
-    line-height: 1.6; padding: 1rem 2rem;
-    background: rgba(0,0,0,0.35); border-radius: 4px;
-    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-  }
 
   .scroll-cue {
     position: absolute; bottom: 2rem; left: 50%;
@@ -300,11 +230,7 @@
   }
   .cue-arrow {
     width: 16px; height: 16px;
-    border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+    border-right: 1px solid var(--accent); border-bottom: 1px solid var(--accent);
     transform: rotate(45deg); opacity: 0.55;
-  }
-
-  @media (max-width: 768px) {
-    .settlement-media { width: 25px; height: 16px; }
   }
 </style>

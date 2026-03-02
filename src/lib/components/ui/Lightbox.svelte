@@ -63,7 +63,7 @@
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     transition: color 0.2s, border-color 0.2s;
   }
-  .lb-close:hover { color: var(--gold); border-color: var(--gold); }
+  .lb-close:hover { color: var(--accent); border-color: var(--accent); }
   .lb-caption {
     margin-top: 0.65rem;
     font-family: var(--font-ui); font-size: 0.58rem;

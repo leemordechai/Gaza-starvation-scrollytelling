@@ -74,7 +74,7 @@
     transition: background 0.25s, transform 0.25s;
   }
   .ind-dot:hover,
-  .ind-dot.ind-active { background: var(--gold); transform: scale(1.5); }
+  .ind-dot.ind-active { background: var(--accent); transform: scale(1.5); }
 
   .ind-dot::after {
     content: attr(data-label);

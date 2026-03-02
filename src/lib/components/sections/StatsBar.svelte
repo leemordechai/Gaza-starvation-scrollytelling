@@ -70,7 +70,7 @@
     font-family: var(--font-ui);
     font-size: clamp(2.4rem, 4.5vw, 3.6rem);
     font-weight: 800;
-    color: var(--gold);
+    color: var(--accent);
     line-height: 1;
     display: block;
     margin-bottom: 0.3rem;
@@ -96,10 +96,10 @@
   .stat-bar-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
     border-radius: 3px;
     transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 2px 0 8px var(--gold);
+    box-shadow: 2px 0 8px var(--accent);
   }
   .stat-note {
     font-size: 0.75rem;

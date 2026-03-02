@@ -10,7 +10,7 @@
     bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%) translateY(12px);
-    background: var(--gold);
+    background: var(--accent);
     color: #0c0b08;
     font-family: var(--font-ui);
     font-size: 0.68rem;

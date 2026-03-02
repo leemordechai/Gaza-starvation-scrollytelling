@@ -118,7 +118,7 @@
   .s-tag {
     font-family: var(--font-ui); font-size: 0.62rem; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 0.6rem;
+    color: var(--accent); margin-bottom: 0.6rem;
   }
   .s-step h3 {
     font-family: var(--font-disp); font-size: 1.45rem; font-weight: 700;

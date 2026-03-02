@@ -32,7 +32,7 @@
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
-    transform: translateX(100%);
+    transform: translateX(-100%);
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
@@ -49,12 +49,12 @@
     transition: color 0.2s;
   }
   .mobile-menu :global(a:hover),
-  .mobile-menu :global(a.active) { color: var(--gold); }
+  .mobile-menu :global(a.active) { color: var(--accent); }
 
   .mob-close {
     position: absolute;
     top: 1.5rem;
-    right: 1.5rem;
+    inset-inline-end: 1.5rem;
     background: none;
     border: 1px solid var(--border-mid);
     color: var(--text-muted);
@@ -68,5 +68,5 @@
     justify-content: center;
     transition: color 0.2s, border-color 0.2s;
   }
-  .mob-close:hover { color: var(--gold); border-color: var(--gold); }
+  .mob-close:hover { color: var(--accent); border-color: var(--accent); }
 </style>

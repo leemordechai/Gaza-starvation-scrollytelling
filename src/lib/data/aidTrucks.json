@@ -1,0 +1,3033 @@
+{
+  "sectionLabel": "Aid Blockade",
+  "sectionTitle": "A gate — but not open",
+  "sectionSub": "Trucks carrying aid into Gaza since the October 2023 invasion. The volume of aid entering the Strip has repeatedly been choked off — sometimes to almost nothing.",
+  "source": "COGAT (Coordination of Government Activities in the Territories)",
+  "months": [
+    {
+      "key": "2023-10",
+      "label": "Oct 2023",
+      "days": 31
+    },
+    {
+      "key": "2023-11",
+      "label": "Nov 2023",
+      "days": 30
+    },
+    {
+      "key": "2023-12",
+      "label": "Dec 2023",
+      "days": 31
+    },
+    {
+      "key": "2024-01",
+      "label": "Jan 2024",
+      "days": 31
+    },
+    {
+      "key": "2024-02",
+      "label": "Feb 2024",
+      "days": 29
+    },
+    {
+      "key": "2024-03",
+      "label": "Mar 2024",
+      "days": 31
+    },
+    {
+      "key": "2024-04",
+      "label": "Apr 2024",
+      "days": 30
+    },
+    {
+      "key": "2024-05",
+      "label": "May 2024",
+      "days": 31
+    },
+    {
+      "key": "2024-06",
+      "label": "Jun 2024",
+      "days": 30
+    },
+    {
+      "key": "2024-07",
+      "label": "Jul 2024",
+      "days": 31
+    },
+    {
+      "key": "2024-08",
+      "label": "Aug 2024",
+      "days": 31
+    },
+    {
+      "key": "2024-09",
+      "label": "Sep 2024",
+      "days": 30
+    },
+    {
+      "key": "2024-10",
+      "label": "Oct 2024",
+      "days": 31
+    },
+    {
+      "key": "2024-11",
+      "label": "Nov 2024",
+      "days": 30
+    },
+    {
+      "key": "2024-12",
+      "label": "Dec 2024",
+      "days": 31
+    },
+    {
+      "key": "2025-01",
+      "label": "Jan 2025",
+      "days": 31
+    },
+    {
+      "key": "2025-02",
+      "label": "Feb 2025",
+      "days": 28
+    },
+    {
+      "key": "2025-03",
+      "label": "Mar 2025",
+      "days": 31
+    },
+    {
+      "key": "2025-04",
+      "label": "Apr 2025",
+      "days": 30
+    },
+    {
+      "key": "2025-05",
+      "label": "May 2025",
+      "days": 31
+    },
+    {
+      "key": "2025-06",
+      "label": "Jun 2025",
+      "days": 30
+    },
+    {
+      "key": "2025-07",
+      "label": "Jul 2025",
+      "days": 31
+    },
+    {
+      "key": "2025-08",
+      "label": "Aug 2025",
+      "days": 31
+    },
+    {
+      "key": "2025-09",
+      "label": "Sep 2025",
+      "days": 30
+    },
+    {
+      "key": "2025-10",
+      "label": "Oct 2025",
+      "days": 31
+    }
+  ],
+  "classifications": [
+    "Essential infrastructure equipment",
+    "Food",
+    "Fuel",
+    "Gas",
+    "Medical equipment - for field hospital",
+    "Medical supplies",
+    "Mixed aid",
+    "Shelter equipment",
+    "UN and International organizations equipment",
+    "Water"
+  ],
+  "orgs": [
+    "Countries",
+    "International Organizations & NGOs",
+    "Mixed donors",
+    "Private sector",
+    "UN Agencies"
+  ],
+  "totals": [
+    {
+      "key": "2023-10",
+      "trucks": 241,
+      "trucksPerDay": 7.8,
+      "tons": 3860,
+      "tonsPerDay": 124.5
+    },
+    {
+      "key": "2023-11",
+      "trucks": 2944,
+      "trucksPerDay": 98.1,
+      "tons": 51078,
+      "tonsPerDay": 1702.6
+    },
+    {
+      "key": "2023-12",
+      "trucks": 3508,
+      "trucksPerDay": 113.2,
+      "tons": 65324,
+      "tonsPerDay": 2107.2
+    },
+    {
+      "key": "2024-01",
+      "trucks": 5166,
+      "trucksPerDay": 166.6,
+      "tons": 101978,
+      "tonsPerDay": 3289.6
+    },
+    {
+      "key": "2024-02",
+      "trucks": 3619,
+      "trucksPerDay": 124.8,
+      "tons": 67363,
+      "tonsPerDay": 2322.9
+    },
+    {
+      "key": "2024-03",
+      "trucks": 5236,
+      "trucksPerDay": 168.9,
+      "tons": 106334,
+      "tonsPerDay": 3430.1
+    },
+    {
+      "key": "2024-04",
+      "trucks": 6820,
+      "trucksPerDay": 227.3,
+      "tons": 139799,
+      "tonsPerDay": 4660
+    },
+    {
+      "key": "2024-05",
+      "trucks": 6407,
+      "trucksPerDay": 206.7,
+      "tons": 135451,
+      "tonsPerDay": 4369.4
+    },
+    {
+      "key": "2024-06",
+      "trucks": 5374,
+      "trucksPerDay": 179.1,
+      "tons": 103331,
+      "tonsPerDay": 3444.4
+    },
+    {
+      "key": "2024-07",
+      "trucks": 5924,
+      "trucksPerDay": 191.1,
+      "tons": 116246,
+      "tonsPerDay": 3749.9
+    },
+    {
+      "key": "2024-08",
+      "trucks": 4581,
+      "trucksPerDay": 147.8,
+      "tons": 91494,
+      "tonsPerDay": 2951.4
+    },
+    {
+      "key": "2024-09",
+      "trucks": 4411,
+      "trucksPerDay": 147,
+      "tons": 90553,
+      "tonsPerDay": 3018.4
+    },
+    {
+      "key": "2024-10",
+      "trucks": 1793,
+      "trucksPerDay": 57.8,
+      "tons": 36784,
+      "tonsPerDay": 1186.6
+    },
+    {
+      "key": "2024-11",
+      "trucks": 2672,
+      "trucksPerDay": 89.1,
+      "tons": 55290,
+      "tonsPerDay": 1843
+    },
+    {
+      "key": "2024-12",
+      "trucks": 5065,
+      "trucksPerDay": 163.4,
+      "tons": 106187,
+      "tonsPerDay": 3425.4
+    },
+    {
+      "key": "2025-01",
+      "trucks": 11255,
+      "trucksPerDay": 363.1,
+      "tons": 208267,
+      "tonsPerDay": 6718.3
+    },
+    {
+      "key": "2025-02",
+      "trucks": 16800,
+      "trucksPerDay": 600,
+      "tons": 295120,
+      "tonsPerDay": 10540
+    },
+    {
+      "key": "2025-03",
+      "trucks": 0,
+      "trucksPerDay": 0,
+      "tons": 0,
+      "tonsPerDay": 0
+    },
+    {
+      "key": "2025-04",
+      "trucks": 0,
+      "trucksPerDay": 0,
+      "tons": 0,
+      "tonsPerDay": 0
+    },
+    {
+      "key": "2025-05",
+      "trucks": 969,
+      "trucksPerDay": 31.3,
+      "tons": 20224,
+      "tonsPerDay": 652.4
+    },
+    {
+      "key": "2025-06",
+      "trucks": 1833,
+      "trucksPerDay": 61.1,
+      "tons": 37513,
+      "tonsPerDay": 1250.4
+    },
+    {
+      "key": "2025-07",
+      "trucks": 3034,
+      "trucksPerDay": 97.9,
+      "tons": 58293,
+      "tonsPerDay": 1880.4
+    },
+    {
+      "key": "2025-08",
+      "trucks": 6722,
+      "trucksPerDay": 216.8,
+      "tons": 132993,
+      "tonsPerDay": 4290.1
+    },
+    {
+      "key": "2025-09",
+      "trucks": 5443,
+      "trucksPerDay": 181.4,
+      "tons": 111765,
+      "tonsPerDay": 3725.5
+    },
+    {
+      "key": "2025-10",
+      "trucks": 1899,
+      "trucksPerDay": 61.3,
+      "tons": 39242,
+      "tonsPerDay": 1265.9
+    }
+  ],
+  "byClassification": [
+    {
+      "key": "Essential infrastructure equipment",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-11",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-12",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-01",
+          "trucks": 7,
+          "trucksPerDay": 0.2,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-02",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-03",
+          "trucks": 21,
+          "trucksPerDay": 0.7,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-04",
+          "trucks": 2,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-07",
+          "trucks": 21,
+          "trucksPerDay": 0.7,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-08",
+          "trucks": 5,
+          "trucksPerDay": 0.2,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-09",
+          "trucks": 7,
+          "trucksPerDay": 0.2,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-10",
+          "trucks": 4,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-11",
+          "trucks": 4,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-12",
+          "trucks": 26,
+          "trucksPerDay": 0.8,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-01",
+          "trucks": 28,
+          "trucksPerDay": 0.9,
+          "tons": 15,
+          "tonsPerDay": 0.5
+        },
+        {
+          "key": "2025-02",
+          "trucks": 4,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 3,
+          "trucksPerDay": 0.1,
+          "tons": 57,
+          "tonsPerDay": 1.8
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 45,
+          "trucksPerDay": 1.5,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-08",
+          "trucks": 10,
+          "trucksPerDay": 0.3,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-09",
+          "trucks": 7,
+          "trucksPerDay": 0.2,
+          "tons": 40,
+          "tonsPerDay": 1.3
+        },
+        {
+          "key": "2025-10",
+          "trucks": 1,
+          "trucksPerDay": 0,
+          "tons": 5,
+          "tonsPerDay": 0.2
+        }
+      ]
+    },
+    {
+      "key": "Food",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 104,
+          "trucksPerDay": 3.4,
+          "tons": 1650,
+          "tonsPerDay": 53.2
+        },
+        {
+          "key": "2023-11",
+          "trucks": 1233,
+          "trucksPerDay": 41.1,
+          "tons": 24827,
+          "tonsPerDay": 827.5
+        },
+        {
+          "key": "2023-12",
+          "trucks": 1802,
+          "trucksPerDay": 58.1,
+          "tons": 38531,
+          "tonsPerDay": 1242.9
+        },
+        {
+          "key": "2024-01",
+          "trucks": 3365,
+          "trucksPerDay": 108.5,
+          "tons": 72624,
+          "tonsPerDay": 2342.7
+        },
+        {
+          "key": "2024-02",
+          "trucks": 2128,
+          "trucksPerDay": 73.4,
+          "tons": 43202,
+          "tonsPerDay": 1489.7
+        },
+        {
+          "key": "2024-03",
+          "trucks": 3725,
+          "trucksPerDay": 120.2,
+          "tons": 82395,
+          "tonsPerDay": 2657.9
+        },
+        {
+          "key": "2024-04",
+          "trucks": 4889,
+          "trucksPerDay": 163,
+          "tons": 109912,
+          "tonsPerDay": 3663.7
+        },
+        {
+          "key": "2024-05",
+          "trucks": 5252,
+          "trucksPerDay": 169.4,
+          "tons": 116855,
+          "tonsPerDay": 3769.5
+        },
+        {
+          "key": "2024-06",
+          "trucks": 4294,
+          "trucksPerDay": 143.1,
+          "tons": 88460,
+          "tonsPerDay": 2948.7
+        },
+        {
+          "key": "2024-07",
+          "trucks": 4633,
+          "trucksPerDay": 149.5,
+          "tons": 94997,
+          "tonsPerDay": 3064.4
+        },
+        {
+          "key": "2024-08",
+          "trucks": 3893,
+          "trucksPerDay": 125.6,
+          "tons": 80343,
+          "tonsPerDay": 2591.7
+        },
+        {
+          "key": "2024-09",
+          "trucks": 3546,
+          "trucksPerDay": 118.2,
+          "tons": 76514,
+          "tonsPerDay": 2550.4
+        },
+        {
+          "key": "2024-10",
+          "trucks": 1111,
+          "trucksPerDay": 35.8,
+          "tons": 25434,
+          "tonsPerDay": 820.5
+        },
+        {
+          "key": "2024-11",
+          "trucks": 1559,
+          "trucksPerDay": 52,
+          "tons": 35374,
+          "tonsPerDay": 1179.1
+        },
+        {
+          "key": "2024-12",
+          "trucks": 3328,
+          "trucksPerDay": 107.4,
+          "tons": 77953,
+          "tonsPerDay": 2514.6
+        },
+        {
+          "key": "2025-01",
+          "trucks": 7906,
+          "trucksPerDay": 255,
+          "tons": 164148,
+          "tonsPerDay": 5295.1
+        },
+        {
+          "key": "2025-02",
+          "trucks": 10565,
+          "trucksPerDay": 377.3,
+          "tons": 216075,
+          "tonsPerDay": 7717
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 896,
+          "trucksPerDay": 28.9,
+          "tons": 19153,
+          "tonsPerDay": 617.8
+        },
+        {
+          "key": "2025-06",
+          "trucks": 1805,
+          "trucksPerDay": 60.2,
+          "tons": 37103,
+          "tonsPerDay": 1236.8
+        },
+        {
+          "key": "2025-07",
+          "trucks": 2708,
+          "trucksPerDay": 87.4,
+          "tons": 53672,
+          "tonsPerDay": 1731.3
+        },
+        {
+          "key": "2025-08",
+          "trucks": 6182,
+          "trucksPerDay": 199.4,
+          "tons": 123256,
+          "tonsPerDay": 3976
+        },
+        {
+          "key": "2025-09",
+          "trucks": 4401,
+          "trucksPerDay": 146.7,
+          "tons": 93518,
+          "tonsPerDay": 3117.3
+        },
+        {
+          "key": "2025-10",
+          "trucks": 1281,
+          "trucksPerDay": 41.3,
+          "tons": 27912,
+          "tonsPerDay": 900.4
+        }
+      ]
+    },
+    {
+      "key": "Fuel",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-11",
+          "trucks": 37,
+          "trucksPerDay": 1.2,
+          "tons": 1054,
+          "tonsPerDay": 35.1
+        },
+        {
+          "key": "2023-12",
+          "trucks": 58,
+          "trucksPerDay": 1.9,
+          "tons": 1836,
+          "tonsPerDay": 59.2
+        },
+        {
+          "key": "2024-01",
+          "trucks": 44,
+          "trucksPerDay": 1.4,
+          "tons": 1769,
+          "tonsPerDay": 57.1
+        },
+        {
+          "key": "2024-02",
+          "trucks": 34,
+          "trucksPerDay": 1.2,
+          "tons": 1308,
+          "tonsPerDay": 45.1
+        },
+        {
+          "key": "2024-03",
+          "trucks": 49,
+          "trucksPerDay": 1.6,
+          "tons": 1845,
+          "tonsPerDay": 59.5
+        },
+        {
+          "key": "2024-04",
+          "trucks": 56,
+          "trucksPerDay": 1.9,
+          "tons": 1982,
+          "tonsPerDay": 66.1
+        },
+        {
+          "key": "2024-05",
+          "trucks": 58,
+          "trucksPerDay": 1.9,
+          "tons": 1582,
+          "tonsPerDay": 51
+        },
+        {
+          "key": "2024-06",
+          "trucks": 61,
+          "trucksPerDay": 2,
+          "tons": 1936,
+          "tonsPerDay": 64.5
+        },
+        {
+          "key": "2024-07",
+          "trucks": 79,
+          "trucksPerDay": 2.5,
+          "tons": 2527,
+          "tonsPerDay": 81.5
+        },
+        {
+          "key": "2024-08",
+          "trucks": 75,
+          "trucksPerDay": 2.4,
+          "tons": 2724,
+          "tonsPerDay": 87.9
+        },
+        {
+          "key": "2024-09",
+          "trucks": 54,
+          "trucksPerDay": 1.8,
+          "tons": 1977,
+          "tonsPerDay": 65.9
+        },
+        {
+          "key": "2024-10",
+          "trucks": 63,
+          "trucksPerDay": 2,
+          "tons": 2651,
+          "tonsPerDay": 85.5
+        },
+        {
+          "key": "2024-11",
+          "trucks": 38,
+          "trucksPerDay": 1.3,
+          "tons": 1303,
+          "tonsPerDay": 43.4
+        },
+        {
+          "key": "2024-12",
+          "trucks": 54,
+          "trucksPerDay": 1.7,
+          "tons": 2084,
+          "tonsPerDay": 67.2
+        },
+        {
+          "key": "2025-01",
+          "trucks": 245,
+          "trucksPerDay": 7.9,
+          "tons": 2025,
+          "tonsPerDay": 65.3
+        },
+        {
+          "key": "2025-02",
+          "trucks": 468,
+          "trucksPerDay": 16.7,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 2,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 39,
+          "trucksPerDay": 1.3,
+          "tons": 1119,
+          "tonsPerDay": 36.1
+        },
+        {
+          "key": "2025-08",
+          "trucks": 120,
+          "trucksPerDay": 3.9,
+          "tons": 3479,
+          "tonsPerDay": 112.2
+        },
+        {
+          "key": "2025-09",
+          "trucks": 90,
+          "trucksPerDay": 3,
+          "tons": 2389,
+          "tonsPerDay": 79.6
+        },
+        {
+          "key": "2025-10",
+          "trucks": 19,
+          "trucksPerDay": 0.6,
+          "tons": 545,
+          "tonsPerDay": 17.6
+        }
+      ]
+    },
+    {
+      "key": "Gas",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-11",
+          "trucks": 28,
+          "trucksPerDay": 0.9,
+          "tons": 588,
+          "tonsPerDay": 19.6
+        },
+        {
+          "key": "2023-12",
+          "trucks": 65,
+          "trucksPerDay": 2.1,
+          "tons": 1358,
+          "tonsPerDay": 43.8
+        },
+        {
+          "key": "2024-01",
+          "trucks": 124,
+          "trucksPerDay": 4,
+          "tons": 2700,
+          "tonsPerDay": 87.1
+        },
+        {
+          "key": "2024-02",
+          "trucks": 116,
+          "trucksPerDay": 4,
+          "tons": 2664,
+          "tonsPerDay": 91.9
+        },
+        {
+          "key": "2024-03",
+          "trucks": 120,
+          "trucksPerDay": 3.9,
+          "tons": 2724,
+          "tonsPerDay": 87.9
+        },
+        {
+          "key": "2024-04",
+          "trucks": 116,
+          "trucksPerDay": 3.9,
+          "tons": 2540,
+          "tonsPerDay": 84.7
+        },
+        {
+          "key": "2024-05",
+          "trucks": 20,
+          "trucksPerDay": 0.6,
+          "tons": 440,
+          "tonsPerDay": 14.2
+        },
+        {
+          "key": "2024-06",
+          "trucks": 75,
+          "trucksPerDay": 2.5,
+          "tons": 1550,
+          "tonsPerDay": 51.7
+        },
+        {
+          "key": "2024-07",
+          "trucks": 132,
+          "trucksPerDay": 4.3,
+          "tons": 2707,
+          "tonsPerDay": 87.3
+        },
+        {
+          "key": "2024-08",
+          "trucks": 125,
+          "trucksPerDay": 4,
+          "tons": 2735,
+          "tonsPerDay": 88.2
+        },
+        {
+          "key": "2024-09",
+          "trucks": 132,
+          "trucksPerDay": 4.4,
+          "tons": 2892,
+          "tonsPerDay": 96.4
+        },
+        {
+          "key": "2024-10",
+          "trucks": 81,
+          "trucksPerDay": 2.6,
+          "tons": 1724,
+          "tonsPerDay": 55.6
+        },
+        {
+          "key": "2024-11",
+          "trucks": 108,
+          "trucksPerDay": 3.6,
+          "tons": 2393,
+          "tonsPerDay": 79.8
+        },
+        {
+          "key": "2024-12",
+          "trucks": 138,
+          "trucksPerDay": 4.5,
+          "tons": 3112,
+          "tonsPerDay": 100.4
+        },
+        {
+          "key": "2025-01",
+          "trucks": 164,
+          "trucksPerDay": 5.3,
+          "tons": 1556,
+          "tonsPerDay": 50.2
+        },
+        {
+          "key": "2025-02",
+          "trucks": 212,
+          "trucksPerDay": 7.6,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 2,
+          "trucksPerDay": 0.1,
+          "tons": 12,
+          "tonsPerDay": 0.4
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-08",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-09",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        }
+      ]
+    },
+    {
+      "key": "Medical equipment - for field hospital",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-11",
+          "trucks": 148,
+          "trucksPerDay": 4.9,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-12",
+          "trucks": 85,
+          "trucksPerDay": 2.7,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-01",
+          "trucks": 52,
+          "trucksPerDay": 1.7,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-02",
+          "trucks": 51,
+          "trucksPerDay": 1.8,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-03",
+          "trucks": 35,
+          "trucksPerDay": 1.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-04",
+          "trucks": 28,
+          "trucksPerDay": 0.9,
+          "tons": 15,
+          "tonsPerDay": 0.5
+        },
+        {
+          "key": "2024-05",
+          "trucks": 1,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-06",
+          "trucks": 25,
+          "trucksPerDay": 0.8,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-07",
+          "trucks": 20,
+          "trucksPerDay": 0.6,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-08",
+          "trucks": 24,
+          "trucksPerDay": 0.8,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-09",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-10",
+          "trucks": 17,
+          "trucksPerDay": 0.5,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-11",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-12",
+          "trucks": 4,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-01",
+          "trucks": 46,
+          "trucksPerDay": 1.5,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-02",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 25,
+          "trucksPerDay": 0.8,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-08",
+          "trucks": 6,
+          "trucksPerDay": 0.2,
+          "tons": 1,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-09",
+          "trucks": 1,
+          "trucksPerDay": 0,
+          "tons": 20,
+          "tonsPerDay": 0.7
+        },
+        {
+          "key": "2025-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        }
+      ]
+    },
+    {
+      "key": "Medical supplies",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 70,
+          "trucksPerDay": 2.3,
+          "tons": 1015,
+          "tonsPerDay": 32.7
+        },
+        {
+          "key": "2023-11",
+          "trucks": 287,
+          "trucksPerDay": 9.6,
+          "tons": 4265,
+          "tonsPerDay": 142.2
+        },
+        {
+          "key": "2023-12",
+          "trucks": 301,
+          "trucksPerDay": 9.7,
+          "tons": 4430,
+          "tonsPerDay": 142.9
+        },
+        {
+          "key": "2024-01",
+          "trucks": 365,
+          "trucksPerDay": 11.8,
+          "tons": 6155,
+          "tonsPerDay": 198.5
+        },
+        {
+          "key": "2024-02",
+          "trucks": 113,
+          "trucksPerDay": 3.9,
+          "tons": 1610,
+          "tonsPerDay": 55.5
+        },
+        {
+          "key": "2024-03",
+          "trucks": 123,
+          "trucksPerDay": 4,
+          "tons": 1745,
+          "tonsPerDay": 56.3
+        },
+        {
+          "key": "2024-04",
+          "trucks": 178,
+          "trucksPerDay": 5.9,
+          "tons": 2385,
+          "tonsPerDay": 79.5
+        },
+        {
+          "key": "2024-05",
+          "trucks": 99,
+          "trucksPerDay": 3.2,
+          "tons": 1325,
+          "tonsPerDay": 42.7
+        },
+        {
+          "key": "2024-06",
+          "trucks": 159,
+          "trucksPerDay": 5.3,
+          "tons": 1280,
+          "tonsPerDay": 42.7
+        },
+        {
+          "key": "2024-07",
+          "trucks": 56,
+          "trucksPerDay": 1.8,
+          "tons": 595,
+          "tonsPerDay": 19.2
+        },
+        {
+          "key": "2024-08",
+          "trucks": 45,
+          "trucksPerDay": 1.5,
+          "tons": 447,
+          "tonsPerDay": 14.4
+        },
+        {
+          "key": "2024-09",
+          "trucks": 88,
+          "trucksPerDay": 2.9,
+          "tons": 1100,
+          "tonsPerDay": 36.7
+        },
+        {
+          "key": "2024-10",
+          "trucks": 65,
+          "trucksPerDay": 2.1,
+          "tons": 785,
+          "tonsPerDay": 25.3
+        },
+        {
+          "key": "2024-11",
+          "trucks": 54,
+          "trucksPerDay": 1.8,
+          "tons": 764,
+          "tonsPerDay": 25.5
+        },
+        {
+          "key": "2024-12",
+          "trucks": 110,
+          "trucksPerDay": 3.5,
+          "tons": 1300,
+          "tonsPerDay": 41.9
+        },
+        {
+          "key": "2025-01",
+          "trucks": 294,
+          "trucksPerDay": 9.5,
+          "tons": 4630,
+          "tonsPerDay": 149.4
+        },
+        {
+          "key": "2025-02",
+          "trucks": 712,
+          "trucksPerDay": 25.4,
+          "tons": 11569,
+          "tonsPerDay": 413.2
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 23,
+          "trucksPerDay": 0.7,
+          "tons": 288,
+          "tonsPerDay": 9.3
+        },
+        {
+          "key": "2025-06",
+          "trucks": 14,
+          "trucksPerDay": 0.5,
+          "tons": 110,
+          "tonsPerDay": 3.7
+        },
+        {
+          "key": "2025-07",
+          "trucks": 82,
+          "trucksPerDay": 2.6,
+          "tons": 1358,
+          "tonsPerDay": 43.8
+        },
+        {
+          "key": "2025-08",
+          "trucks": 97,
+          "trucksPerDay": 3.1,
+          "tons": 1173,
+          "tonsPerDay": 37.8
+        },
+        {
+          "key": "2025-09",
+          "trucks": 125,
+          "trucksPerDay": 4.2,
+          "tons": 1860,
+          "tonsPerDay": 62
+        },
+        {
+          "key": "2025-10",
+          "trucks": 39,
+          "trucksPerDay": 1.3,
+          "tons": 434,
+          "tonsPerDay": 14
+        }
+      ]
+    },
+    {
+      "key": "Mixed aid",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 28,
+          "trucksPerDay": 0.9,
+          "tons": 495,
+          "tonsPerDay": 16
+        },
+        {
+          "key": "2023-11",
+          "trucks": 358,
+          "trucksPerDay": 11.9,
+          "tons": 5455,
+          "tonsPerDay": 181.8
+        },
+        {
+          "key": "2023-12",
+          "trucks": 271,
+          "trucksPerDay": 8.7,
+          "tons": 4210,
+          "tonsPerDay": 135.8
+        },
+        {
+          "key": "2024-01",
+          "trucks": 348,
+          "trucksPerDay": 11.2,
+          "tons": 5275,
+          "tonsPerDay": 170.2
+        },
+        {
+          "key": "2024-02",
+          "trucks": 321,
+          "trucksPerDay": 11.1,
+          "tons": 4895,
+          "tonsPerDay": 168.8
+        },
+        {
+          "key": "2024-03",
+          "trucks": 240,
+          "trucksPerDay": 7.7,
+          "tons": 3580,
+          "tonsPerDay": 115.5
+        },
+        {
+          "key": "2024-04",
+          "trucks": 213,
+          "trucksPerDay": 7.1,
+          "tons": 3160,
+          "tonsPerDay": 105.3
+        },
+        {
+          "key": "2024-05",
+          "trucks": 124,
+          "trucksPerDay": 4,
+          "tons": 1855,
+          "tonsPerDay": 59.8
+        },
+        {
+          "key": "2024-06",
+          "trucks": 118,
+          "trucksPerDay": 3.9,
+          "tons": 1825,
+          "tonsPerDay": 60.8
+        },
+        {
+          "key": "2024-07",
+          "trucks": 405,
+          "trucksPerDay": 13.1,
+          "tons": 6665,
+          "tonsPerDay": 215
+        },
+        {
+          "key": "2024-08",
+          "trucks": 77,
+          "trucksPerDay": 2.5,
+          "tons": 1190,
+          "tonsPerDay": 38.4
+        },
+        {
+          "key": "2024-09",
+          "trucks": 183,
+          "trucksPerDay": 6.1,
+          "tons": 2780,
+          "tonsPerDay": 92.7
+        },
+        {
+          "key": "2024-10",
+          "trucks": 64,
+          "trucksPerDay": 2.1,
+          "tons": 970,
+          "tonsPerDay": 31.3
+        },
+        {
+          "key": "2024-11",
+          "trucks": 490,
+          "trucksPerDay": 16.3,
+          "tons": 9278,
+          "tonsPerDay": 309.3
+        },
+        {
+          "key": "2024-12",
+          "trucks": 688,
+          "trucksPerDay": 22.2,
+          "tons": 11325,
+          "tonsPerDay": 365.3
+        },
+        {
+          "key": "2025-01",
+          "trucks": 527,
+          "trucksPerDay": 17,
+          "tons": 10157,
+          "tonsPerDay": 327.6
+        },
+        {
+          "key": "2025-02",
+          "trucks": 903,
+          "trucksPerDay": 32.3,
+          "tons": 17545,
+          "tonsPerDay": 626.6
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 5,
+          "trucksPerDay": 0.2,
+          "tons": 75,
+          "tonsPerDay": 2.4
+        },
+        {
+          "key": "2025-08",
+          "trucks": 57,
+          "trucksPerDay": 1.8,
+          "tons": 1053,
+          "tonsPerDay": 34
+        },
+        {
+          "key": "2025-09",
+          "trucks": 249,
+          "trucksPerDay": 8.3,
+          "tons": 4230,
+          "tonsPerDay": 141
+        },
+        {
+          "key": "2025-10",
+          "trucks": 387,
+          "trucksPerDay": 12.5,
+          "tons": 7665,
+          "tonsPerDay": 247.3
+        }
+      ]
+    },
+    {
+      "key": "Shelter equipment",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 16,
+          "trucksPerDay": 0.5,
+          "tons": 250,
+          "tonsPerDay": 8.1
+        },
+        {
+          "key": "2023-11",
+          "trucks": 363,
+          "trucksPerDay": 12.1,
+          "tons": 5125,
+          "tonsPerDay": 170.8
+        },
+        {
+          "key": "2023-12",
+          "trucks": 621,
+          "trucksPerDay": 20,
+          "tons": 8900,
+          "tonsPerDay": 287.1
+        },
+        {
+          "key": "2024-01",
+          "trucks": 649,
+          "trucksPerDay": 20.9,
+          "tons": 9315,
+          "tonsPerDay": 300.5
+        },
+        {
+          "key": "2024-02",
+          "trucks": 623,
+          "trucksPerDay": 21.5,
+          "tons": 9000,
+          "tonsPerDay": 310.3
+        },
+        {
+          "key": "2024-03",
+          "trucks": 751,
+          "trucksPerDay": 24.2,
+          "tons": 10685,
+          "tonsPerDay": 344.7
+        },
+        {
+          "key": "2024-04",
+          "trucks": 1126,
+          "trucksPerDay": 37.5,
+          "tons": 15760,
+          "tonsPerDay": 525.3
+        },
+        {
+          "key": "2024-05",
+          "trucks": 524,
+          "trucksPerDay": 16.9,
+          "tons": 6955,
+          "tonsPerDay": 224.4
+        },
+        {
+          "key": "2024-06",
+          "trucks": 495,
+          "trucksPerDay": 16.5,
+          "tons": 5520,
+          "tonsPerDay": 184
+        },
+        {
+          "key": "2024-07",
+          "trucks": 235,
+          "trucksPerDay": 7.6,
+          "tons": 2175,
+          "tonsPerDay": 70.2
+        },
+        {
+          "key": "2024-08",
+          "trucks": 252,
+          "trucksPerDay": 8.1,
+          "tons": 2720,
+          "tonsPerDay": 87.7
+        },
+        {
+          "key": "2024-09",
+          "trucks": 284,
+          "trucksPerDay": 9.5,
+          "tons": 3290,
+          "tonsPerDay": 109.7
+        },
+        {
+          "key": "2024-10",
+          "trucks": 355,
+          "trucksPerDay": 11.5,
+          "tons": 4700,
+          "tonsPerDay": 151.6
+        },
+        {
+          "key": "2024-11",
+          "trucks": 410,
+          "trucksPerDay": 13.7,
+          "tons": 6147,
+          "tonsPerDay": 204.9
+        },
+        {
+          "key": "2024-12",
+          "trucks": 630,
+          "trucksPerDay": 20.3,
+          "tons": 9593,
+          "tonsPerDay": 309.5
+        },
+        {
+          "key": "2025-01",
+          "trucks": 1829,
+          "trucksPerDay": 59,
+          "tons": 22850,
+          "tonsPerDay": 737.1
+        },
+        {
+          "key": "2025-02",
+          "trucks": 3619,
+          "trucksPerDay": 129.3,
+          "tons": 45321,
+          "tonsPerDay": 1618.6
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 35,
+          "trucksPerDay": 1.1,
+          "tons": 714,
+          "tonsPerDay": 23
+        },
+        {
+          "key": "2025-06",
+          "trucks": 12,
+          "trucksPerDay": 0.4,
+          "tons": 300,
+          "tonsPerDay": 10
+        },
+        {
+          "key": "2025-07",
+          "trucks": 127,
+          "trucksPerDay": 4.1,
+          "tons": 2045,
+          "tonsPerDay": 66
+        },
+        {
+          "key": "2025-08",
+          "trucks": 220,
+          "trucksPerDay": 7.1,
+          "tons": 3593,
+          "tonsPerDay": 115.9
+        },
+        {
+          "key": "2025-09",
+          "trucks": 550,
+          "trucksPerDay": 18.3,
+          "tons": 9324,
+          "tonsPerDay": 310.8
+        },
+        {
+          "key": "2025-10",
+          "trucks": 163,
+          "trucksPerDay": 5.3,
+          "tons": 2681,
+          "tonsPerDay": 86.5
+        }
+      ]
+    },
+    {
+      "key": "UN and International organizations equipment",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-11",
+          "trucks": 5,
+          "trucksPerDay": 0.2,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-12",
+          "trucks": 2,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-01",
+          "trucks": 5,
+          "trucksPerDay": 0.2,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-02",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-03",
+          "trucks": 4,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-04",
+          "trucks": 10,
+          "trucksPerDay": 0.3,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-05",
+          "trucks": 7,
+          "trucksPerDay": 0.2,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-06",
+          "trucks": 9,
+          "trucksPerDay": 0.3,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-07",
+          "trucks": 14,
+          "trucksPerDay": 0.5,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-08",
+          "trucks": 18,
+          "trucksPerDay": 0.6,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-09",
+          "trucks": 17,
+          "trucksPerDay": 0.6,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-10",
+          "trucks": 10,
+          "trucksPerDay": 0.3,
+          "tons": 60,
+          "tonsPerDay": 1.9
+        },
+        {
+          "key": "2024-11",
+          "trucks": 9,
+          "trucksPerDay": 0.3,
+          "tons": 30,
+          "tonsPerDay": 1
+        },
+        {
+          "key": "2024-12",
+          "trucks": 49,
+          "trucksPerDay": 1.6,
+          "tons": 60,
+          "tonsPerDay": 1.9
+        },
+        {
+          "key": "2025-01",
+          "trucks": 70,
+          "trucksPerDay": 2.3,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-02",
+          "trucks": 86,
+          "trucksPerDay": 3.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 10,
+          "trucksPerDay": 0.3,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 2,
+          "trucksPerDay": 0.1,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-08",
+          "trucks": 18,
+          "trucksPerDay": 0.6,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-09",
+          "trucks": 3,
+          "trucksPerDay": 0.1,
+          "tons": 20,
+          "tonsPerDay": 0.7
+        },
+        {
+          "key": "2025-10",
+          "trucks": 9,
+          "trucksPerDay": 0.3,
+          "tons": 0,
+          "tonsPerDay": 0
+        }
+      ]
+    },
+    {
+      "key": "Water",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 23,
+          "trucksPerDay": 0.7,
+          "tons": 450,
+          "tonsPerDay": 14.5
+        },
+        {
+          "key": "2023-11",
+          "trucks": 485,
+          "trucksPerDay": 16.2,
+          "tons": 9765,
+          "tonsPerDay": 325.5
+        },
+        {
+          "key": "2023-12",
+          "trucks": 303,
+          "trucksPerDay": 9.8,
+          "tons": 6060,
+          "tonsPerDay": 195.5
+        },
+        {
+          "key": "2024-01",
+          "trucks": 207,
+          "trucksPerDay": 6.7,
+          "tons": 4140,
+          "tonsPerDay": 133.5
+        },
+        {
+          "key": "2024-02",
+          "trucks": 233,
+          "trucksPerDay": 8,
+          "tons": 4685,
+          "tonsPerDay": 161.6
+        },
+        {
+          "key": "2024-03",
+          "trucks": 168,
+          "trucksPerDay": 5.4,
+          "tons": 3360,
+          "tonsPerDay": 108.4
+        },
+        {
+          "key": "2024-04",
+          "trucks": 202,
+          "trucksPerDay": 6.7,
+          "tons": 4045,
+          "tonsPerDay": 134.8
+        },
+        {
+          "key": "2024-05",
+          "trucks": 322,
+          "trucksPerDay": 10.4,
+          "tons": 6440,
+          "tonsPerDay": 207.7
+        },
+        {
+          "key": "2024-06",
+          "trucks": 138,
+          "trucksPerDay": 4.6,
+          "tons": 2760,
+          "tonsPerDay": 92
+        },
+        {
+          "key": "2024-07",
+          "trucks": 329,
+          "trucksPerDay": 10.6,
+          "tons": 6580,
+          "tonsPerDay": 212.3
+        },
+        {
+          "key": "2024-08",
+          "trucks": 67,
+          "trucksPerDay": 2.2,
+          "tons": 1335,
+          "tonsPerDay": 43.1
+        },
+        {
+          "key": "2024-09",
+          "trucks": 100,
+          "trucksPerDay": 3.3,
+          "tons": 2000,
+          "tonsPerDay": 66.7
+        },
+        {
+          "key": "2024-10",
+          "trucks": 23,
+          "trucksPerDay": 0.7,
+          "tons": 460,
+          "tonsPerDay": 14.8
+        },
+        {
+          "key": "2024-11",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2024-12",
+          "trucks": 38,
+          "trucksPerDay": 1.2,
+          "tons": 760,
+          "tonsPerDay": 24.5
+        },
+        {
+          "key": "2025-01",
+          "trucks": 146,
+          "trucksPerDay": 4.7,
+          "tons": 2886,
+          "tonsPerDay": 93.1
+        },
+        {
+          "key": "2025-02",
+          "trucks": 231,
+          "trucksPerDay": 8.3,
+          "tons": 4610,
+          "tonsPerDay": 164.6
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 1,
+          "trucksPerDay": 0,
+          "tons": 24,
+          "tonsPerDay": 0.8
+        },
+        {
+          "key": "2025-08",
+          "trucks": 12,
+          "trucksPerDay": 0.4,
+          "tons": 438,
+          "tonsPerDay": 14.1
+        },
+        {
+          "key": "2025-09",
+          "trucks": 17,
+          "trucksPerDay": 0.6,
+          "tons": 364,
+          "tonsPerDay": 12.1
+        },
+        {
+          "key": "2025-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        }
+      ]
+    }
+  ],
+  "byOrg": [
+    {
+      "key": "Countries",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 13,
+          "trucksPerDay": 0.4,
+          "tons": 255,
+          "tonsPerDay": 8.2
+        },
+        {
+          "key": "2023-11",
+          "trucks": 454,
+          "trucksPerDay": 15.1,
+          "tons": 5312,
+          "tonsPerDay": 177.1
+        },
+        {
+          "key": "2023-12",
+          "trucks": 568,
+          "trucksPerDay": 18.3,
+          "tons": 8816,
+          "tonsPerDay": 284.4
+        },
+        {
+          "key": "2024-01",
+          "trucks": 871,
+          "trucksPerDay": 28.1,
+          "tons": 14614,
+          "tonsPerDay": 471.4
+        },
+        {
+          "key": "2024-02",
+          "trucks": 319,
+          "trucksPerDay": 11,
+          "tons": 4637,
+          "tonsPerDay": 159.9
+        },
+        {
+          "key": "2024-03",
+          "trucks": 607,
+          "trucksPerDay": 19.6,
+          "tons": 12495,
+          "tonsPerDay": 403
+        },
+        {
+          "key": "2024-04",
+          "trucks": 1037,
+          "trucksPerDay": 34.6,
+          "tons": 23037,
+          "tonsPerDay": 767.9
+        },
+        {
+          "key": "2024-05",
+          "trucks": 536,
+          "trucksPerDay": 17.3,
+          "tons": 9845,
+          "tonsPerDay": 317.6
+        },
+        {
+          "key": "2024-06",
+          "trucks": 589,
+          "trucksPerDay": 19.6,
+          "tons": 7227,
+          "tonsPerDay": 240.9
+        },
+        {
+          "key": "2024-07",
+          "trucks": 293,
+          "trucksPerDay": 9.5,
+          "tons": 3693,
+          "tonsPerDay": 119.1
+        },
+        {
+          "key": "2024-08",
+          "trucks": 282,
+          "trucksPerDay": 9.1,
+          "tons": 4353,
+          "tonsPerDay": 140.4
+        },
+        {
+          "key": "2024-09",
+          "trucks": 218,
+          "trucksPerDay": 7.3,
+          "tons": 3167,
+          "tonsPerDay": 105.6
+        },
+        {
+          "key": "2024-10",
+          "trucks": 26,
+          "trucksPerDay": 0.8,
+          "tons": 458,
+          "tonsPerDay": 14.8
+        },
+        {
+          "key": "2024-11",
+          "trucks": 148,
+          "trucksPerDay": 4.9,
+          "tons": 2309,
+          "tonsPerDay": 77
+        },
+        {
+          "key": "2024-12",
+          "trucks": 174,
+          "trucksPerDay": 5.6,
+          "tons": 3169,
+          "tonsPerDay": 102.2
+        },
+        {
+          "key": "2025-01",
+          "trucks": 384,
+          "trucksPerDay": 12.4,
+          "tons": 6028,
+          "tonsPerDay": 194.4
+        },
+        {
+          "key": "2025-02",
+          "trucks": 547,
+          "trucksPerDay": 19.5,
+          "tons": 7870,
+          "tonsPerDay": 281.1
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 108,
+          "trucksPerDay": 3.5,
+          "tons": 2444,
+          "tonsPerDay": 78.8
+        },
+        {
+          "key": "2025-06",
+          "trucks": 65,
+          "trucksPerDay": 2.2,
+          "tons": 1347,
+          "tonsPerDay": 44.9
+        },
+        {
+          "key": "2025-07",
+          "trucks": 298,
+          "trucksPerDay": 9.6,
+          "tons": 4499,
+          "tonsPerDay": 145.1
+        },
+        {
+          "key": "2025-08",
+          "trucks": 510,
+          "trucksPerDay": 16.5,
+          "tons": 10254,
+          "tonsPerDay": 330.8
+        },
+        {
+          "key": "2025-09",
+          "trucks": 288,
+          "trucksPerDay": 9.6,
+          "tons": 5210,
+          "tonsPerDay": 173.7
+        },
+        {
+          "key": "2025-10",
+          "trucks": 44,
+          "trucksPerDay": 1.4,
+          "tons": 780,
+          "tonsPerDay": 25.2
+        }
+      ]
+    },
+    {
+      "key": "International Organizations & NGOs",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 136,
+          "trucksPerDay": 4.4,
+          "tons": 2220,
+          "tonsPerDay": 71.6
+        },
+        {
+          "key": "2023-11",
+          "trucks": 1557,
+          "trucksPerDay": 51.9,
+          "tons": 28020,
+          "tonsPerDay": 934
+        },
+        {
+          "key": "2023-12",
+          "trucks": 1536,
+          "trucksPerDay": 49.5,
+          "tons": 28210,
+          "tonsPerDay": 910
+        },
+        {
+          "key": "2024-01",
+          "trucks": 1485,
+          "trucksPerDay": 47.9,
+          "tons": 28090,
+          "tonsPerDay": 906.1
+        },
+        {
+          "key": "2024-02",
+          "trucks": 1409,
+          "trucksPerDay": 48.6,
+          "tons": 26655,
+          "tonsPerDay": 919.1
+        },
+        {
+          "key": "2024-03",
+          "trucks": 1558,
+          "trucksPerDay": 50.3,
+          "tons": 29555,
+          "tonsPerDay": 953.4
+        },
+        {
+          "key": "2024-04",
+          "trucks": 2178,
+          "trucksPerDay": 72.6,
+          "tons": 41895,
+          "tonsPerDay": 1396.5
+        },
+        {
+          "key": "2024-05",
+          "trucks": 708,
+          "trucksPerDay": 22.8,
+          "tons": 13520,
+          "tonsPerDay": 436.1
+        },
+        {
+          "key": "2024-06",
+          "trucks": 471,
+          "trucksPerDay": 15.7,
+          "tons": 6760,
+          "tonsPerDay": 225.3
+        },
+        {
+          "key": "2024-07",
+          "trucks": 152,
+          "trucksPerDay": 4.9,
+          "tons": 1880,
+          "tonsPerDay": 60.6
+        },
+        {
+          "key": "2024-08",
+          "trucks": 253,
+          "trucksPerDay": 8.2,
+          "tons": 3486,
+          "tonsPerDay": 112.4
+        },
+        {
+          "key": "2024-09",
+          "trucks": 484,
+          "trucksPerDay": 16.1,
+          "tons": 7835,
+          "tonsPerDay": 261.2
+        },
+        {
+          "key": "2024-10",
+          "trucks": 581,
+          "trucksPerDay": 18.7,
+          "tons": 9845,
+          "tonsPerDay": 317.6
+        },
+        {
+          "key": "2024-11",
+          "trucks": 1085,
+          "trucksPerDay": 36.2,
+          "tons": 20601,
+          "tonsPerDay": 686.7
+        },
+        {
+          "key": "2024-12",
+          "trucks": 2762,
+          "trucksPerDay": 89.1,
+          "tons": 51338,
+          "tonsPerDay": 1656
+        },
+        {
+          "key": "2025-01",
+          "trucks": 6990,
+          "trucksPerDay": 225.5,
+          "tons": 130765,
+          "tonsPerDay": 4218.2
+        },
+        {
+          "key": "2025-02",
+          "trucks": 11668,
+          "trucksPerDay": 416.7,
+          "tons": 215402,
+          "tonsPerDay": 7692.9
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 302,
+          "trucksPerDay": 9.7,
+          "tons": 6142,
+          "tonsPerDay": 198.1
+        },
+        {
+          "key": "2025-06",
+          "trucks": 1142,
+          "trucksPerDay": 38.1,
+          "tons": 23131,
+          "tonsPerDay": 771
+        },
+        {
+          "key": "2025-07",
+          "trucks": 1548,
+          "trucksPerDay": 49.9,
+          "tons": 30943,
+          "tonsPerDay": 998.2
+        },
+        {
+          "key": "2025-08",
+          "trucks": 2456,
+          "trucksPerDay": 79.2,
+          "tons": 48346,
+          "tonsPerDay": 1559.5
+        },
+        {
+          "key": "2025-09",
+          "trucks": 2002,
+          "trucksPerDay": 66.7,
+          "tons": 44168,
+          "tonsPerDay": 1472.3
+        },
+        {
+          "key": "2025-10",
+          "trucks": 837,
+          "trucksPerDay": 27,
+          "tons": 18664,
+          "tonsPerDay": 602.1
+        }
+      ]
+    },
+    {
+      "key": "Mixed donors",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 10,
+          "trucksPerDay": 0.3,
+          "tons": 180,
+          "tonsPerDay": 5.8
+        },
+        {
+          "key": "2023-11",
+          "trucks": 64,
+          "trucksPerDay": 2.1,
+          "tons": 1045,
+          "tonsPerDay": 34.8
+        },
+        {
+          "key": "2023-12",
+          "trucks": 89,
+          "trucksPerDay": 2.9,
+          "tons": 1300,
+          "tonsPerDay": 41.9
+        },
+        {
+          "key": "2024-01",
+          "trucks": 22,
+          "trucksPerDay": 0.7,
+          "tons": 345,
+          "tonsPerDay": 11.1
+        },
+        {
+          "key": "2024-02",
+          "trucks": 47,
+          "trucksPerDay": 1.6,
+          "tons": 810,
+          "tonsPerDay": 27.9
+        },
+        {
+          "key": "2024-03",
+          "trucks": 58,
+          "trucksPerDay": 1.9,
+          "tons": 985,
+          "tonsPerDay": 31.8
+        },
+        {
+          "key": "2024-04",
+          "trucks": 35,
+          "trucksPerDay": 1.2,
+          "tons": 395,
+          "tonsPerDay": 13.2
+        },
+        {
+          "key": "2024-05",
+          "trucks": 28,
+          "trucksPerDay": 0.9,
+          "tons": 319,
+          "tonsPerDay": 10.3
+        },
+        {
+          "key": "2024-06",
+          "trucks": 35,
+          "trucksPerDay": 1.2,
+          "tons": 435,
+          "tonsPerDay": 14.5
+        },
+        {
+          "key": "2024-07",
+          "trucks": 20,
+          "trucksPerDay": 0.6,
+          "tons": 300,
+          "tonsPerDay": 9.7
+        },
+        {
+          "key": "2024-08",
+          "trucks": 15,
+          "trucksPerDay": 0.5,
+          "tons": 135,
+          "tonsPerDay": 4.4
+        },
+        {
+          "key": "2024-09",
+          "trucks": 14,
+          "trucksPerDay": 0.5,
+          "tons": 10,
+          "tonsPerDay": 0.3
+        },
+        {
+          "key": "2024-10",
+          "trucks": 6,
+          "trucksPerDay": 0.2,
+          "tons": 35,
+          "tonsPerDay": 1.1
+        },
+        {
+          "key": "2024-11",
+          "trucks": 3,
+          "trucksPerDay": 0.1,
+          "tons": 15,
+          "tonsPerDay": 0.5
+        },
+        {
+          "key": "2024-12",
+          "trucks": 22,
+          "trucksPerDay": 0.7,
+          "tons": 365,
+          "tonsPerDay": 11.8
+        },
+        {
+          "key": "2025-01",
+          "trucks": 37,
+          "trucksPerDay": 1.2,
+          "tons": 371,
+          "tonsPerDay": 12
+        },
+        {
+          "key": "2025-02",
+          "trucks": 179,
+          "trucksPerDay": 6.4,
+          "tons": 2710,
+          "tonsPerDay": 96.8
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 28,
+          "trucksPerDay": 0.9,
+          "tons": 605,
+          "tonsPerDay": 19.5
+        },
+        {
+          "key": "2025-08",
+          "trucks": 11,
+          "trucksPerDay": 0.4,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-09",
+          "trucks": 1,
+          "trucksPerDay": 0,
+          "tons": 15,
+          "tonsPerDay": 0.5
+        },
+        {
+          "key": "2025-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        }
+      ]
+    },
+    {
+      "key": "Private sector",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2023-11",
+          "trucks": 38,
+          "trucksPerDay": 1.3,
+          "tons": 788,
+          "tonsPerDay": 26.3
+        },
+        {
+          "key": "2023-12",
+          "trucks": 282,
+          "trucksPerDay": 9.1,
+          "tons": 6663,
+          "tonsPerDay": 214.9
+        },
+        {
+          "key": "2024-01",
+          "trucks": 569,
+          "trucksPerDay": 18.4,
+          "tons": 13160,
+          "tonsPerDay": 424.5
+        },
+        {
+          "key": "2024-02",
+          "trucks": 349,
+          "trucksPerDay": 12,
+          "tons": 7744,
+          "tonsPerDay": 267
+        },
+        {
+          "key": "2024-03",
+          "trucks": 872,
+          "trucksPerDay": 28.1,
+          "tons": 17429,
+          "tonsPerDay": 562.2
+        },
+        {
+          "key": "2024-04",
+          "trucks": 455,
+          "trucksPerDay": 15.2,
+          "tons": 9035,
+          "tonsPerDay": 301.2
+        },
+        {
+          "key": "2024-05",
+          "trucks": 2899,
+          "trucksPerDay": 93.5,
+          "tons": 58280,
+          "tonsPerDay": 1880
+        },
+        {
+          "key": "2024-06",
+          "trucks": 2469,
+          "trucksPerDay": 82.3,
+          "tons": 49250,
+          "tonsPerDay": 1641.7
+        },
+        {
+          "key": "2024-07",
+          "trucks": 4260,
+          "trucksPerDay": 137.4,
+          "tons": 84202,
+          "tonsPerDay": 2716.2
+        },
+        {
+          "key": "2024-08",
+          "trucks": 2759,
+          "trucksPerDay": 89,
+          "tons": 55395,
+          "tonsPerDay": 1786.9
+        },
+        {
+          "key": "2024-09",
+          "trucks": 2560,
+          "trucksPerDay": 85.3,
+          "tons": 51442,
+          "tonsPerDay": 1714.7
+        },
+        {
+          "key": "2024-10",
+          "trucks": 130,
+          "trucksPerDay": 4.2,
+          "tons": 2689,
+          "tonsPerDay": 86.7
+        },
+        {
+          "key": "2024-11",
+          "trucks": 108,
+          "trucksPerDay": 3.6,
+          "tons": 2393,
+          "tonsPerDay": 79.8
+        },
+        {
+          "key": "2024-12",
+          "trucks": 138,
+          "trucksPerDay": 4.5,
+          "tons": 3112,
+          "tonsPerDay": 100.4
+        },
+        {
+          "key": "2025-01",
+          "trucks": 168,
+          "trucksPerDay": 5.4,
+          "tons": 1556,
+          "tonsPerDay": 50.2
+        },
+        {
+          "key": "2025-02",
+          "trucks": 212,
+          "trucksPerDay": 7.6,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-06",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-07",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-08",
+          "trucks": 2070,
+          "trucksPerDay": 66.8,
+          "tons": 41406,
+          "tonsPerDay": 1335.7
+        },
+        {
+          "key": "2025-09",
+          "trucks": 1844,
+          "trucksPerDay": 61.5,
+          "tons": 36417,
+          "tonsPerDay": 1213.9
+        },
+        {
+          "key": "2025-10",
+          "trucks": 738,
+          "trucksPerDay": 23.8,
+          "tons": 14685,
+          "tonsPerDay": 473.7
+        }
+      ]
+    },
+    {
+      "key": "UN Agencies",
+      "series": [
+        {
+          "key": "2023-10",
+          "trucks": 82,
+          "trucksPerDay": 2.6,
+          "tons": 1205,
+          "tonsPerDay": 38.9
+        },
+        {
+          "key": "2023-11",
+          "trucks": 831,
+          "trucksPerDay": 27.7,
+          "tons": 15914,
+          "tonsPerDay": 530.5
+        },
+        {
+          "key": "2023-12",
+          "trucks": 1033,
+          "trucksPerDay": 33.3,
+          "tons": 20336,
+          "tonsPerDay": 656
+        },
+        {
+          "key": "2024-01",
+          "trucks": 2219,
+          "trucksPerDay": 71.6,
+          "tons": 45769,
+          "tonsPerDay": 1476.4
+        },
+        {
+          "key": "2024-02",
+          "trucks": 1495,
+          "trucksPerDay": 51.6,
+          "tons": 27518,
+          "tonsPerDay": 948.9
+        },
+        {
+          "key": "2024-03",
+          "trucks": 2141,
+          "trucksPerDay": 69.1,
+          "tons": 45870,
+          "tonsPerDay": 1479.7
+        },
+        {
+          "key": "2024-04",
+          "trucks": 3115,
+          "trucksPerDay": 103.8,
+          "tons": 65437,
+          "tonsPerDay": 2181.2
+        },
+        {
+          "key": "2024-05",
+          "trucks": 2236,
+          "trucksPerDay": 72.1,
+          "tons": 53488,
+          "tonsPerDay": 1725.4
+        },
+        {
+          "key": "2024-06",
+          "trucks": 1810,
+          "trucksPerDay": 60.3,
+          "tons": 39659,
+          "tonsPerDay": 1322
+        },
+        {
+          "key": "2024-07",
+          "trucks": 1199,
+          "trucksPerDay": 38.7,
+          "tons": 26171,
+          "tonsPerDay": 844.2
+        },
+        {
+          "key": "2024-08",
+          "trucks": 1272,
+          "trucksPerDay": 41,
+          "tons": 28125,
+          "tonsPerDay": 907.3
+        },
+        {
+          "key": "2024-09",
+          "trucks": 1135,
+          "trucksPerDay": 37.8,
+          "tons": 28099,
+          "tonsPerDay": 936.6
+        },
+        {
+          "key": "2024-10",
+          "trucks": 1050,
+          "trucksPerDay": 33.9,
+          "tons": 23758,
+          "tonsPerDay": 766.4
+        },
+        {
+          "key": "2024-11",
+          "trucks": 1328,
+          "trucksPerDay": 44.3,
+          "tons": 29971,
+          "tonsPerDay": 999
+        },
+        {
+          "key": "2024-12",
+          "trucks": 1969,
+          "trucksPerDay": 63.5,
+          "tons": 48204,
+          "tonsPerDay": 1555
+        },
+        {
+          "key": "2025-01",
+          "trucks": 3676,
+          "trucksPerDay": 118.6,
+          "tons": 69547,
+          "tonsPerDay": 2243.5
+        },
+        {
+          "key": "2025-02",
+          "trucks": 4194,
+          "trucksPerDay": 149.8,
+          "tons": 69138,
+          "tonsPerDay": 2469.2
+        },
+        {
+          "key": "2025-03",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-04",
+          "trucks": 0,
+          "trucksPerDay": 0,
+          "tons": 0,
+          "tonsPerDay": 0
+        },
+        {
+          "key": "2025-05",
+          "trucks": 559,
+          "trucksPerDay": 18,
+          "tons": 11638,
+          "tonsPerDay": 375.4
+        },
+        {
+          "key": "2025-06",
+          "trucks": 626,
+          "trucksPerDay": 20.9,
+          "tons": 13035,
+          "tonsPerDay": 434.5
+        },
+        {
+          "key": "2025-07",
+          "trucks": 1160,
+          "trucksPerDay": 37.4,
+          "tons": 22246,
+          "tonsPerDay": 717.6
+        },
+        {
+          "key": "2025-08",
+          "trucks": 1675,
+          "trucksPerDay": 54,
+          "tons": 32987,
+          "tonsPerDay": 1064.1
+        },
+        {
+          "key": "2025-09",
+          "trucks": 1308,
+          "trucksPerDay": 43.6,
+          "tons": 25954,
+          "tonsPerDay": 865.1
+        },
+        {
+          "key": "2025-10",
+          "trucks": 280,
+          "trucksPerDay": 9,
+          "tons": 5113,
+          "tonsPerDay": 165
+        }
+      ]
+    }
+  ]
+}

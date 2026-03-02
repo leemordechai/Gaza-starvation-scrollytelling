@@ -18,7 +18,7 @@
   .scroll-cue-line {
     width: 1px;
     height: 36px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
+    background: linear-gradient(to bottom, var(--accent), transparent);
     animation: cuePulse 2s ease-in-out infinite;
   }
   @keyframes cuePulse {

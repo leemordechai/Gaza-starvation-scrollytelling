@@ -1,0 +1,3934 @@
+{
+  "hebrewNames": {
+    "Chickpeas": "חומוס",
+    "Cucumbers": "מלפפונים",
+    "Dry Fava Beans": "פול יבש",
+    "Dry Onions": "בצל יבש",
+    "Eggplants": "חצילים",
+    "Eggs": "ביצים",
+    "Egyptian Rice": "אורז מצרי",
+    "Lentils-Brown": "עדשים חומות",
+    "Potatoes": "תפוחי אדמה",
+    "Red Lentils": "עדשים אדומות",
+    "Salt": "מלח",
+    "Sugar": "סוכר",
+    "Sunflower Oil": "שמן חמניות",
+    "Tomatoes": "עגבניות",
+    "Wheat Flour": "קמח חיטה",
+    "Baby Diapers": "חיתולי תינוקות",
+    "Cooking Gas": "גז בישול",
+    "Diesel": "דיזל",
+    "Drinking Water": "מי שתייה",
+    "Firewood": "עצי הסקה",
+    "Gasoline": "בנזין",
+    "Sanitary Pads": "תחבושות היגייניות",
+    "Tent": "אוהל"
+  },
+  "categories": {
+    "food": {
+      "labelHe": "מזון",
+      "items": {
+        "Chickpeas": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 5.4
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 15.7
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 13.2
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 15.53
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 21.5
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 23.53
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 20.93
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 19.23
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 15.63
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 15.93
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 15.5
+            },
+            {
+              "period": "2024-10",
+              "price": 18.67
+            },
+            {
+              "period": "2024-11",
+              "price": 30.7
+            },
+            {
+              "period": "2024-12",
+              "price": 27.33
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 23.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 9.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 5.83
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 5
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 7
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 5.33
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 8.67
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 9.33
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 16.67
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 15.67
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 20
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 28.33
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 50
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 35
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 20
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 16
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 10.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 10.67
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 14.67
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 11.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 10
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 6.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 8
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 8.67
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 7.67
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 7
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 6.67
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 6.67
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 7
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 5.33
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 6.33
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 6.67
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 6
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 6.33
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 5
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 6
+            }
+          ]
+        },
+        "Cucumbers": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 2.7
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 15.1
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 18.73
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 16.43
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 16.73
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 15.83
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 21.07
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 23.9
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 25.8
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 37.27
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 22.5
+            },
+            {
+              "period": "2024-10",
+              "price": 26.73
+            },
+            {
+              "period": "2024-11",
+              "price": 39.57
+            },
+            {
+              "period": "2024-12",
+              "price": 37.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 36.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 14.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 8.33
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 8.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 16
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 11.67
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 13.67
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 11.33
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 15.33
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 26.33
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 18.33
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 20
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 75
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 75
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 35
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 36.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 120
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 31.67
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 32
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 26
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 14
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 12.33
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 10
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 10.33
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 7.67
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 8.67
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 6
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 8.33
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 10.67
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 8.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 7.67
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 7.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 8.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 7.33
+            }
+          ]
+        },
+        "Dry Fava Beans": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 7
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 8.83
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 8.8
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 11.4
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 22.5
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 16
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 13.63
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 17.05
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 14.65
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 13.67
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 12.3
+            },
+            {
+              "period": "2024-10",
+              "price": 14.83
+            },
+            {
+              "period": "2024-11",
+              "price": 25
+            },
+            {
+              "period": "2024-12",
+              "price": 27
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 16.67
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 10.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 7
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 7
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 9.67
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 6.5
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 11
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 12.67
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 16
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 5.67
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 9
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 22.5
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 22.5
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 12.5
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 10
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 9.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 9.5
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 11
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 10.5
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 11
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 9.33
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 4.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 10
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 9
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 9.33
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 8
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 8
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 8
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 8
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 7
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 7.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 7
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 6.5
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 6.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 6.33
+            }
+          ]
+        },
+        "Dry Onions": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 3.2
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 15.47
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 27.77
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 4.5
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 83.67
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 115.27
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 37.93
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 177.67
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 9.65
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 110.63
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 49.07
+            },
+            {
+              "period": "2024-10",
+              "price": 129.7
+            },
+            {
+              "period": "2024-11",
+              "price": 103.33
+            },
+            {
+              "period": "2024-12",
+              "price": 34.33
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 27
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 10.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 2.5
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 5.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 9.67
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 10
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 29
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 40
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 35
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 40
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 38.33
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 41.67
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 93.33
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 140
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 65
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 53.33
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 61.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 80
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 56.67
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 50
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 67.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 40
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 12.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 11.33
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 7.67
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 6.33
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 5.67
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 3.17
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 3
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 3
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 3.33
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 3.33
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 3.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 3.67
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 3.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 3.17
+            }
+          ]
+        },
+        "Eggplants": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 4
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 12.33
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 16.97
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 18.4
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 34.17
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 23.93
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 20.47
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 21.8
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 20.27
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 16.47
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 15.03
+            },
+            {
+              "period": "2024-10",
+              "price": 21.23
+            },
+            {
+              "period": "2024-11",
+              "price": 39.83
+            },
+            {
+              "period": "2024-12",
+              "price": 40.92
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 35.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 13
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 8
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 10.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 18.33
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 20
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 25
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 24.33
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 26.67
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 36.67
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 33.33
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 28
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 37.5
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 45
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 25
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 23.33
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 16
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 15
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 20
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 18.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 20
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 14.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 12
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 13
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 14.5
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 11
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 7
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 6.5
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 6.33
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 6
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 6
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 6.5
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 7
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 6.5
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 8
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 8.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 9
+            }
+          ]
+        },
+        "Eggs": {
+          "unit": "2 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 14
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 116.25
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 82.97
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 109
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 142.5
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 104.27
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 169.7
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 127.87
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 114.4
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 128.1
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 92.83
+            },
+            {
+              "period": "2024-10",
+              "price": 230
+            },
+            {
+              "period": "2024-11",
+              "price": 400
+            },
+            {
+              "period": "2024-12",
+              "price": 210
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 203.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 60.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 27.67
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 24.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 31
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 40
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 95
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 130
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 210
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 270
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 270
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 420
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 600
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 600
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 510
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 450
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 450
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 450
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 450
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 450
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 600
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 450
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 450
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 100
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 100
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 83.33
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 77.5
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 55
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 41.67
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 30
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 27.33
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 26.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 25.67
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 23.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 23.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 27.33
+            }
+          ]
+        },
+        "Egyptian Rice": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 6.2
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 7.07
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 6.57
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 7.67
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 10.83
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 10.33
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 9.77
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 10.03
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 7.6
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 9.33
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 11.43
+            },
+            {
+              "period": "2024-10",
+              "price": 11.6
+            },
+            {
+              "period": "2024-11",
+              "price": 15.67
+            },
+            {
+              "period": "2024-12",
+              "price": 16.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 15.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 7.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 3.5
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 2.67
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 3.67
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 3.67
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 4.33
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 5
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 9.33
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 9
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 11.67
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 20.67
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 73.33
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 46.67
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 21.67
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 15.67
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 10
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 10.33
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 9.33
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 10
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 12.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 9.33
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 7.67
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 5.33
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 6.33
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 5.67
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 3.67
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 4
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 3.5
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 3.33
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 3.33
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 4
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 4
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 4
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 2.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 2.67
+            }
+          ]
+        },
+        "Lentils-Brown": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 6.3
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 6.5
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 13
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 8.83
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 8.83
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 13.57
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 7.83
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 6.63
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 13.07
+            },
+            {
+              "period": "2024-10",
+              "price": 17.33
+            },
+            {
+              "period": "2024-11",
+              "price": 19.97
+            },
+            {
+              "period": "2024-12",
+              "price": 26.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 18.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 9.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 6.33
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 5.67
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 8.33
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 8.5
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 9
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 12
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 19.33
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 20
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 21.67
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 28.33
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 50
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 41.67
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 17.67
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 13.33
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 12.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 19
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 21.67
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 25
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 25
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 19
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 14
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 14
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 12
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 9.5
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 9
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 10
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 8.33
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 8.67
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 7
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 9
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 7.67
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 7.33
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 7.33
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 6.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 7
+            }
+          ]
+        },
+        "Potatoes": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 2.5
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 39
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 22.67
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 6.6
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 38.67
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 41.57
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 43.1
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 10.45
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 11.6
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 108.5
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 11
+            },
+            {
+              "period": "2024-10",
+              "price": 18.45
+            },
+            {
+              "period": "2024-11",
+              "price": 26.7
+            },
+            {
+              "period": "2024-12",
+              "price": 31.33
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 23.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 10.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 5
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 6.67
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 20
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 25
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 50
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 43.33
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 50
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 50
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 48.33
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 45
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 55
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 56.67
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 28.33
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 21.67
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 22.5
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 70
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 28.33
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 19
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 22.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 23.33
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 13.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 11.67
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 10
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 6.67
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 5.33
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 2.83
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 3
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 2.83
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 3.33
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 3.67
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 3.5
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 3.5
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 3.33
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 3.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 3.17
+            }
+          ]
+        },
+        "Red Lentils": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 5
+            },
+            {
+              "period": "2024-12",
+              "price": 11
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 11
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 5.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 2.5
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 3.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 2.67
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 2
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 4.67
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 5.33
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 7.33
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 7.33
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 17.33
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 48.33
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 38.33
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 15
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 6.67
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 5.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 5.67
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 7
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 6.33
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 8
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 5.67
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 5.67
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 4.33
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 3.33
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 2.67
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 2.33
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 3
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 2.5
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 1.5
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 1.33
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 2.5
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 2.5
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 2.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 2
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 2.5
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 1.44
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 1.44
+            }
+          ]
+        },
+        "Salt": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 1.5
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 3
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 9
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 4.63
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 4.63
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 8.67
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 5.27
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 4.27
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 4.13
+            },
+            {
+              "period": "2024-10",
+              "price": 6.6
+            },
+            {
+              "period": "2024-11",
+              "price": 11.43
+            },
+            {
+              "period": "2024-12",
+              "price": 13.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 10
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 4
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 2.33
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 3.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 4.67
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 5
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 6.33
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 9.33
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 14
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 17.33
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 17.67
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 25
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 8.33
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 9.33
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 6
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 6
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 6.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 6
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 5.67
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 5.67
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 7.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 6.33
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 4
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 4.67
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 4.33
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 5
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 3.67
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 4
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 4
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 3.33
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 2.33
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 3
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 3
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 3
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 3
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 2.5
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 3.33
+            }
+          ]
+        },
+        "Sugar": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 3.9
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 6.5
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 26.83
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 11.53
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 11.53
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 21
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 23.63
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 15.5
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 14.77
+            },
+            {
+              "period": "2024-10",
+              "price": 39.93
+            },
+            {
+              "period": "2024-11",
+              "price": 63.6
+            },
+            {
+              "period": "2024-12",
+              "price": 32
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 20.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 8.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 6
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 6
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 7.33
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 8
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 16.5
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 24
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 29.33
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 40
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 50
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 81.67
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 600
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 238.33
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 30
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 15.67
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 13.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 14.67
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 14.33
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 15
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 12.33
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 5.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 5.5
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 5
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 5
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 5
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 5
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 3.5
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 4
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 3.67
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 3
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 4
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 5.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 5
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 4.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 4.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 4.5
+            }
+          ]
+        },
+        "Sunflower Oil": {
+          "unit": "3 ל'",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 31.13
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 31.3
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 28.5
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 26.8
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 44.47
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 55.73
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 61.23
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 62.53
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 71.67
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 56.93
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 48.53
+            },
+            {
+              "period": "2024-10",
+              "price": 91.67
+            },
+            {
+              "period": "2024-11",
+              "price": 148.33
+            },
+            {
+              "period": "2024-12",
+              "price": 106.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 68.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 30.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 25.67
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 26
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 31
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 32.67
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 58.67
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 86.67
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 100
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 135
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 151.67
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 225
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 220
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 185
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 98.33
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 90
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 75
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 70
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 68
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 68
+            },
+            {
+              "period": "2025-09-W4",
+              "price": 62.5
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 55
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 30
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 28
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 29
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 28
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 26.33
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 25
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 22
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 23
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 23
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 22
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 23
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 29
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 28
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 23.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 21
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 21
+            }
+          ]
+        },
+        "Tomatoes": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 3.6
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 15.83
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 30.43
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 31.57
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 44.5
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 41.3
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 101.53
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 13.9
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 120.57
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 93.9
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 81.73
+            },
+            {
+              "period": "2024-10",
+              "price": 38.3
+            },
+            {
+              "period": "2024-11",
+              "price": 46.5
+            },
+            {
+              "period": "2024-12",
+              "price": 48.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 29.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 12.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 5.83
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 6.33
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 10.33
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 10
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 15
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 12
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 17
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 24.33
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 24
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 30
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 96.67
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 100
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 110
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 90
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 96.67
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 95
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 71.67
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 50
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 41
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 24.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 30
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 15
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 7.33
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 18
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 8
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 8.33
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 10
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 9.67
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 9
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 11
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 10.67
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 10
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 11.67
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 10.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 10.33
+            }
+          ]
+        },
+        "Wheat Flour": {
+          "unit": "25 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 47.5
+            },
+            {
+              "period": "2024-05-H1",
+              "price": 55
+            },
+            {
+              "period": "2024-05-H2",
+              "price": 25.83
+            },
+            {
+              "period": "2024-06-H1",
+              "price": 20.83
+            },
+            {
+              "period": "2024-06-H2",
+              "price": 22.5
+            },
+            {
+              "period": "2024-07-H1",
+              "price": 26.67
+            },
+            {
+              "period": "2024-07-H2",
+              "price": 21.67
+            },
+            {
+              "period": "2024-08-H1",
+              "price": 17.5
+            },
+            {
+              "period": "2024-08-H2",
+              "price": 16.67
+            },
+            {
+              "period": "2024-09-H1",
+              "price": 20.83
+            },
+            {
+              "period": "2024-09-H2",
+              "price": 21.67
+            },
+            {
+              "period": "2024-10",
+              "price": 41.67
+            },
+            {
+              "period": "2024-11",
+              "price": 142.5
+            },
+            {
+              "period": "2024-12",
+              "price": 392.5
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 348.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 120.83
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 50.83
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 45
+            },
+            {
+              "period": "2025-03-W1",
+              "price": 70
+            },
+            {
+              "period": "2025-03-W2",
+              "price": 56.67
+            },
+            {
+              "period": "2025-03-W3",
+              "price": 88.33
+            },
+            {
+              "period": "2025-03-W4",
+              "price": 140
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 233.33
+            },
+            {
+              "period": "2025-04-W3",
+              "price": 383.33
+            },
+            {
+              "period": "2025-04-W4",
+              "price": 483.33
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 1500
+            },
+            {
+              "period": "2025-07-W4",
+              "price": 1208.33
+            },
+            {
+              "period": "2025-08-W1",
+              "price": 833.33
+            },
+            {
+              "period": "2025-08-W2",
+              "price": 416.67
+            },
+            {
+              "period": "2025-08-W3",
+              "price": 350
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 200
+            },
+            {
+              "period": "2025-09-W1",
+              "price": 178.33
+            },
+            {
+              "period": "2025-09-W2",
+              "price": 188.33
+            },
+            {
+              "period": "2025-09-W3",
+              "price": 163.33
+            },
+            {
+              "period": "2025-10-W1",
+              "price": 128.33
+            },
+            {
+              "period": "2025-10-W2",
+              "price": 53.33
+            },
+            {
+              "period": "2025-10-W3",
+              "price": 81.67
+            },
+            {
+              "period": "2025-10-W4",
+              "price": 126
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 99
+            },
+            {
+              "period": "2025-11-W2",
+              "price": 96.67
+            },
+            {
+              "period": "2025-11-W3",
+              "price": 55
+            },
+            {
+              "period": "2025-11-W4",
+              "price": 53.33
+            },
+            {
+              "period": "2025-12-W1",
+              "price": 40
+            },
+            {
+              "period": "2025-12-W2",
+              "price": 38.33
+            },
+            {
+              "period": "2025-12-W3",
+              "price": 31.67
+            },
+            {
+              "period": "2025-12-W4",
+              "price": 26.67
+            },
+            {
+              "period": "2026-01-W1",
+              "price": 28.33
+            },
+            {
+              "period": "2026-01-W2",
+              "price": 31.67
+            },
+            {
+              "period": "2026-01-W3",
+              "price": 30
+            },
+            {
+              "period": "2026-01-W4",
+              "price": 18.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 18.33
+            }
+          ]
+        }
+      }
+    },
+    "nonfood": {
+      "labelHe": "לא-מזון",
+      "items": {
+        "Baby Diapers": {
+          "unit": "40 יח'",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 18.7
+            },
+            {
+              "period": "2024-08",
+              "price": 38.33
+            },
+            {
+              "period": "2024-09",
+              "price": 89.67
+            },
+            {
+              "period": "2024-10",
+              "price": 166.67
+            },
+            {
+              "period": "2024-11",
+              "price": 110
+            },
+            {
+              "period": "2024-12",
+              "price": 35.93
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 47.5
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 33.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 25
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 25
+            },
+            {
+              "period": "2025-03",
+              "price": 40
+            },
+            {
+              "period": "2025-04",
+              "price": 70
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 41
+            },
+            {
+              "period": "2025-05",
+              "price": 95
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 86.67
+            },
+            {
+              "period": "2025-06",
+              "price": 300
+            },
+            {
+              "period": "2025-07",
+              "price": 440
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 186.67
+            },
+            {
+              "period": "2025-09",
+              "price": 276.67
+            },
+            {
+              "period": "2025-10",
+              "price": 53.33
+            },
+            {
+              "period": "2025-11",
+              "price": 26.67
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 16
+            },
+            {
+              "period": "2025-12",
+              "price": 23.33
+            },
+            {
+              "period": "2026-01",
+              "price": 14
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 25
+            }
+          ]
+        },
+        "Cooking Gas": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 5.9
+            },
+            {
+              "period": "2024-08",
+              "price": 77
+            },
+            {
+              "period": "2024-09",
+              "price": 71.5
+            },
+            {
+              "period": "2024-10",
+              "price": 74.17
+            },
+            {
+              "period": "2024-11",
+              "price": 88.33
+            },
+            {
+              "period": "2024-12",
+              "price": 69.83
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 81.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 61.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 35
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 40
+            },
+            {
+              "period": "2025-03",
+              "price": 250
+            },
+            {
+              "period": "2025-04",
+              "price": 290
+            },
+            {
+              "period": "2025-05",
+              "price": 300
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 260
+            },
+            {
+              "period": "2025-07",
+              "price": 450
+            },
+            {
+              "period": "2025-09",
+              "price": 550
+            },
+            {
+              "period": "2025-10",
+              "price": 400
+            },
+            {
+              "period": "2025-11",
+              "price": 92.5
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 81.67
+            },
+            {
+              "period": "2025-12",
+              "price": 93.33
+            },
+            {
+              "period": "2026-01",
+              "price": 91.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 75
+            }
+          ]
+        },
+        "Diesel": {
+          "unit": "1 ל'",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 6.5
+            },
+            {
+              "period": "2024-08",
+              "price": 67.2
+            },
+            {
+              "period": "2024-09",
+              "price": 59.67
+            },
+            {
+              "period": "2024-10",
+              "price": 69.17
+            },
+            {
+              "period": "2024-11",
+              "price": 64.33
+            },
+            {
+              "period": "2024-12",
+              "price": 75
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 42.5
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 31.67
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 28.33
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 28.33
+            },
+            {
+              "period": "2025-03",
+              "price": 70
+            },
+            {
+              "period": "2025-04",
+              "price": 62.5
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 33.5
+            },
+            {
+              "period": "2025-05",
+              "price": 65
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 78.33
+            },
+            {
+              "period": "2025-06",
+              "price": 100
+            },
+            {
+              "period": "2025-07",
+              "price": 95
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 118.33
+            },
+            {
+              "period": "2025-09",
+              "price": 110
+            },
+            {
+              "period": "2025-10",
+              "price": 68.33
+            },
+            {
+              "period": "2025-11",
+              "price": 48.33
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 33.33
+            },
+            {
+              "period": "2025-12",
+              "price": 50
+            },
+            {
+              "period": "2026-01",
+              "price": 22.33
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 30
+            }
+          ]
+        },
+        "Drinking Water": {
+          "unit": "1.5 ל'",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 1.67
+            },
+            {
+              "period": "2024-08",
+              "price": 3.67
+            },
+            {
+              "period": "2024-09",
+              "price": 3
+            },
+            {
+              "period": "2024-10",
+              "price": 4.5
+            },
+            {
+              "period": "2024-11",
+              "price": 5.5
+            },
+            {
+              "period": "2024-12",
+              "price": 9.25
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 4
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 4
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 3.67
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 3.67
+            },
+            {
+              "period": "2025-03",
+              "price": 5
+            },
+            {
+              "period": "2025-04",
+              "price": 6
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 7
+            },
+            {
+              "period": "2025-05",
+              "price": 8
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 7
+            },
+            {
+              "period": "2025-06",
+              "price": 9
+            },
+            {
+              "period": "2025-07",
+              "price": 10
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 9.33
+            },
+            {
+              "period": "2025-09",
+              "price": 6.33
+            },
+            {
+              "period": "2025-10",
+              "price": 12
+            },
+            {
+              "period": "2025-11",
+              "price": 5
+            },
+            {
+              "period": "2025-12",
+              "price": 4.67
+            },
+            {
+              "period": "2026-01",
+              "price": 4.5
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 3.67
+            }
+          ]
+        },
+        "Firewood": {
+          "unit": "1 ק\"ג",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 0.93
+            },
+            {
+              "period": "2024-08",
+              "price": 3.7
+            },
+            {
+              "period": "2024-09",
+              "price": 2.93
+            },
+            {
+              "period": "2024-10",
+              "price": 4.43
+            },
+            {
+              "period": "2024-11",
+              "price": 3.83
+            },
+            {
+              "period": "2024-12",
+              "price": 4.43
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 3.2
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 2.5
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 2.33
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 2.33
+            },
+            {
+              "period": "2025-03",
+              "price": 4
+            },
+            {
+              "period": "2025-04",
+              "price": 5
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 3.67
+            },
+            {
+              "period": "2025-05",
+              "price": 4.5
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 4.67
+            },
+            {
+              "period": "2025-06",
+              "price": 7
+            },
+            {
+              "period": "2025-07",
+              "price": 7
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 7.67
+            },
+            {
+              "period": "2025-09",
+              "price": 7
+            },
+            {
+              "period": "2025-10",
+              "price": 6.33
+            },
+            {
+              "period": "2025-11",
+              "price": 4.33
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 4
+            },
+            {
+              "period": "2025-12",
+              "price": 4.33
+            },
+            {
+              "period": "2026-01",
+              "price": 5
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 4.67
+            }
+          ]
+        },
+        "Gasoline": {
+          "unit": "1 ל'",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 6.8
+            },
+            {
+              "period": "2024-08",
+              "price": 167.93
+            },
+            {
+              "period": "2024-09",
+              "price": 159.33
+            },
+            {
+              "period": "2024-10",
+              "price": 186.67
+            },
+            {
+              "period": "2024-11",
+              "price": 186.67
+            },
+            {
+              "period": "2024-12",
+              "price": 57.67
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 76.25
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 42.5
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 110
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 110
+            },
+            {
+              "period": "2025-03",
+              "price": 100.67
+            },
+            {
+              "period": "2025-04",
+              "price": 126
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 100
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 500
+            },
+            {
+              "period": "2025-06",
+              "price": 107.5
+            },
+            {
+              "period": "2025-07",
+              "price": 106.67
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 360
+            },
+            {
+              "period": "2025-09",
+              "price": 260
+            },
+            {
+              "period": "2025-10",
+              "price": 373.33
+            },
+            {
+              "period": "2025-11",
+              "price": 95
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 10
+            },
+            {
+              "period": "2025-12",
+              "price": 96.67
+            },
+            {
+              "period": "2026-01",
+              "price": 20.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 75
+            }
+          ]
+        },
+        "Sanitary Pads": {
+          "unit": "16 יח'",
+          "series": [
+            {
+              "period": "2023-09",
+              "price": 4.77
+            },
+            {
+              "period": "2024-08",
+              "price": 12.53
+            },
+            {
+              "period": "2024-09",
+              "price": 18.5
+            },
+            {
+              "period": "2024-10",
+              "price": 18.67
+            },
+            {
+              "period": "2024-11",
+              "price": 22.33
+            },
+            {
+              "period": "2024-12",
+              "price": 17.83
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 11.33
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 9.33
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 6.33
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 6.33
+            },
+            {
+              "period": "2025-03",
+              "price": 10
+            },
+            {
+              "period": "2025-04",
+              "price": 13.5
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 8.67
+            },
+            {
+              "period": "2025-05",
+              "price": 22
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 11.67
+            },
+            {
+              "period": "2025-06",
+              "price": 18.5
+            },
+            {
+              "period": "2025-07",
+              "price": 15.33
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 18.33
+            },
+            {
+              "period": "2025-09",
+              "price": 18.33
+            },
+            {
+              "period": "2025-10",
+              "price": 15
+            },
+            {
+              "period": "2025-11",
+              "price": 11.67
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 12.5
+            },
+            {
+              "period": "2025-12",
+              "price": 9.33
+            },
+            {
+              "period": "2026-01",
+              "price": 7.67
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 7.33
+            }
+          ]
+        },
+        "Tent": {
+          "unit": "24 מ\"ר",
+          "series": [
+            {
+              "period": "2024-08",
+              "price": 2241.67
+            },
+            {
+              "period": "2024-09",
+              "price": 3000
+            },
+            {
+              "period": "2024-10",
+              "price": 1600
+            },
+            {
+              "period": "2024-11",
+              "price": 1600
+            },
+            {
+              "period": "2024-12",
+              "price": 575
+            },
+            {
+              "period": "2025-01-H1",
+              "price": 300
+            },
+            {
+              "period": "2025-01-H2",
+              "price": 250
+            },
+            {
+              "period": "2025-02-H1",
+              "price": 375
+            },
+            {
+              "period": "2025-02-W4",
+              "price": 262.5
+            },
+            {
+              "period": "2025-03",
+              "price": 700
+            },
+            {
+              "period": "2025-04",
+              "price": 950
+            },
+            {
+              "period": "2025-04-W1",
+              "price": 1050
+            },
+            {
+              "period": "2025-05-W1",
+              "price": 1200
+            },
+            {
+              "period": "2025-06",
+              "price": 1850
+            },
+            {
+              "period": "2025-07",
+              "price": 1266.67
+            },
+            {
+              "period": "2025-08-W4",
+              "price": 1300
+            },
+            {
+              "period": "2025-09",
+              "price": 1933.33
+            },
+            {
+              "period": "2025-10",
+              "price": 1666.67
+            },
+            {
+              "period": "2025-11",
+              "price": 583.33
+            },
+            {
+              "period": "2025-11-W1",
+              "price": 1400
+            },
+            {
+              "period": "2025-12",
+              "price": 383.33
+            },
+            {
+              "period": "2026-01",
+              "price": 375
+            },
+            {
+              "period": "2026-02-W1",
+              "price": 750
+            }
+          ]
+        }
+      }
+    }
+  }
+}

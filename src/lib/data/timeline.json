@@ -1,72 +1,58 @@
 [
   {
-    "date": "Oct 7, 2023",
-    "title": "Hamas attacks Israel; 1,200 killed, 250 taken hostage",
-    "detailTitle": "Hamas attacks Israel — the catalyst",
-    "detail": "The deadliest single-day attack on Jewish people since the Holocaust. Hamas-led forces breached the Gaza border fence at multiple points, killing approximately 1,200 people and taking 251 hostages. The event triggered an immediate Israeli military response and within weeks opened public space for settler movement leaders to advocate for a new Jewish civilian presence in the Strip.",
+    "date": "7 באוקטובר 2023",
+    "title": "התקפת חמאס; 1,200 הרוגים, 250 חטופים",
+    "detailTitle": "ה-7 באוקטובר — הניצוץ",
+    "detail": "המתקפה הקטלנית ביותר על יהודים מאז השואה. כוחות בהובלת חמאס פרצו את גדר הגבול בנקודות מרובות, הרגו כ-1,200 איש ולקחו 251 חטופים. הצבא הישראלי החל במלחמה בעזה, ובד בבד הכריזה ישראל על חסימה מוחלטת: אין חשמל, אין מים, אין מזון, אין גז.",
     "dotColor": "red"
   },
   {
-    "date": "Oct 28, 2023",
-    "title": "Israel launches ground invasion of Gaza",
-    "detailTitle": "IDF ground operation begins",
-    "detail": "Israeli ground forces entered northern Gaza in a large-scale operation aimed at dismantling Hamas military and governmental infrastructure. Military operations intensified the international debate about post-war governance and gave settler advocates a concrete political opening to argue that a permanent Israeli presence was both achievable and necessary.",
+    "date": "28 באוקטובר 2023",
+    "title": "כניסת כוחות יבשה ישראליים לעזה",
+    "detailTitle": "מבצע הקרקע — הפלישה",
+    "detail": "כוחות הקרקע הישראלים נכנסו לצפון עזה במבצע נרחב שמטרתו לפרק את התשתית הצבאית והממשלתית של חמאס. גל עקירה גדול עקר מיליוני תושבים לדרום. תפקוד מערכות המים, הביוב, הבריאות והמזון התמוטט תחת הפצצות כבדות.",
     "dotColor": "red"
   },
   {
-    "date": "Dec 2023",
-    "title": "First \"Return to Gaza\" petition circulates; 50,000+ signatures",
-    "detailTitle": "\"Return to Gaza\" petition launched",
-    "detail": "A petition calling for Jewish settlement of Gaza circulated widely in Israeli society, gathering over 50,000 signatures within weeks. Key organizers included former Gush Katif residents displaced during the 2005 disengagement, many of whom framed resettlement as historical rectification and a national security imperative that the 2005 withdrawal had proved prescient in opposing.",
+    "date": "נובמבר 2023",
+    "title": "הפסקת אש ראשונה — שחרור ראשוני של חטופים",
+    "detailTitle": "הפוגה קצרה — אבל לא רגיעה",
+    "detail": "הפסקת אש קצרה של שבוע אפשרה שחרור של עשרות חטופים תמורת אסירים פלסטינים. בחסות הפוגה, כמות גדולה יותר של משאיות סיוע הצליחה לעבור. ברגע שהפסקת האש הסתיימה — הסיוע נחסם שוב.",
     "dotColor": "gold"
   },
   {
-    "date": "Jan 28, 2024",
-    "title": "Major settler conference in Jerusalem; 900 attendees, 6 cabinet ministers",
-    "detailTitle": "Jerusalem settler conference draws 900",
-    "detail": "The \"Settlement Brings Security\" conference in Jerusalem attracted around 900 participants, including six Israeli cabinet ministers. Speakers presented detailed resettlement maps and called for immediate legislative action. International condemnation followed, with US and EU officials calling the event inflammatory and contrary to the prospects for a two-state solution.",
+    "date": "ינואר 2025",
+    "title": "הסכם הפסקת אש; שחרור חטופים בשלבים",
+    "detailTitle": "הסכם הפסקת אש — רגע של נשימה",
+    "detail": "הסכם הפסקת אש שנחתם עם חמאס עצר את הלחימה ואיפשר שחרור חטופים נוסף. לאחר החסימה המוחלטת של ינואר 2025 שנמשכה שבועות, כניסת הסיוע זינקה זמנית: נתוני WFP הראו שיפור דרמטי בצריכת מוצרי חלב ושמן בפברואר 2025.",
     "dotColor": "gold"
   },
   {
-    "date": "Mar 2024",
-    "title": "Knesset hearing on post-war governance; resettlement debated openly",
-    "detailTitle": "Knesset committee takes up resettlement",
-    "detail": "A Knesset committee heard testimony from settler leaders, government advisors, and security officials on the question of post-war governance in Gaza. For the first time, Jewish resettlement was debated in an official legislative forum, with some coalition members suggesting it should become explicit government policy once military operations concluded.",
-    "dotColor": "gold"
-  },
-  {
-    "date": "Jun 2024",
-    "title": "US warns Israel resettlement would \"fundamentally undermine\" peace",
-    "detailTitle": "Washington issues formal warning",
-    "detail": "Secretary of State Antony Blinken stated that Jewish resettlement of Gaza would \"fundamentally undermine\" any viable peace process and would violate international law. The statement reflected growing alarm in Washington at the movement's mainstream traction within the Netanyahu coalition and the participation of sitting ministers in settler-organized events.",
+    "date": "מרץ 2025",
+    "title": "ישראל חוזרת ללחימה; חסימה מוחלטת חדשה",
+    "detailTitle": "שובה של החסימה",
+    "detail": "לאחר שהמשא ומתן על השלב השני של הסכם הפסקת האש קרס, ישראל חידשה את הלחימה ואת החסימה המוחלטת. אפס משאיות נכנסו לעזה במשך שבועות. ארגוני הסיוע הזהירו שמלאי המזון מתרוקן וכי האוכלוסייה עומדת בפני רעב המוני.",
     "dotColor": "red"
   },
   {
-    "date": "Sep 2024",
-    "title": "Second major conference; former Gush Katif residents present resettlement maps",
-    "detailTitle": "Second conference — maps and momentum",
-    "detail": "A second high-profile conference drew former Gush Katif residents, settler leaders, and Knesset members. Participants unveiled detailed maps of proposed settlement blocs across northern and central Gaza and pledged to lobby the government systematically. Organizers reported that the movement had grown significantly compared to the January event.",
-    "dotColor": "gold"
-  },
-  {
-    "date": "Jan 2025",
-    "title": "Ceasefire agreement; movement debates whether deal forecloses resettlement",
-    "detailTitle": "Ceasefire deal — movement recalibrates",
-    "detail": "A phased ceasefire agreement between Israel and Hamas paused the fighting and began releasing hostages in exchange for Palestinian prisoners. Settler movement leaders publicly debated whether the agreement foreclosed resettlement or merely deferred it, with most vowing to continue lobbying regardless of any deal terms, framing the ceasefire as a tactical pause rather than a strategic endpoint.",
-    "dotColor": "gold"
-  },
-  {
-    "date": "Feb 2025",
-    "title": "Trump administration floats population relocation plan; settler groups express support",
-    "detailTitle": "Trump administration endorses relocation concept",
-    "detail": "The Trump administration publicly floated a plan to displace Gaza's Palestinian population to neighboring Arab states, framing it as an opportunity for reconstruction on a \"clean slate.\" Israeli settler groups expressed enthusiastic public support, calling it the most significant diplomatic opening they had obtained since October 7. Arab states and international bodies rejected the proposal.",
+    "date": "יוני 2025",
+    "title": "שפל האספקה; נקודת התמוטטות תזונתית",
+    "detailTitle": "יוני 2025 — השפל המוחלט",
+    "detail": "נתוני WFP ל-FSA סבב 17 הראו שיוני 2025 היה החודש הקשה ביותר לביטחון תזונתי שנרשם מאז תחילת המלחמה: דגנים — 4 ימים בשבוע בלבד. כמעט כל קבוצות המזון האחרות התקרבו לאפס. סיכוי הישרדות של מאות אלפים תלויים כעת ברצינות הלחץ הבינלאומי.",
     "dotColor": "red"
+  },
+  {
+    "date": "אוגוסט–ספטמבר 2025",
+    "title": "לחץ בינלאומי גובר; הגדלת כניסת הסיוע",
+    "detailTitle": "לחץ בינלאומי — ומעט אוויר",
+    "detail": "תחת לחץ בינלאומי מוגבר, ישראל אפשרה כניסה של כמות גדולה יותר של סיוע. ארגוני סיוע דיווחו על שיפור, אך הדגישו שהצרכים עולים על יכולת ההספקה: הרס תשתיות, שוד שיירות ועקירה המונית ממשיכים להכשיל את הגעת הסיוע לנזקקים.",
+    "dotColor": "gold"
   },
   {
     "date": "2025–2026",
-    "title": "Ongoing political and legal developments",
-    "detailTitle": "Ongoing legal and political developments",
-    "detail": "International courts, diplomatic pressure from the US and EU, and shifting battlefield conditions continue to shape the parameters of any potential governance arrangement. Settler movement organizations remain active, lobbying the Israeli government, seeking US backing for resettlement legislation, and holding periodic rallies and conferences to maintain political momentum. The ICJ advisory opinion remains a focal point of international legal debate.",
+    "title": "המשך הלחימה; ניהול משבר הרעב",
+    "detailTitle": "2026 — הרעב שנהיה נורמה",
+    "detail": "ביתי הדין הבינלאומיים, לחץ דיפלומטי ומציאות שטח משתנה ממשיכים לעצב את גורלה של הרצועה. ישראל הוציאה צווי פינוי על חלקים גדולים מהרצועה. יותר ממיליון תושבים עקורים, תשתיות מים וביוב קרסו, ומערכת הבריאות מתנהלת על קו ישרדות. המחסור הממושך כמעט ואינו מגיע לכותרות — כבר ראינו דברים חמורים.",
     "dotColor": "gold"
   }
 ]

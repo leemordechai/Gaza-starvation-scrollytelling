@@ -102,7 +102,7 @@
   .compare-layer img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .compare-slider {
     position: absolute; top: 0; bottom: 0;
-    width: 2px; background: var(--gold);
+    width: 2px; background: var(--accent);
     transform: translateX(-50%); z-index: 3;
     pointer-events: none;
   }
@@ -110,7 +110,7 @@
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 36px; height: 36px; border-radius: 50%;
-    background: var(--gold); border: 2px solid var(--bg);
+    background: var(--accent); border: 2px solid var(--bg);
     box-shadow: 0 0 12px rgba(0,0,0,0.5);
     display: flex; align-items: center; justify-content: center;
     pointer-events: auto;

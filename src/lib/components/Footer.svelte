@@ -43,7 +43,7 @@
     font-weight: 800;
     font-size: 0.9rem;
     letter-spacing: 0.2em;
-    color: var(--gold);
+    color: var(--accent);
     text-transform: uppercase;
     margin-bottom: 0.5rem;
   }
@@ -66,7 +66,7 @@
     cursor: pointer;
     transition: color 0.2s;
   }
-  .footer-links li:hover { color: var(--gold); }
+  .footer-links li:hover { color: var(--accent); }
 
   .footer-bottom {
     border-top: 1px solid var(--border);

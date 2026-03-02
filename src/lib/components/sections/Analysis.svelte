@@ -18,7 +18,7 @@
       <aside class="analysis-sidebar">
         <!-- Key Voices -->
         <div class="sidebar-card reveal" use:reveal>
-          <div class="sidebar-card-title">Key Voices</div>
+          <div class="sidebar-card-title">קולות מפתח</div>
           <ul class="sidebar-list">
             {#each analysisData.keyVoices as voice}
               <li>{voice}</li>
@@ -28,7 +28,7 @@
 
         <!-- Related Coverage -->
         <div class="sidebar-card reveal" use:reveal>
-          <div class="sidebar-card-title">Related Coverage</div>
+          <div class="sidebar-card-title">כיסוי קשור</div>
           <ul class="sidebar-list">
             {#each analysisData.relatedCoverage as item}
               <li>{item}</li>
@@ -38,7 +38,7 @@
 
         <!-- Methodology -->
         <div class="sidebar-card reveal" use:reveal>
-          <div class="sidebar-card-title">Methodology</div>
+          <div class="sidebar-card-title">מתודולוגיה</div>
           <p>{analysisData.methodology}</p>
         </div>
       </aside>
@@ -63,7 +63,7 @@
   .sidebar-card {
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
-    border-top: 2px solid var(--gold);
+    border-top: 2px solid var(--accent);
     padding: 1.4rem;
     margin-bottom: 1.2rem;
   }
@@ -74,7 +74,7 @@
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--accent);
     margin-bottom: 0.85rem;
   }
 
@@ -99,7 +99,7 @@
     content: '';
     width: 4px;
     height: 4px;
-    background: var(--gold);
+    background: var(--accent);
     flex-shrink: 0;
     transform: rotate(45deg);
     margin-top: 2px;

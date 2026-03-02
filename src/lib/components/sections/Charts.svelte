@@ -60,7 +60,7 @@
   const lineFill = `${lineLeft},${lineTop + lineH} ${linePolyline} ${lineLeft + lineW},${lineTop + lineH}`;
 
   const colorMap: Record<string, string> = {
-    gold: 'var(--gold)',
+    gold: 'var(--accent)',
     red: 'var(--red-light)',
     gray: '#3a3530'
   };
@@ -153,9 +153,9 @@
           <text x={lineLeft + (i / (line.labels.length - 1)) * lineW} y={lineTop + lineH + 18} class="axis-label" text-anchor="middle">{label}</text>
         {/each}
         <!-- Fill area -->
-        <polygon points={lineFill} fill="var(--gold)" opacity="0.08" class="line-fill-anim" class:animate={lineVisible} />
+        <polygon points={lineFill} fill="var(--accent)" opacity="0.08" class="line-fill-anim" class:animate={lineVisible} />
         <!-- Line -->
-        <polyline points={linePolyline} fill="none" stroke="var(--gold)" stroke-width="2" class="line-draw" class:animate={lineVisible} />
+        <polyline points={linePolyline} fill="none" stroke="var(--accent)" stroke-width="2" class="line-draw" class:animate={lineVisible} />
         <!-- Dots -->
         {#each line.values as v, i}
           <circle
@@ -163,7 +163,7 @@
             cy={lineTop + lineH - (v / lineMax) * lineH}
             r="3.5"
             fill="var(--bg)"
-            stroke="var(--gold)"
+            stroke="var(--accent)"
             stroke-width="1.5"
             class="line-dot"
             class:animate={lineVisible}

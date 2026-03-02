@@ -1,17 +1,26 @@
 {
-  "brand": "Visual Desk",
+  "brand": "דסק הוויז׳ואל",
   "links": [
-    { "label": "Background", "href": "#background" },
-    { "label": "Timeline", "href": "#timeline" },
-    { "label": "Data", "href": "#data" },
-    { "label": "Analysis", "href": "#analysis" }
+    { "label": "רקע", "href": "#background" },
+    { "label": "ציר זמן", "href": "#timeline" },
+    { "label": "משאיות סיוע", "href": "#aid-trucks" },
+    { "label": "מסע המשאית", "href": "#truck-route" },
+    { "label": "מחירי מזון", "href": "#food-prices" },
+    { "label": "סייר מחירים", "href": "#price-explorer" },
+    { "label": "מגוון מזון", "href": "#food-diversity" },
+    { "label": "וידאו", "href": "#video" },
+    { "label": "ניתוח", "href": "#analysis" }
   ],
   "indicators": [
-    { "label": "Background", "target": "#background" },
-    { "label": "Timeline", "target": "#timeline" },
-    { "label": "Data", "target": "#data" },
-    { "label": "Gallery", "target": "#gallery" },
-    { "label": "Map", "target": "#map" },
-    { "label": "Analysis", "target": "#analysis" }
+    { "label": "רקע", "target": "#background" },
+    { "label": "ציר זמן", "target": "#timeline" },
+    { "label": "שלבי הסיוע", "target": "#aid-phases" },
+    { "label": "משאיות סיוע", "target": "#aid-trucks" },
+    { "label": "מסע המשאית", "target": "#truck-route" },
+    { "label": "מחירי מזון", "target": "#food-prices" },
+    { "label": "סייר מחירים", "target": "#price-explorer" },
+    { "label": "מגוון מזון", "target": "#food-diversity" },
+    { "label": "GHF וידאו", "target": "#video" },
+    { "label": "ניתוח", "target": "#analysis" }
   ]
 }

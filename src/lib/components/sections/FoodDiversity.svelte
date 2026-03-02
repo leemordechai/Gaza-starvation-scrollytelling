@@ -1,0 +1,604 @@
+<script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
+  import { browser } from '$app/environment';
+  import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
+  import { reveal } from '$lib/actions/reveal';
+  import SectionHead from '$lib/components/ui/SectionHead.svelte';
+  import data from '$lib/data/foodDiversity.json';
+
+  const { foodGroups, steps, maxDays, source } = data;
+  const baseline = steps[0].values;
+  // Only "scored" groups count toward the diversity score (excludes oil & sugar)
+  const scoredGroups = (foodGroups as any[]).filter(g => g.scored !== false);
+  const maxScore = maxDays * scoredGroups.length; // 42
+
+  let activeStep = $state(0);
+  let triggers: any[] = [];
+
+  // Derived state
+  let current = $derived(steps[activeStep]);
+  let currentValues = $derived(current.values as Record<string, number | null>);
+  let score = $derived(
+    scoredGroups.reduce((sum: number, g: any) => sum + ((currentValues[g.key] as number) ?? 0), 0)
+  );
+  let scorePct = $derived(Math.round((score / maxScore) * 100));
+  let baselineScore = $derived(
+    scoredGroups.reduce((sum: number, g: any) => sum + (((baseline as any)[g.key] as number) ?? 0), 0)
+  );
+  let baselinePct = $derived(Math.round((baselineScore / maxScore) * 100));
+
+  /**
+   * For a food group value (0–7), compute the fill fraction for a given cell (0–6).
+   * Cell 0 fills first, cell 6 fills last.
+   */
+  function cellFill(value: number, cellIndex: number): number {
+    return Math.min(1, Math.max(0, value - cellIndex));
+  }
+
+  /**
+   * Map fill fraction to visual opacity.
+   * 0 → 0 (empty), >0 → at least 0.18 for visibility.
+   */
+  function fillOpacity(fill: number): number {
+    if (fill <= 0) return 0;
+    return 0.18 + fill * 0.82;
+  }
+
+  onMount(async () => {
+    if (!browser) return;
+    const result = await initGsap();
+    if (!result) return;
+    const { ScrollTrigger } = result;
+
+    const stepEls = document.querySelectorAll('.fd-step');
+    stepEls.forEach((el, i) => {
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => { activeStep = i; },
+        onEnterBack: () => { activeStep = i; },
+      });
+      triggers.push(st);
+    });
+  });
+
+  onDestroy(() => {
+    killScrollTriggers(triggers);
+  });
+</script>
+
+<section class="fd-section section-topo" id="food-diversity">
+  <div class="container-wide">
+    <div class="reveal" use:reveal>
+      <SectionHead
+        label={data.sectionLabel}
+        title={data.sectionTitle}
+        sub={data.sectionSub}
+      />
+    </div>
+
+    <div class="fd-layout">
+      <!-- Sticky visualization -->
+      <div class="fd-sticky">
+        <div class="fd-viz">
+          <!-- Period header -->
+          <div class="fd-period">
+            <span class="fd-period-tag">{current.tag}</span>
+            <h3 class="fd-period-label">{current.period}</h3>
+            <span class="fd-period-sub">{current.sublabel}</span>
+          </div>
+
+          <!-- Score bar -->
+          <div class="fd-score">
+            <div class="fd-score-header">
+              <span class="fd-score-title">מגוון תזונתי</span>
+              <span class="fd-score-value">
+                {scorePct}<span class="fd-score-unit">%</span>
+              </span>
+            </div>
+            <div class="fd-score-track">
+              <div
+                class="fd-score-fill"
+                style="width: {scorePct}%;"
+              ></div>
+              <!-- Baseline reference marker (shown after step 0) -->
+              {#if activeStep > 0}
+                <div
+                  class="fd-score-baseline"
+                  style="left: {baselinePct}%;"
+                  title="רמה טרם המלחמה: {baselinePct}%"
+                ></div>
+              {/if}
+            </div>
+            {#if activeStep > 0}
+              <span class="fd-score-delta">
+                {scorePct < baselinePct ? '▼' : '▲'}
+                {Math.abs(scorePct - baselinePct)}% מלפני המלחמה
+              </span>
+            {/if}
+          </div>
+
+          <!-- Food group grid -->
+          <div class="fd-grid">
+            {#each foodGroups as group, rowIdx}
+              {#if !(group as any).scored && rowIdx > 0 && (foodGroups[rowIdx - 1] as any).scored !== false}
+                <div class="fd-divider">
+                  <span class="fd-divider-label">גם נעקב לפני 2025</span>
+                </div>
+              {/if}
+              {@const val = (currentValues as Record<string, number | null>)[group.key] ?? null}
+              {@const isNull = val === null}
+              <div class="fd-row">
+                <span class="fd-label" class:fd-label--muted={isNull}>{group.label}</span>
+                <div class="fd-cells">
+                  {#each { length: maxDays } as _, cellIdx}
+                    {#if isNull}
+                      <div class="fd-cell fd-cell--null"></div>
+                    {:else}
+                      {@const fill = cellFill(val as number, cellIdx)}
+                      <div
+                        class="fd-cell"
+                        class:fd-cell--empty={fill <= 0}
+                        style="--fill-opacity: {fillOpacity(fill)}; --row: {rowIdx}; --col: {cellIdx};"
+                      >
+                        <div class="fd-cell-fill"></div>
+                      </div>
+                    {/if}
+                  {/each}
+                </div>
+                <span class="fd-val" class:fd-val--zero={!isNull && val === 0} class:fd-val--null={isNull}>
+                  {isNull ? '—' : val === 0 ? '0' : (val as number).toFixed(1)}
+                </span>
+              </div>
+            {/each}
+          </div>
+
+          <!-- Day labels -->
+          <div class="fd-day-labels">
+            <span class="fd-day-spacer"></span>
+            <div class="fd-day-row">
+              {#each ['ב', 'ג', 'ד', 'ה', 'ו', 'ש', 'א'] as day}
+                <span class="fd-day">{day}</span>
+              {/each}
+            </div>
+            <span class="fd-day-spacer-right"></span>
+          </div>
+
+          <!-- Footer -->
+          <p class="fd-source">ימים בשבוע · {source}</p>
+        </div>
+      </div>
+
+      <!-- Scrolling narrative -->
+      <div class="fd-narrative">
+        {#each steps as step, i}
+          <div
+            class="fd-step"
+            class:active={activeStep === i}
+          >
+            <span class="fd-step-tag">{step.tag}</span>
+            <h3 class="fd-step-heading">{step.heading}</h3>
+            <p class="fd-step-body">{step.body}</p>
+            {#if step.note}
+              <p class="fd-step-note">{step.note}</p>
+            {/if}
+          </div>
+        {/each}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ===== Section ===== */
+  .fd-section {
+    padding: 5rem 0 2rem;
+  }
+
+  /* ===== Layout: sticky viz + scrolling text ===== */
+  .fd-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    .fd-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  /* ===== Sticky panel ===== */
+  .fd-sticky {
+    position: sticky;
+    top: 90px;
+  }
+
+  @media (max-width: 768px) {
+    .fd-sticky {
+      position: sticky;
+      top: 56px;
+      z-index: 5;
+      padding-bottom: 1rem;
+    }
+  }
+
+  .fd-viz {
+    background: var(--bg-card);
+    border: 1px solid var(--border-mid);
+    border-radius: 3px;
+    padding: 1.5rem 1.75rem 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .fd-viz {
+      padding: 1rem 1rem 0.75rem;
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+  }
+
+  /* ===== Period header ===== */
+  .fd-period {
+    margin-bottom: 1.25rem;
+    border-inline-start: 3px solid var(--accent);
+    padding-inline-start: 0.9rem;
+  }
+
+  .fd-period-tag {
+    font-family: var(--font-ui);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .fd-period-label {
+    font-family: var(--font-disp);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin: 0 0 0.1rem;
+    transition: none;
+  }
+
+  .fd-period-sub {
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 768px) {
+    .fd-period-label { font-size: 1.05rem; }
+  }
+
+  /* ===== Score bar ===== */
+  .fd-score {
+    margin-bottom: 1.25rem;
+  }
+
+  .fd-score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.35rem;
+  }
+
+  .fd-score-title {
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .fd-score-value {
+    font-family: var(--font-ui);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    transition: color 0.4s ease;
+  }
+
+  .fd-score-unit {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+
+  .fd-score-track {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .fd-score-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 8px rgba(196, 162, 74, 0.3);
+  }
+
+  .fd-score-baseline {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    background: var(--text-muted);
+    opacity: 0.5;
+    border-radius: 1px;
+    transition: left 0.4s ease;
+  }
+
+  .fd-score-delta {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== Food group grid ===== */
+  .fd-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .fd-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .fd-label {
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--sand);
+    width: 110px;
+    flex-shrink: 0;
+    text-align: right;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 768px) {
+    .fd-label {
+      width: 70px;
+      font-size: 0.52rem;
+    }
+  }
+
+  .fd-cells {
+    display: flex;
+    gap: 3px;
+    flex: 1;
+  }
+
+  /* ===== Individual cell ===== */
+  .fd-cell {
+    flex: 1;
+    aspect-ratio: 1.3;
+    max-width: 32px;
+    border-radius: 3px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fd-cell-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    border-radius: 3px;
+    opacity: var(--fill-opacity, 0);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--row, 0) * 40ms + var(--col, 0) * 25ms);
+  }
+
+  .fd-cell--empty {
+    background: rgba(37, 32, 24, 0.6);
+  }
+
+  .fd-cell--null {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--border),
+      var(--border) 1.5px,
+      transparent 1.5px,
+      transparent 5px
+    );
+    opacity: 0.35;
+  }
+
+  /* ===== Value display ===== */
+  .fd-val {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-light);
+    width: 28px;
+    flex-shrink: 0;
+    text-align: right;
+    transition: color 0.4s ease;
+  }
+
+  .fd-val--zero {
+    color: var(--red-light);
+  }
+
+  .fd-val--null {
+    color: var(--text-muted);
+    opacity: 0.4;
+  }
+
+  /* ===== Divider between scored / unscored groups ===== */
+  .fd-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0 0.3rem;
+  }
+
+  .fd-divider::before,
+  .fd-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    opacity: 0.5;
+  }
+
+  .fd-divider-label {
+    font-family: var(--font-ui);
+    font-size: 0.46rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.5;
+    white-space: nowrap;
+  }
+
+  .fd-label--muted {
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    .fd-val { font-size: 0.6rem; width: 24px; }
+  }
+
+  /* ===== Day labels ===== */
+  .fd-day-labels {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.3rem;
+  }
+
+  .fd-day-spacer {
+    width: 110px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .fd-day-spacer { width: 70px; }
+  }
+
+  .fd-day-row {
+    display: flex;
+    gap: 3px;
+    flex: 1;
+  }
+
+  .fd-day {
+    flex: 1;
+    max-width: 32px;
+    text-align: center;
+    font-family: var(--font-ui);
+    font-size: 0.48rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  .fd-day-spacer-right {
+    width: 28px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .fd-day-spacer-right { width: 24px; }
+  }
+
+  /* ===== Source footer ===== */
+  .fd-source {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+    text-align: center;
+    margin-top: 0.75rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== Narrative steps ===== */
+  .fd-narrative {
+    padding: 3rem 0 10rem;
+  }
+
+  @media (max-width: 768px) {
+    .fd-narrative {
+      padding: 2rem 0 6rem;
+    }
+  }
+
+  .fd-step {
+    padding: 3rem 0;
+    min-height: calc(var(--vh, 1vh) * 70);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0.25;
+    transition: opacity 0.5s ease;
+  }
+
+  .fd-step.active {
+    opacity: 1;
+  }
+
+  .fd-step-tag {
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .fd-step-heading {
+    font-family: var(--font-disp);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    line-height: 1.25;
+  }
+
+  .fd-step-body {
+    font-family: var(--font-body);
+    font-size: 0.97rem;
+    line-height: 1.78;
+    color: var(--text);
+  }
+
+  .fd-step-note {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    font-style: italic;
+    line-height: 1.5;
+    opacity: 0.7;
+  }
+</style>
