@@ -38,7 +38,7 @@
 
     function setHeight() {
       const isMobile = window.innerWidth <= 768;
-      scrollContainer.style.height = window.innerHeight * (isMobile ? 5 : 7) + 'px';
+      scrollContainer.style.height = window.innerHeight * (isMobile ? 4.5 : 7) + 'px';
     }
     setHeight();
     window.addEventListener('resize', setHeight, { passive: true });

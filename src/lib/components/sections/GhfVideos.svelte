@@ -62,7 +62,6 @@
               </div>
             </div>
           </div>
-          <div class="ghf-caption">{video.caption}</div>
         </a>
       {/each}
     </div>
@@ -134,7 +133,7 @@
   .ghf-x-badge {
     position: absolute;
     bottom: 0.5rem;
-    left: 0.6rem;
+    inset-inline-start: 0.6rem;
     background: rgba(0,0,0,0.65);
     border-radius: 50%;
     width: 28px;
@@ -144,21 +143,13 @@
     justify-content: center;
   }
 
-  .ghf-caption {
-    padding: 0.6rem 0.85rem 0.7rem;
-    font-family: var(--font-ui);
-    font-size: 0.72rem;
-    line-height: 1.5;
-    color: var(--text-muted);
-    direction: rtl;
-  }
-
   .ghf-source {
     font-family: var(--font-ui);
     font-size: 0.55rem;
     color: var(--text-muted);
     opacity: 0.6;
     margin-top: 1.5rem;
-    text-align: center;
+    text-align: end;
+    direction: rtl;
   }
 </style>

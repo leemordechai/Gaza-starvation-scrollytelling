@@ -9,7 +9,7 @@
 
   // ── Chart geometry ────────────────────────────────────────────────────────
   const W = 600, H = 300;
-  const PAD = { top: 28, right: 20, bottom: 44, left: 58 };
+  const PAD = { top: 28, right: 56, bottom: 44, left: 12 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
 
@@ -56,19 +56,9 @@
   const WAR_START    = new Date(2023, 9, 1).getTime(); // Oct 2023
   const DOMAIN_END   = new Date(2026, 2, 1).getTime();
 
-  // Per-commodity domain start: first observation after Oct 2023, snapped to month start
-  let domainStart = $derived((() => {
-    const c = currentCommodity;
-    if (!c?.series?.length) return new Date(2024, 4, 1).getTime();
-    const postWar = c.series
-      .map(p => periodToDate(p.period))
-      .filter(t => t > WAR_START);
-    if (!postWar.length) return new Date(2024, 4, 1).getTime();
-    const earliest = Math.min(...postWar);
-    // Snap to first of that month for a clean left edge
-    const d = new Date(earliest);
-    return new Date(d.getFullYear(), d.getMonth(), 1).getTime();
-  })());
+  // Shared domain start across all commodities — May 2024, the earliest post-war observation.
+  // Using a fixed value keeps all 4 charts on the same x-axis scale.
+  const domainStart = new Date(2024, 4, 1).getTime(); // May 2024
 
   function xPos(period: string): number {
     const t = periodToDate(period);
@@ -110,7 +100,7 @@
     return `${firstX},${base} ${coords} ${lastX},${base}`;
   });
 
-  // ── X-axis ticks — derived so they update with domainStart ────────────────
+  // ── X-axis ticks ──────────────────────────────────────────────────────────
   let xTicks = $derived((() => {
     const ticks = [];
     // First tick: label the domain start month
@@ -130,7 +120,7 @@
     return PAD.left + ((t - domainStart) / (DOMAIN_END - domainStart)) * CW;
   }
 
-  // ── Event bands — derived so x positions update with domainStart ───────────
+  // ── Event bands ────────────────────────────────────────────────────────────
   let events = $derived(priceData.metadata.events.map(e => ({
     ...e,
     x1: xFromTime(new Date(e.start + '-15').getTime()),
@@ -275,7 +265,7 @@
             <p class="fp-step-body">{step.body}</p>
             <div class="fp-delta-box">
               <div class="fp-delta">
-                <span class="fp-delta-before">{step.beforePrice} <small>ש"ח</small></span>
+                <span class="fp-delta-before"><span class="fp-delta-before-num">{step.beforePrice}</span> <small>ש"ח</small></span>
                 <span class="fp-delta-arrow">&#8592;</span>
                 <span class="fp-delta-after">{step.afterPrice} <small>ש"ח</small></span>
                 <span class="fp-delta-mult">{step.multiplier}</span>
@@ -326,7 +316,7 @@
               {#each [0, 0.25, 0.5, 0.75, 1.0] as frac}
                 {@const y = PAD.top + CH * (1 - frac)}
                 <line x1={PAD.left} y1={y} x2={PAD.left + CW} y2={y} stroke="var(--border)" stroke-width="0.5"/>
-                <text x={PAD.left - 7} y={y + 4} class="fp-axis-label" text-anchor="end">
+                <text x={PAD.left + CW + 8} y={y + 4} class="fp-axis-label" text-anchor="start">
                   {Math.round(maxPrice * frac)}
                 </text>
               {/each}
@@ -440,7 +430,10 @@
   /* ── Sticky chart ─── */
   .fp-sticky {
     position: sticky;
-    top: 4rem;
+    top: 0;
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
     align-self: start;
   }
 
@@ -575,7 +568,8 @@
     color: var(--text-muted);
     opacity: 0.65;
     margin-top: 0.5rem;
-    text-align: center;
+    text-align: end;
+    direction: rtl;
   }
 
   /* ── Steps ─── */
@@ -591,6 +585,12 @@
     transition: opacity 0.45s ease;
   }
 
+  /* Last step (cooking gas) gets extra top space so the chart is visible
+     in its flat pre-spike region before the step scrolls into focus */
+  .fp-step:last-child {
+    padding-top: calc(var(--vh, 1vh) * 40);
+  }
+
   @media (max-width: 800px) {
     .fp-step {
       min-height: 0;
@@ -598,7 +598,10 @@
       padding: 1.75rem 0;
       border-bottom: 1px solid var(--border);
     }
-    .fp-step:last-child { border-bottom: none; }
+    .fp-step:last-child {
+      border-bottom: none;
+      padding-top: 1.75rem;
+    }
   }
 
   .fp-step--active { opacity: 1; }
@@ -661,8 +664,12 @@
     font-family: var(--font-ui);
     font-size: 1rem;
     color: var(--text-muted);
+  }
+
+  .fp-delta-before-num {
     text-decoration: line-through;
-    text-decoration-color: var(--border-mid);
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
   }
 
   .fp-delta-arrow {

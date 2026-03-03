@@ -26,12 +26,12 @@
       gsap.set(spotlight, { opacity: 1 });
     }
 
-    // Phase 1: zoom-out + spotlight fade, completes in one Page Down (~85vh)
+    // Phase 1: zoom-out + spotlight fade, completes at exactly one Page Down (100vh)
     const tlZoom = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero-scroll-container',
         start: 'top top',
-        end: '+=85vh',
+        end: '+=100vh',
         scrub: 1.2,
       }
     });
@@ -44,7 +44,7 @@
     }
     if (heroBg) {
       tlZoom.to(heroBg, {
-        scale: 0.78,
+        scale: 0.63,
         xPercent: 0,
         yPercent: 0,
         duration: 1,
@@ -52,21 +52,7 @@
       }, 0);
     }
 
-    // Phase 2: hero content fades as user scrolls from 85vh → 170vh
-    const tlFade = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.hero-scroll-container',
-        start: '+=85vh',
-        end: '+=170vh',
-        scrub: 1.2,
-      }
-    });
-
-    if (heroContent) {
-      tlFade.to(heroContent, { opacity: 0, y: -40, duration: 1, ease: 'power1.in' }, 0);
-    }
-
-    triggers.push(tlZoom.scrollTrigger, tlFade.scrollTrigger);
+    triggers.push(tlZoom.scrollTrigger);
   });
 
   onDestroy(() => {
@@ -105,14 +91,26 @@
       <div class="cue-arrow"></div>
     </div>
   </section>
+
+  <!-- Zoom phase: 100vh of scroll space. Page-down #1 snaps to start of this block. -->
+  <div class="hero-phase-zoom" aria-hidden="true"></div>
 </div>
 
 <style>
   .hero-scroll-container {
     position: relative;
-    height: calc(var(--vh, 1vh) * 200);
+    scroll-snap-align: start;
   }
   .hero-scroll-container .hero { position: sticky; top: 0; }
+
+  /* Zoom phase: 100vh of normal-flow scroll space after the sticky hero.
+     scroll-snap-align: start means page-down #1 snaps to the top of this block
+     (i.e. scroll position = 100vh, exactly when zoom-out completes). */
+  .hero-phase-zoom {
+    height: calc(var(--vh, 1vh) * 100);
+    scroll-snap-align: start;
+    pointer-events: none;
+  }
 
   .hero {
     position: relative;
@@ -173,7 +171,7 @@
   .hero-content {
     position: relative; z-index: 2;
     text-align: center; padding: 0 2rem;
-    max-width: 920px; will-change: opacity, transform;
+    max-width: 920px;
     /* Shift slightly upward from center to account for the fade gradient at bottom */
     margin-bottom: 8vh;
   }

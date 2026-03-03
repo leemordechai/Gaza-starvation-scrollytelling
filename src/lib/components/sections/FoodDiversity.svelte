@@ -89,7 +89,7 @@
     <div class="fd-layout">
       <!-- Sticky visualization -->
       <div class="fd-sticky">
-        <div class="fd-viz">
+        <div class="fd-viz" class:fd-viz--nadir={activeStep === nadirStepIndex}>
           <!-- Period header -->
           <div class="fd-period">
             <span class="fd-period-tag">{current.tag}</span>
@@ -214,7 +214,7 @@
     padding: 0.3rem 0.65rem;
     border-radius: 2px;
     margin-top: 0.5rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 1rem;
   }
   .fd-nadir-label {
     font-family: var(--font-ui);
@@ -265,6 +265,11 @@
     border: 1px solid var(--border-mid);
     border-radius: 3px;
     padding: 1.5rem 1.75rem 1.25rem;
+    transition: background 0.7s ease, border-color 0.4s ease;
+  }
+  .fd-viz--nadir {
+    background: rgba(140, 30, 22, 0.06);
+    border-color: var(--accent);
   }
 
   @media (max-width: 768px) {
@@ -568,7 +573,8 @@
     font-size: 0.72rem;
     color: var(--text-muted);
     opacity: 0.7;
-    text-align: center;
+    text-align: end;
+    direction: rtl;
     margin-top: 0.75rem;
     letter-spacing: 0.03em;
   }

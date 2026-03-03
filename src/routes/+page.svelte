@@ -79,6 +79,8 @@
 <main>
   <Hero />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <Intro />
 
   <!-- Background context paragraphs — scroll-driven, one at a time -->
@@ -98,70 +100,101 @@
 
   <Divider variant="gem" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <!-- Guterres quote -->
   <PullQuote quote={pullQuote.quote} attribution={pullQuote.attribution} />
 
   <Divider variant="topo" />
 
-  <!-- Bridging paragraphs: section anchor so page-down from quote above lands here -->
-  <section id="food-characteristics" class="bridge-block container">
-    {#each [bridge.intro, ...bridge.items] as item}
+  <!-- Bridging paragraphs: intro + first three items, centered -->
+  <section id="food-characteristics" class="bridge-block bridge-block--centered container">
+    {#each [bridge.intro, ...bridge.items.slice(0, 3)] as item}
       <p>{@html sanitizeText(item)}</p>
     {/each}
   </section>
 
+  <!-- Fourth bridge item on its own page-down snap point -->
+  <section class="bridge-block bridge-block--snap container">
+    <p>{@html sanitizeText(bridge.items[3])}</p>
+  </section>
+
   <Divider variant="fade" />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <Timeline />
 
   <Divider variant="fade" />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <!-- GHF narrative (both paragraphs) -->
   <NarrativeBlock id="ghf-narrative" title={ghfNarrative.title} paragraphs={[ghfNarrative.paragraphBefore, ghfNarrative.paragraphAfter]} />
 
   <Divider variant="fade" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <PullQuote quote={pullQuote2.quote} attribution={pullQuote2.attribution} />
 
   <Divider variant="fade" />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <GhfVideos />
 
   <Divider variant="gem" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <StatsBar />
 
   <Divider variant="topo" />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <!-- How we measure hunger -->
   <MeasureSection />
 
   <Divider variant="topo" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <AidPhases />
 
   <Divider variant="topo" />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <AidTrucks />
 
   <Divider variant="topo" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <TruckRoute />
 
   <div class="section-wipe" use:reveal aria-hidden="true"></div>
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <FoodPrices />
 
   <Divider variant="topo" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <PriceExplorer />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <FoodCalculator />
 
   <Divider variant="topo" />
 
   <!-- Famine deaths narrative -->
-  <section class="famine-block nb-section">
+  <section class="famine-block nb-section snap-target">
     <div class="container">
       <h2 class="famine-title">
         <span class="famine-inner" class:famineHighlighted bind:this={famineTitleEl}>{famineDeaths.title}</span>
@@ -174,23 +207,22 @@
 
   <Divider variant="fade" />
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <!-- Witness testimony -->
-  <section class="witness-section reveal" use:reveal>
-    <div class="container">
-      <blockquote class="witness-quote">
-        <p>{witnessTestimony.quote}</p>
-        <footer class="witness-attribution">{witnessTestimony.attribution}</footer>
-      </blockquote>
-    </div>
-  </section>
+  <PullQuote quote={witnessTestimony.quote} attribution={witnessTestimony.attribution} small />
 
   <Divider variant="gem" />
 
   <div class="section-wipe" use:reveal aria-hidden="true"></div>
 
+  <div class="snap-point" aria-hidden="true"></div>
+
   <FoodDiversity />
 
   <Divider variant="gem" />
+
+  <div class="snap-point" aria-hidden="true"></div>
 
   <Analysis />
 </main>
@@ -199,9 +231,19 @@
 <CopyToast />
 
 <style>
+  /* Scroll snap sentinels */
+  .snap-point {
+    height: 0;
+    scroll-snap-align: start;
+  }
+  .snap-target {
+    scroll-snap-align: start;
+  }
+
   /* ── Background context scroll steps (before PullQuote) ─── */
   .intro-bg-steps {
     margin-top: 0;
+    scroll-snap-align: start;
   }
   .intro-bg-step {
     padding: 3rem 0;
@@ -210,7 +252,7 @@
     align-items: center;
     opacity: 0.2;
     transition: opacity 0.5s ease;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
 
   @media (max-width: 600px) {
@@ -248,12 +290,12 @@
     inset: -0.1em 0 -0.1em -0.3em;
     background: rgba(140, 30, 22, 0.82);
     border-radius: 2px;
-    clip-path: inset(0 0 0 100%);
+    clip-path: inset(0 100% 0 0);
     transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
     z-index: -1;
   }
   .intro-bg-step.active :global(mark.inv::before) {
-    clip-path: inset(0 0 0 0%);
+    clip-path: inset(0 0% 0 0);
   }
   .intro-bg-step.active :global(mark.inv) {
     color: #fff;
@@ -262,42 +304,28 @@
   .bridge-block {
     padding: 3rem 0;
   }
+  .bridge-block--centered {
+    text-align: center;
+    padding: 4rem 0;
+    scroll-snap-align: start;
+  }
+  .bridge-block--centered p {
+    max-width: 36ch;
+    margin-inline: auto;
+    margin-bottom: 1.4rem;
+  }
+  .bridge-block--snap {
+    scroll-snap-align: start;
+    min-height: calc(var(--vh, 1vh) * 60);
+    display: flex;
+    align-items: center;
+  }
   .bridge-block p {
     font-size: clamp(1.15rem, 2vw, 1.45rem);
     line-height: 1.72;
     color: var(--sand);
     font-family: var(--font-body);
     font-weight: 400;
-  }
-
-  .witness-section {
-    padding: 4rem 0;
-    background: rgba(155, 42, 33, 0.07);
-    border-top: 1px solid rgba(155, 42, 33, 0.18);
-    border-bottom: 1px solid rgba(155, 42, 33, 0.18);
-  }
-  .witness-quote {
-    margin: 0 auto;
-    padding: 0;
-    max-width: 52ch;
-    text-align: center;
-  }
-  .witness-quote p {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 1.6vw, 1.2rem);
-    font-style: italic;
-    line-height: 1.82;
-    color: var(--sand);
-    margin: 0 0 1.25rem;
-    text-wrap: balance;
-  }
-  .witness-attribution {
-    font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
   }
 
   /* mark.inv styles and animation live in app.css (global) */
@@ -334,12 +362,12 @@
     inset: 0;
     background: rgba(140, 30, 22, 0.82);
     border-radius: 2px;
-    clip-path: inset(0 0 0 100%);
+    clip-path: inset(0 100% 0 0);
     transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
     z-index: -1;
   }
   .famine-inner.famineHighlighted::before {
-    clip-path: inset(0 0 0 0%);
+    clip-path: inset(0 0% 0 0);
   }
   .famine-inner.famineHighlighted {
     color: #fff;

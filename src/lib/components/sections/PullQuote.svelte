@@ -3,7 +3,7 @@
   import { copyToClipboard } from '$lib/utils/clipboard';
   import { showToast } from '$lib/stores/copyToast';
 
-  let { quote, attribution }: { quote: string; attribution: string } = $props();
+  let { quote, attribution, small = false }: { quote: string; attribution: string; small?: boolean } = $props();
 
   async function handleCopy() {
     const ok = await copyToClipboard(quote);
@@ -12,7 +12,7 @@
 </script>
 
 <section class="pullquote-section">
-  <div class="pullquote reveal" use:reveal>
+  <div class="pullquote reveal" class:pullquote--small={small} use:reveal>
     <button class="pq-copy" aria-label="העתק ציטוט" onclick={handleCopy}>&#x2398;</button>
     <blockquote>{quote}</blockquote>
     <cite>{attribution}</cite>
@@ -61,6 +61,15 @@
     margin-bottom: 1.75rem;
     max-width: 26ch;
     margin-inline: auto;
+  }
+
+  .pullquote--small blockquote {
+    font-size: clamp(0.95rem, 0.85rem + 0.8vw, 1.3rem);
+    max-width: 52ch;
+    line-height: 1.65;
+    text-align: justify;
+    text-align-last: justify;
+    hyphens: auto;
   }
 
   .pullquote cite {

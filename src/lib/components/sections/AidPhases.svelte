@@ -170,14 +170,25 @@
                 aria-label="{phase.iconCount} משאיות, {phase.annotation}"
               >
                 {#each order as t}
-                  <img
+                  <svg
                     class="ap-truck"
                     style="--delay: {Math.min(t * 3, 800)}ms;"
-                    src="/images/truck-hand-3.png"
-                    width="38" height="24"
-                    alt=""
+                    viewBox="0 0 28 14"
+                    width="28" height="14"
                     aria-hidden="true"
-                  />
+                    fill="currentColor"
+                  >
+                    <!-- cargo bed -->
+                    <rect x="0" y="2" width="18" height="10" rx="1"/>
+                    <!-- cab -->
+                    <rect x="18" y="4" width="8" height="8" rx="1"/>
+                    <!-- windshield -->
+                    <rect x="19" y="5" width="5" height="4" rx="0.5" fill="rgba(0,0,0,0.25)"/>
+                    <!-- wheels -->
+                    <circle cx="5"  cy="13" r="1.8"/>
+                    <circle cx="13" cy="13" r="1.8"/>
+                    <circle cx="23" cy="13" r="1.8"/>
+                  </svg>
                 {/each}
               </div>
             {/if}
@@ -282,9 +293,9 @@
   .ap-truck {
     display: inline-block;
     vertical-align: top;
-    width: 38px;
-    height: 24px;
-    object-fit: fill;
+    width: 28px;
+    height: 14px;
+    color: var(--accent);
     opacity: 0;
     transform: scale(0.5);
     transition: opacity 0.12s ease, transform 0.12s ease;

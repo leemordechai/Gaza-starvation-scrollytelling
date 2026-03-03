@@ -24,12 +24,6 @@
 =================================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
-}
-
-@media (max-width: 600px) {
-  html { scroll-snap-type: none; }
 }
 body {
   background: var(--bg);
@@ -200,14 +194,14 @@ section[id] {
    SECTION WIPE TRANSITIONS
 =================================== */
 @keyframes wipe-in-rtl {
-  from { clip-path: inset(0 0 0 100%); }
-  to   { clip-path: inset(0 0 0 0%); }
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
 }
 .section-wipe {
   height: 2px;
   background: linear-gradient(to left, transparent, var(--accent), transparent);
   opacity: 0;
-  clip-path: inset(0 0 0 100%);
+  clip-path: inset(0 100% 0 0);
   margin: 0;
 }
 .section-wipe.shown {
@@ -235,9 +229,9 @@ mark.inv {
   animation-play-state: running;
 }
 @keyframes mark-wipe {
-  /* inset(0 0 0 L%): L shrinks 100%→0%, exposing from RIGHT to LEFT (RTL) */
-  from { clip-path: inset(0 0 0 100%); }
-  to   { clip-path: inset(0 0 0 0%); }
+  /* inset(0 R% 0 0): R shrinks 100%→0%, exposing from RIGHT edge inward (RTL) */
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
 }
 
 /* ===================================

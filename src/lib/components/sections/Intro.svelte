@@ -18,7 +18,7 @@
 <style>
   .intro-section {
     padding: 5rem 0;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
 
   .lede {

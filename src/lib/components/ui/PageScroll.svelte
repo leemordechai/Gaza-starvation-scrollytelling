@@ -9,11 +9,23 @@
   // Sections with IDs = major section tops.
   // Scrollytelling steps = the individual narrative cards within sticky sections.
   const STEP_SELECTORS = [
-    'section[id]',       // all named sections
-    '.fd-step',          // FoodDiversity narrative steps
-    '.fp-step',          // FoodPrices narrative steps
-    '.s-step',           // Scrollytelling narrative steps
+    'section[id]',           // all named sections with IDs
+    '.hero-scroll-container',// hero (zoomed-in start)
+    '.hero-phase-zoom',      // hero (zoomed-out end)
+    '.pullquote-section',    // PullQuote components
+    '.stats-section',        // StatsBar
+    '.nb-section',           // NarrativeBlock
+    '.intro-bg-step',        // background context steps
+    '.bridge-block--centered', // bridge centered block
+    '.bridge-block--snap',   // bridge snap block
+    '.famine-block',         // famine deaths section
+    '.fd-step',              // FoodDiversity narrative steps
+    '.fp-step',              // FoodPrices narrative steps
+    '.s-step',               // Scrollytelling narrative steps
   ].join(', ');
+
+  // TruckRoute stop fractions — must match TruckRoute.svelte STOP_FRACS
+  const TR_STOP_FRACS = [0.10, 0.243, 0.386, 0.529, 0.671, 0.814];
 
   /**
    * Collect all anchor top positions (document-relative) from the DOM,
@@ -32,6 +44,18 @@
         tops.push(Math.max(0, top));
       }
     });
+
+    // Add TruckRoute individual stop positions
+    const trContainer = document.querySelector<HTMLElement>('.tr-scroll-container');
+    if (trContainer) {
+      const containerRect = trContainer.getBoundingClientRect();
+      const containerTop = containerRect.top + window.scrollY - NAV_H;
+      const containerHeight = trContainer.offsetHeight;
+      for (const frac of TR_STOP_FRACS) {
+        tops.push(Math.max(0, containerTop + frac * containerHeight));
+      }
+    }
+
     // Deduplicate positions that are within 10px of each other
     return [...new Set(tops.map(t => Math.round(t)))]
       .sort((a, b) => a - b)

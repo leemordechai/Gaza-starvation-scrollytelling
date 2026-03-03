@@ -2,8 +2,10 @@
   import { audioEnabled } from '$lib/stores/audio';
   import { navVisible } from '$lib/stores/nav';
   import { browser } from '$app/environment';
+  import { onMount, onDestroy } from 'svelte';
 
   let audioEl: HTMLAudioElement | undefined = $state(undefined);
+  let scrollUnlocked = false;
 
   $effect(() => {
     if (!audioEl) return;
@@ -15,8 +17,25 @@
     }
   });
 
+  function onFirstScroll() {
+    if (scrollUnlocked) return;
+    scrollUnlocked = true;
+    audioEnabled.set(true);
+    window.removeEventListener('scroll', onFirstScroll, { capture: true });
+  }
+
+  onMount(() => {
+    if (!browser) return;
+    window.addEventListener('scroll', onFirstScroll, { passive: true, capture: true, once: true });
+  });
+
+  onDestroy(() => {
+    if (browser) window.removeEventListener('scroll', onFirstScroll, { capture: true });
+  });
+
   function toggle() {
     if (!browser) return;
+    scrollUnlocked = true;
     audioEnabled.update(v => !v);
   }
 </script>
