@@ -172,22 +172,26 @@
                 {#each order as t}
                   <svg
                     class="ap-truck"
-                    style="--delay: {Math.min(t * 3, 800)}ms;"
+                    style="--delay: {Math.min(t * 3, 800)}ms; color: {phase.color};"
                     viewBox="0 0 28 14"
                     width="28" height="14"
                     aria-hidden="true"
-                    fill="currentColor"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <!-- cargo bed -->
-                    <rect x="0" y="2" width="18" height="10" rx="1"/>
-                    <!-- cab -->
-                    <rect x="18" y="4" width="8" height="8" rx="1"/>
+                    <!-- cargo bed outline -->
+                    <rect x="0.5" y="2.5" width="17" height="9" rx="0.8"/>
+                    <!-- cab outline -->
+                    <path d="M17.5 11.5 L17.5 4.5 L22 4.5 L25.5 7 L25.5 11.5 Z"/>
                     <!-- windshield -->
-                    <rect x="19" y="5" width="5" height="4" rx="0.5" fill="rgba(0,0,0,0.25)"/>
-                    <!-- wheels -->
-                    <circle cx="5"  cy="13" r="1.8"/>
-                    <circle cx="13" cy="13" r="1.8"/>
-                    <circle cx="23" cy="13" r="1.8"/>
+                    <line x1="18.5" y1="4.5" x2="21.5" y2="7" stroke-opacity="0.55"/>
+                    <!-- rear wheel -->
+                    <circle cx="5.5" cy="12.5" r="1.5"/>
+                    <!-- front wheel -->
+                    <circle cx="21" cy="12.5" r="1.5"/>
                   </svg>
                 {/each}
               </div>
@@ -295,7 +299,6 @@
     vertical-align: top;
     width: 28px;
     height: 14px;
-    color: var(--accent);
     opacity: 0;
     transform: scale(0.5);
     transition: opacity 0.12s ease, transform 0.12s ease;

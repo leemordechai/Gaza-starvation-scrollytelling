@@ -1,6 +1,7 @@
 <script lang="ts">
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import explorerData from '$lib/data/priceExplorer.json';
+  import foodPricesData from '$lib/data/foodPrices.json';
 
   // ── Chart geometry ──────────────────────────────────────────────────────────
   const W = 640, H = 300;
@@ -76,6 +77,14 @@
   function yPos(price: number, maxP: number): number {
     return PAD.top + CH - (price / maxP) * CH;
   }
+
+  // ── Event bands (shared with FoodPrices) ────────────────────────────────────
+  const events = foodPricesData.metadata.events.map(e => ({
+    label: e.label,
+    color: e.color,
+    x1: xFromMs(new Date(e.start + '-15').getTime()),
+    x2: e.end ? xFromMs(new Date(e.end + '-15').getTime()) : xFromMs(DOMAIN_END),
+  }));
 
   // ── X-axis ticks ────────────────────────────────────────────────────────────
   const xTicks = [
@@ -260,15 +269,23 @@
               onmousemove={handleMouseMove}
               onmouseleave={handleMouseLeave}
             >
+              <!-- {#key} forces the reveal clipPath rect to re-animate on every commodity change -->
+              {#key activeCommodity}
               <defs>
                 <linearGradient id="pe-area-grad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.22"/>
                   <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
                 </linearGradient>
+                <!-- Static domain clip -->
                 <clipPath id="pe-clip">
                   <rect x={PAD.left} y={PAD.top} width={CW} height={CH} />
                 </clipPath>
+                <!-- Animated reveal clip: width grows 0→CW left-to-right -->
+                <clipPath id="pe-reveal-clip">
+                  <rect x={PAD.left} y={PAD.top} width={CW} height={CH} class="pe-reveal-rect"/>
+                </clipPath>
               </defs>
+              {/key}
 
               <!-- Grid lines + Y labels -->
               {#if currentItem}
@@ -288,6 +305,11 @@
 
               <text x={PAD.left - 6} y={PAD.top - 8} class="pe-axis-unit" text-anchor="end">₪</text>
 
+              <!-- Event bands -->
+              {#each events as ev}
+                <rect x={ev.x1} y={PAD.top} width={ev.x2 - ev.x1} height={CH} fill={ev.color}/>
+              {/each}
+
               <!-- Baseline reference line (first / pre-war price) -->
               {#if currentItem && baselinePrice > 0}
                 {@const by = yPos(baselinePrice, maxPrice)}
@@ -298,12 +320,12 @@
                 />
               {/if}
 
-              <!-- Area fill -->
+              <!-- Area fill — revealed by animated clip -->
               {#if fillPoints()}
-                <polygon points={fillPoints()} fill="url(#pe-area-grad)" clip-path="url(#pe-clip)"/>
+                <polygon points={fillPoints()} fill="url(#pe-area-grad)" clip-path="url(#pe-reveal-clip)"/>
               {/if}
 
-              <!-- Price line -->
+              <!-- Price line — revealed by animated clip -->
               {#if polylinePoints()}
                 <polyline
                   points={polylinePoints()}
@@ -312,14 +334,15 @@
                   stroke-width="2.2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  clip-path="url(#pe-clip)"
+                  clip-path="url(#pe-reveal-clip)"
                 />
               {/if}
 
-              <!-- Data dots -->
+              <!-- Data dots — revealed by animated clip -->
               {#if currentItem}
                 {#each visibleSeries() as pt}
-                  <circle cx={xPos(pt.period)} cy={yPos(pt.price, maxPrice)} r="1.5" fill="var(--accent)" opacity="0.6"/>
+                  <circle cx={xPos(pt.period)} cy={yPos(pt.price, maxPrice)} r="1.5" fill="var(--accent)" opacity="0.6"
+                    clip-path="url(#pe-reveal-clip)"/>
                 {/each}
               {/if}
 
@@ -341,6 +364,17 @@
                 <span class="pe-tooltip-price">₪{hoverPoint.price.toLocaleString('he-IL', { maximumFractionDigits: 2 })}</span>
               </div>
             {/if}
+
+            <!-- Event band labels -->
+            {#each events as ev, ei}
+              {@const midXPct = ((ev.x1 + ev.x2) / 2 / W * 100).toFixed(1)}
+              {@const topPct  = (PAD.top / H * 100).toFixed(1)}
+              <div
+                class="pe-band-label"
+                class:pe-band-label--low={ei % 2 === 1}
+                style="left:{midXPct}%; top:{topPct}%;"
+              >{ev.label}</div>
+            {/each}
 
             <!-- Baseline hover tooltip -->
             {#if baselineHover && baselinePrice > 0}
@@ -494,6 +528,15 @@
     color: var(--accent);
   }
 
+  /* ── Chart reveal animation ── */
+  @keyframes pe-reveal {
+    from { width: 0; }
+    to   { width: 554px; } /* = CW = 640 - 62 - 24 */
+  }
+  :global(.pe-reveal-rect) {
+    animation: pe-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   .pe-axis-label { font-family: var(--font-ui); font-size: 9px; fill: var(--text-muted); }
   .pe-axis-unit  { font-family: var(--font-ui); font-size: 10px; fill: var(--accent); opacity: 0.7; }
 
@@ -523,6 +566,23 @@
     opacity: 0.6;
     margin-top: 0.5rem;
     text-align: center;
+  }
+
+  /* ── Event band labels ── */
+  .pe-band-label {
+    position: absolute;
+    transform: translateX(-50%) translateY(calc(-100% - 3px));
+    font-family: var(--font-ui);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    pointer-events: none;
+    direction: rtl;
+  }
+  .pe-band-label--low {
+    transform: translateX(-50%) translateY(calc(-200% - 6px));
   }
 
   @media (max-width: 640px) {

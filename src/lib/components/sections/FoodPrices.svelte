@@ -231,11 +231,13 @@
     const { ScrollTrigger } = result;
 
     const steps = document.querySelectorAll('.fp-step');
+    const lastIdx = steps.length - 1;
     steps.forEach((step, i) => {
+      const isLast = i === lastIdx;
       const st = ScrollTrigger.create({
         trigger: step,
-        start: 'top center',
-        end: 'bottom center',
+        start: isLast ? 'top 15%' : 'top center',
+        end: isLast ? 'bottom 15%' : 'bottom center',
         onEnter: () => { activeStep = i; hoverPoint = null; pinnedPoint = null; },
         onEnterBack: () => { activeStep = i; hoverPoint = null; pinnedPoint = null; },
       });
@@ -296,16 +298,23 @@
               onpointerleave={handlePointerLeave}
               onpointerdown={handlePointerDown}
             >
-              <!-- Defs -->
+              <!-- Defs — {#key} forces clipPath rect to re-animate on every step change -->
+              {#key activeStep}
               <defs>
                 <linearGradient id="fp-area-grad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.25"/>
                   <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
                 </linearGradient>
+                <!-- Static domain clip -->
                 <clipPath id="fp-clip">
                   <rect x={PAD.left} y={PAD.top} width={CW} height={CH}/>
                 </clipPath>
+                <!-- Animated reveal clip: width grows 0→CW left-to-right -->
+                <clipPath id="fp-reveal-clip">
+                  <rect x={PAD.left} y={PAD.top} width={CW} height={CH} class="fp-reveal-rect"/>
+                </clipPath>
               </defs>
+              {/key}
 
               <!-- Event bands (no inline labels — placed as HTML overlay below) -->
               {#each events as ev}
@@ -340,18 +349,18 @@
                 </g>
               {/if}
 
-              <!-- Fill area (clipped to domain) -->
+              <!-- Fill area — revealed by animated clip -->
               {#if chartFill()}
-                <polygon points={chartFill()} fill="url(#fp-area-grad)" clip-path="url(#fp-clip)"/>
+                <polygon points={chartFill()} fill="url(#fp-area-grad)" clip-path="url(#fp-reveal-clip)"/>
               {/if}
 
-              <!-- Price line (clipped to domain) -->
+              <!-- Price line — revealed by animated clip -->
               {#if chartPolyline()}
                 <polyline points={chartPolyline()} fill="none" stroke="var(--accent)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" clip-path="url(#fp-clip)"/>
+                  stroke-linecap="round" stroke-linejoin="round" clip-path="url(#fp-reveal-clip)"/>
               {/if}
 
-              <!-- Data dots -->
+              <!-- Data dots — revealed by animated clip -->
               {#if currentCommodity}
                 {#each visibleSeries() as pt}
                   <circle
@@ -360,6 +369,7 @@
                     r="1.5"
                     fill="var(--accent)"
                     opacity="0.65"
+                    clip-path="url(#fp-reveal-clip)"
                   />
                 {/each}
               {/if}
@@ -554,6 +564,15 @@
     font-size: 1rem;
     font-weight: 800;
     color: var(--accent);
+  }
+
+  /* ── Chart reveal animation ─── */
+  @keyframes fp-reveal {
+    from { width: 0; }
+    to   { width: 532px; } /* = CW = 600 - 12 - 56 */
+  }
+  :global(.fp-reveal-rect) {
+    animation: fp-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .fp-axis-label {

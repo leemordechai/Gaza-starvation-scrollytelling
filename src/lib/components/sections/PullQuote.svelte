@@ -64,11 +64,11 @@
   }
 
   .pullquote--small blockquote {
-    font-size: clamp(0.95rem, 0.85rem + 0.8vw, 1.3rem);
-    max-width: 52ch;
-    line-height: 1.65;
+    font-size: clamp(1rem, 0.9rem + 0.75vw, 1.2rem);
+    max-width: 41ch;
+    line-height: 1.75;
     text-align: justify;
-    text-align-last: justify;
+    text-align-last: center;
     hyphens: auto;
   }
 
