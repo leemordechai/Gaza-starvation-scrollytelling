@@ -1,5 +1,6 @@
 <script lang="ts">
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
+  import { viewport } from '$lib/actions/viewport';
   import explorerData from '$lib/data/priceExplorer.json';
   import foodPricesData from '$lib/data/foodPrices.json';
 
@@ -12,6 +13,8 @@
   // ── State ───────────────────────────────────────────────────────────────────
   let activeCategory = $state<'food' | 'nonfood'>('food');
   let activeCommodity = $state('Wheat Flour');
+  let chartVisible = $state(false);
+  let revealKey = $derived(chartVisible ? activeCommodity : 'hidden');
 
   // ── Hover state (HTML overlay) ──────────────────────────────────────────────
   type HoverPoint = { svgX: number; svgY: number; price: number; period: string } | null;
@@ -93,11 +96,10 @@
     { label: "2026",       t: new Date(2026, 0, 1).getTime() },
   ];
 
-  // ── Visible series (domain-filtered) ───────────────────────────────────────
-  let visibleSeries = $derived(() => {
-    if (!currentItem?.series?.length) return [];
-    return currentItem.series.filter(p => periodToMs(p.period) >= DOMAIN_START);
-  });
+  // ── Visible series (domain-filtered) — plain $derived value, computed once ──
+  let visibleSeries = $derived(
+    currentItem?.series?.filter(p => periodToMs(p.period) >= DOMAIN_START) ?? []
+  );
 
   // ── Derived chart paths ─────────────────────────────────────────────────────
   let maxPrice = $derived(
@@ -106,37 +108,37 @@
       : 100
   );
 
-  let polylinePoints = $derived(() => {
-    const pts = visibleSeries();
-    if (!pts.length) return '';
-    return pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
-  });
+  let polylinePoints = $derived(
+    visibleSeries.length
+      ? visibleSeries.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ')
+      : ''
+  );
 
-  let fillPoints = $derived(() => {
-    const pts = visibleSeries();
+  let fillPoints = $derived((() => {
+    const pts = visibleSeries;
     if (!pts.length) return '';
     const coords = pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
     const firstX = xPos(pts[0].period).toFixed(1);
     const lastX  = xPos(pts[pts.length - 1].period).toFixed(1);
     const base   = (PAD.top + CH).toFixed(1);
     return `${firstX},${base} ${coords} ${lastX},${base}`;
-  });
+  })());
 
   // ── Baseline: first data point price ────────────────────────────────────────
   let baselinePrice = $derived(currentItem?.series?.[0]?.price ?? 0);
 
   // ── Multiplier: peak / first ────────────────────────────────────────────────
-  let multiplierText = $derived(() => {
+  let multiplierText = $derived((() => {
     if (!currentItem?.series || currentItem.series.length < 2) return '';
     const first = currentItem.series[0].price;
     const peak  = Math.max(...currentItem.series.map(p => p.price));
     const mult  = peak / first;
     if (mult < 1.5) return '';
     return `פי ${Math.round(mult)}`;
-  });
+  })());
 
   // ── HTML tooltip position ───────────────────────────────────────────────────
-  let tooltipStyle = $derived(() => {
+  let tooltipStyle = $derived((() => {
     if (!hoverPoint || !svgEl) return '';
     const rect  = svgEl.getBoundingClientRect();
     const scaleX = rect.width / W;
@@ -149,7 +151,7 @@
     const top   = flipV ? `${py - 56}px` : `${py + 8}px`;
     const transform = flipH ? 'translateX(-100%)' : 'none';
     return `left:${left}; top:${top}; transform:${transform};`;
-  });
+  })());
 
   // ── Hover logic ─────────────────────────────────────────────────────────────
   let _rafPending = false;
@@ -170,7 +172,7 @@
 
       // Data point hover
       if (currentItem?.series?.length) {
-        const visible = visibleSeries();
+        const visible = visibleSeries;
         let nearest: SeriesPoint | null = null;
         let minDist = Infinity;
         for (const pt of visible) {
@@ -247,14 +249,14 @@
 
       <!-- Chart (left in RTL) -->
       <div class="pe-chart-col">
-        <div class="pe-chart-wrap">
+        <div class="pe-chart-wrap" use:viewport={{ onEnter: () => { chartVisible = true; }, once: true, threshold: 0.3 }}>
           <div class="pe-chart-header">
             <span class="pe-chart-name">{hebrewNames[activeCommodity] ?? activeCommodity}</span>
             {#if currentItem}
               <span class="pe-chart-unit">{currentItem.unit}</span>
             {/if}
-            {#if multiplierText()}
-              <span class="pe-multiplier">{multiplierText()} מהמחיר לפני המלחמה</span>
+            {#if multiplierText}
+              <span class="pe-multiplier">{multiplierText} מהמחיר לפני המלחמה</span>
             {/if}
           </div>
 
@@ -269,23 +271,27 @@
               onmousemove={handleMouseMove}
               onmouseleave={handleMouseLeave}
             >
-              <!-- {#key} forces the reveal clipPath rect to re-animate on every commodity change -->
-              {#key activeCommodity}
+              <!-- Static defs (gradient, domain clip) -->
               <defs>
                 <linearGradient id="pe-area-grad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.22"/>
                   <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
                 </linearGradient>
-                <!-- Static domain clip -->
                 <clipPath id="pe-clip">
                   <rect x={PAD.left} y={PAD.top} width={CW} height={CH} />
                 </clipPath>
-                <!-- Animated reveal clip: width grows 0→CW left-to-right -->
-                <clipPath id="pe-reveal-clip">
-                  <rect x={PAD.left} y={PAD.top} width={CW} height={CH} class="pe-reveal-rect"/>
-                </clipPath>
               </defs>
-              {/key}
+
+              <!-- Animated reveal clip — re-keyed on viewport entry and commodity change -->
+              {#if chartVisible}
+                {#key revealKey}
+                  <defs>
+                    <clipPath id="pe-reveal-clip">
+                      <rect class="pe-reveal-rect" x={PAD.left} y={PAD.top} height={CH}/>
+                    </clipPath>
+                  </defs>
+                {/key}
+              {/if}
 
               <!-- Grid lines + Y labels -->
               {#if currentItem}
@@ -320,30 +326,21 @@
                 />
               {/if}
 
-              <!-- Area fill — revealed by animated clip -->
-              {#if fillPoints()}
-                <polygon points={fillPoints()} fill="url(#pe-area-grad)" clip-path="url(#pe-reveal-clip)"/>
-              {/if}
-
-              <!-- Price line — revealed by animated clip -->
-              {#if polylinePoints()}
-                <polyline
-                  points={polylinePoints()}
-                  fill="none"
-                  stroke="var(--accent)"
-                  stroke-width="2.2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  clip-path="url(#pe-reveal-clip)"
-                />
-              {/if}
-
-              <!-- Data dots — revealed by animated clip -->
-              {#if currentItem}
-                {#each visibleSeries() as pt}
-                  <circle cx={xPos(pt.period)} cy={yPos(pt.price, maxPrice)} r="1.5" fill="var(--accent)" opacity="0.6"
-                    clip-path="url(#pe-reveal-clip)"/>
-                {/each}
+              <!-- Line + area + dots: only rendered after viewport entry so they draw in via animated clip -->
+              {#if chartVisible}
+                {#if fillPoints}
+                  <polygon points={fillPoints} fill="url(#pe-area-grad)" clip-path="url(#pe-reveal-clip)"/>
+                {/if}
+                {#if polylinePoints}
+                  <polyline points={polylinePoints} fill="none" stroke="var(--accent)" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" clip-path="url(#pe-reveal-clip)"/>
+                {/if}
+                {#if currentItem}
+                  {#each visibleSeries as pt}
+                    <circle cx={xPos(pt.period)} cy={yPos(pt.price, maxPrice)} r="1.5" fill="var(--accent)" opacity="0.6"
+                      clip-path="url(#pe-reveal-clip)"/>
+                  {/each}
+                {/if}
               {/if}
 
               <!-- Crosshair only (no SVG tooltip) -->
@@ -359,7 +356,7 @@
 
             <!-- HTML tooltip — RTL-native -->
             {#if hoverPoint}
-              <div class="pe-tooltip" style={tooltipStyle()}>
+              <div class="pe-tooltip" style={tooltipStyle}>
                 <span class="pe-tooltip-period">{formatPeriod(hoverPoint.period)}</span>
                 <span class="pe-tooltip-price">₪{hoverPoint.price.toLocaleString('he-IL', { maximumFractionDigits: 2 })}</span>
               </div>
@@ -534,7 +531,7 @@
     to   { width: 554px; } /* = CW = 640 - 62 - 24 */
   }
   :global(.pe-reveal-rect) {
-    animation: pe-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: pe-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .pe-axis-label { font-family: var(--font-ui); font-size: 9px; fill: var(--text-muted); }

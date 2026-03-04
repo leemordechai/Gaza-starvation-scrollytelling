@@ -37,8 +37,9 @@
     if (!browser) return;
 
     function setHeight() {
-      const isMobile = window.innerWidth <= 768;
-      scrollContainer.style.height = window.innerHeight * (isMobile ? 4.5 : 7) + 'px';
+      const w = window.innerWidth;
+      const multiplier = w <= 700 ? 4.5 : w <= 1024 ? 5.5 : 7;
+      scrollContainer.style.height = window.innerHeight * multiplier + 'px';
     }
     setHeight();
     window.addEventListener('resize', setHeight, { passive: true });
@@ -206,6 +207,45 @@
           <ellipse cx="510" cy="1600" rx="9" ry="5.5" fill="#d4aa7a" stroke="rgba(160,90,30,0.65)" stroke-width="0.9" transform="rotate(4,510,1600)"/>
         </g>
 
+        <!-- Water puddles — in the last third of the route (y≥1200), near the road edges -->
+        <g class="tr-puddles" opacity="0.72">
+          <!-- Puddle 1: left side road edge, y≈1240 -->
+          <ellipse cx="162" cy="1242" rx="18" ry="8" fill="#6ea8c4" opacity="0.45" transform="rotate(-15,162,1242)"/>
+          <ellipse cx="162" cy="1242" rx="11" ry="4.5" fill="#8cc0d8" opacity="0.55" transform="rotate(-15,162,1242)"/>
+          <!-- Puddle 2: right side road edge, y≈1310 -->
+          <ellipse cx="845" cy="1312" rx="22" ry="9" fill="#6ea8c4" opacity="0.42" transform="rotate(10,845,1312)"/>
+          <ellipse cx="845" cy="1312" rx="14" ry="5" fill="#8cc0d8" opacity="0.52" transform="rotate(10,845,1312)"/>
+          <!-- Puddle 3: left side, y≈1390 — larger pothole puddle -->
+          <ellipse cx="170" cy="1392" rx="25" ry="11" fill="#5a9ab8" opacity="0.38" transform="rotate(-8,170,1392)"/>
+          <ellipse cx="170" cy="1392" rx="16" ry="6.5" fill="#7ab8d0" opacity="0.50" transform="rotate(-8,170,1392)"/>
+          <ellipse cx="170" cy="1392" rx="7" ry="2.5" fill="#9ed0e8" opacity="0.6" transform="rotate(-8,170,1392)"/>
+          <!-- Puddle 4: centre road, y≈1465 -->
+          <ellipse cx="490" cy="1468" rx="19" ry="7" fill="#6ea8c4" opacity="0.40" transform="rotate(5,490,1468)"/>
+          <ellipse cx="490" cy="1468" rx="11" ry="3.5" fill="#8cc0d8" opacity="0.52" transform="rotate(5,490,1468)"/>
+          <!-- Puddle 5: right side, y≈1530 -->
+          <ellipse cx="830" cy="1533" rx="20" ry="8" fill="#5a9ab8" opacity="0.38" transform="rotate(-12,830,1533)"/>
+          <ellipse cx="830" cy="1533" rx="12" ry="4.5" fill="#7ab8d0" opacity="0.50" transform="rotate(-12,830,1533)"/>
+          <!-- Puddle 6: left side, y≈1600 -->
+          <ellipse cx="158" cy="1602" rx="16" ry="6.5" fill="#6ea8c4" opacity="0.42" transform="rotate(-5,158,1602)"/>
+          <ellipse cx="158" cy="1602" rx="9" ry="3" fill="#8cc0d8" opacity="0.55" transform="rotate(-5,158,1602)"/>
+        </g>
+
+        <!-- Children crowd — two groups flanking the road near the distribution stop -->
+        <image
+          href="/images/children-crowd.webp"
+          x="290" y="1300"
+          width="240" height="300"
+          preserveAspectRatio="xMidYMid meet"
+          style="mix-blend-mode: multiply; opacity: 0.88;"
+        />
+        <image
+          href="/images/children-crowd.webp"
+          x="400" y="1200"
+          width="240" height="300"
+          preserveAspectRatio="xMidYMid meet"
+          style="mix-blend-mode: multiply; opacity: 0.82;"
+        />
+
         <!-- Debris piles — scattered in the destroyed zone (y≥1180) -->
         <g class="tr-debris" opacity="0.78">
           <!-- Cluster A: left side, y≈1210 -->
@@ -257,7 +297,7 @@
         {#each truckRoute.stops as _stop, i}
           <g style="opacity: {activeStop === i ? 1 : 0.06}; transition: opacity 0.7s ease;">
             <image
-              href={activeStop >= i - 1 ? `/images/scene-${i+1}-${SCENE_SLUGS[i]}.png` : undefined}
+              href={activeStop >= i - 1 ? `/images/scene-${i+1}-${SCENE_SLUGS[i]}.webp` : undefined}
               x={SCENE_POS[i].x}
               y={SCENE_POS[i].y}
               width={SCENE_POS[i].w}

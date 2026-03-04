@@ -27,6 +27,12 @@
   let baselineHover = $state(false);
   let baselineHoverStyle = $state('');
   let baselineDrawn = $state(false);
+  let chartVisible = $state(false);
+  // Increments each time the line should re-animate (visible + step change)
+  let revealKey = $state(0);
+  $effect(() => {
+    if (chartVisible) revealKey = activeStep;
+  });
 
   // ── Current commodity series ──────────────────────────────────────────────
   const commodityKeys = foodPricesText.steps.map(s => s.commodity) as string[];
@@ -70,11 +76,9 @@
   }
 
   // ── Visible series: only points within the domain ─────────────────────────
-  let visibleSeries = $derived(() => {
-    const c = currentCommodity;
-    if (!c?.series?.length) return [];
-    return c.series.filter(p => periodToDate(p.period) >= domainStart);
-  });
+  let visibleSeries = $derived(
+    currentCommodity?.series?.filter(p => periodToDate(p.period) >= domainStart) ?? []
+  );
 
   // ── Single maxPrice computation — shared by all chart elements ────────────
   let maxPrice = $derived(
@@ -84,21 +88,21 @@
   );
 
   // ── Build SVG paths from visible series only ──────────────────────────────
-  let chartPolyline = $derived(() => {
-    const pts = visibleSeries();
-    if (!pts.length) return '';
-    return pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
-  });
+  let chartPolyline = $derived(
+    visibleSeries.length
+      ? visibleSeries.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ')
+      : ''
+  );
 
-  let chartFill = $derived(() => {
-    const pts = visibleSeries();
+  let chartFill = $derived((() => {
+    const pts = visibleSeries;
     if (!pts.length) return '';
     const coords = pts.map(p => `${xPos(p.period).toFixed(1)},${yPos(p.price, maxPrice).toFixed(1)}`).join(' ');
     const firstX = xPos(pts[0].period).toFixed(1);
     const lastX  = xPos(pts[pts.length - 1].period).toFixed(1);
     const base   = (PAD.top + CH).toFixed(1);
     return `${firstX},${base} ${coords} ${lastX},${base}`;
-  });
+  })());
 
   // ── X-axis ticks ──────────────────────────────────────────────────────────
   let xTicks = $derived((() => {
@@ -161,7 +165,7 @@
     const rect = svgEl.getBoundingClientRect();
     const scaleX = W / rect.width;
     const posX = (clientX - rect.left) * scaleX;
-    const vis = visibleSeries();
+    const vis = visibleSeries;
     let nearest: SeriesPoint | null = null;
     let minDist = Infinity;
     for (const pt of vis) {
@@ -234,9 +238,13 @@
     const lastIdx = steps.length - 1;
     steps.forEach((step, i) => {
       const isLast = i === lastIdx;
+      // For the last step (cooking gas), the step div has 40vh padding-top so its
+      // DOM top is far above the visible text. Trigger on the heading inside instead,
+      // so activation happens when the title text reaches the centre of the viewport.
+      const triggerEl = isLast ? step.querySelector('.fp-step-title') ?? step : step;
       const st = ScrollTrigger.create({
-        trigger: step,
-        start: isLast ? 'top 15%' : 'top center',
+        trigger: triggerEl,
+        start: 'top center',
         end: isLast ? 'bottom 15%' : 'bottom center',
         onEnter: () => { activeStep = i; hoverPoint = null; pinnedPoint = null; },
         onEnterBack: () => { activeStep = i; hoverPoint = null; pinnedPoint = null; },
@@ -280,7 +288,7 @@
 
       <!-- Sticky chart — second in DOM = left column in RTL -->
       <div class="fp-sticky">
-        <div class="fp-chart-wrap" use:viewport={{ onEnter: () => { baselineDrawn = true; }, once: true, threshold: 0.4 }}>
+        <div class="fp-chart-wrap" use:viewport={{ onEnter: () => { baselineDrawn = true; chartVisible = true; }, once: true, threshold: 0.4 }}>
           <div class="fp-commodity-meta">
             <span class="fp-commodity-name">{currentCommodity?.labelHe}</span>
             <span class="fp-commodity-unit">{currentCommodity?.unit}</span>
@@ -298,8 +306,6 @@
               onpointerleave={handlePointerLeave}
               onpointerdown={handlePointerDown}
             >
-              <!-- Defs — {#key} forces clipPath rect to re-animate on every step change -->
-              {#key activeStep}
               <defs>
                 <linearGradient id="fp-area-grad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.25"/>
@@ -309,12 +315,7 @@
                 <clipPath id="fp-clip">
                   <rect x={PAD.left} y={PAD.top} width={CW} height={CH}/>
                 </clipPath>
-                <!-- Animated reveal clip: width grows 0→CW left-to-right -->
-                <clipPath id="fp-reveal-clip">
-                  <rect x={PAD.left} y={PAD.top} width={CW} height={CH} class="fp-reveal-rect"/>
-                </clipPath>
               </defs>
-              {/key}
 
               <!-- Event bands (no inline labels — placed as HTML overlay below) -->
               {#each events as ev}
@@ -349,29 +350,32 @@
                 </g>
               {/if}
 
-              <!-- Fill area — revealed by animated clip -->
-              {#if chartFill()}
-                <polygon points={chartFill()} fill="url(#fp-area-grad)" clip-path="url(#fp-reveal-clip)"/>
+              <!-- Animated reveal clipPath — only rendered after viewport entry, re-keyed on step change -->
+              {#if chartVisible}
+                {#key revealKey}
+                  <defs>
+                    <clipPath id="fp-reveal-clip">
+                      <rect class="fp-reveal-rect" x={PAD.left} y={PAD.top} height={CH}/>
+                    </clipPath>
+                  </defs>
+                {/key}
               {/if}
 
-              <!-- Price line — revealed by animated clip -->
-              {#if chartPolyline()}
-                <polyline points={chartPolyline()} fill="none" stroke="var(--accent)" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" clip-path="url(#fp-reveal-clip)"/>
-              {/if}
-
-              <!-- Data dots — revealed by animated clip -->
-              {#if currentCommodity}
-                {#each visibleSeries() as pt}
-                  <circle
-                    cx={xPos(pt.period)}
-                    cy={yPos(pt.price, maxPrice)}
-                    r="1.5"
-                    fill="var(--accent)"
-                    opacity="0.65"
-                    clip-path="url(#fp-reveal-clip)"
-                  />
-                {/each}
+              <!-- Line + area + dots: only rendered after viewport entry so they draw in via animated clip -->
+              {#if chartVisible}
+                {#if chartFill}
+                  <polygon points={chartFill} fill="url(#fp-area-grad)" clip-path="url(#fp-reveal-clip)"/>
+                {/if}
+                {#if chartPolyline}
+                  <polyline points={chartPolyline} fill="none" stroke="var(--accent)" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" clip-path="url(#fp-reveal-clip)"/>
+                {/if}
+                {#if currentCommodity}
+                  {#each visibleSeries as pt}
+                    <circle cx={xPos(pt.period)} cy={yPos(pt.price, maxPrice)} r="1.5" fill="var(--accent)" opacity="0.65"
+                      clip-path="url(#fp-reveal-clip)"/>
+                  {/each}
+                {/if}
               {/if}
 
               <!-- Hover crosshair dot only -->
@@ -432,7 +436,7 @@
     gap: 4rem;
     align-items: start;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 700px) {
     .fp-grid { grid-template-columns: 1fr; gap: 0; }
     .fp-sticky { order: -1; }
   }
@@ -447,7 +451,7 @@
     align-self: start;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 700px) {
     .fp-sticky {
       position: static;
     }
@@ -569,10 +573,10 @@
   /* ── Chart reveal animation ─── */
   @keyframes fp-reveal {
     from { width: 0; }
-    to   { width: 532px; } /* = CW = 600 - 12 - 56 */
+    to   { width: 532px; } /* CW = 600 - 12 - 56 */
   }
   :global(.fp-reveal-rect) {
-    animation: fp-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: fp-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .fp-axis-label {
@@ -610,7 +614,7 @@
     padding-top: calc(var(--vh, 1vh) * 40);
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 700px) {
     .fp-step {
       min-height: 0;
       opacity: 1;

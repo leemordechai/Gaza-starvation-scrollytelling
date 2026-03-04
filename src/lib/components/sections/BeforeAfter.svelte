@@ -55,13 +55,13 @@
 
       <!-- Before layer -->
       <div class="compare-layer compare-before">
-        <img src="/images/before-neighborhood.jpg" alt="Intact Gaza neighborhood with orderly buildings, trees, and a mosque" />
+        <img src="/images/before-neighborhood.jpg" alt="Intact Gaza neighborhood with orderly buildings, trees, and a mosque" loading="lazy" />
         <span class="compare-label-overlay before-label">Before</span>
       </div>
 
       <!-- After layer -->
       <div class="compare-layer compare-after" bind:this={afterLayer} style="clip-path: inset(0 0 0 {pct}%);">
-        <img src="/images/after-neighborhood.jpg" alt="Same Gaza neighborhood destroyed: collapsed buildings, rubble, craters" />
+        <img src="/images/after-neighborhood.jpg" alt="Same Gaza neighborhood destroyed: collapsed buildings, rubble, craters" loading="lazy" />
         <span class="compare-label-overlay after-label">After</span>
       </div>
 

@@ -58,6 +58,17 @@ body {
 .container-wide  { max-width: 1100px; margin: 0 auto; padding: 0 clamp(0.75rem, 3vw, 2rem); }
 
 /* ===================================
+   CSS CONTAINMENT — isolates chart/section reflows from the rest of the page
+=================================== */
+.fp-section,
+.fd-section,
+.pe-section,
+.ap-section,
+.at-section {
+  contain: layout style;
+}
+
+/* ===================================
    SECTION TOPO TEXTURE
 =================================== */
 .section-topo {

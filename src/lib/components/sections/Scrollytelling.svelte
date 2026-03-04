@@ -9,10 +9,10 @@
 
   const captions = stepsData.map(s => s.caption);
   const panelImages = [
-    '/images/scrolly-1.jpg',
-    '/images/scrolly-2.jpg',
-    '/images/scrolly-3.jpg',
-    '/images/scrolly-4.jpg'
+    '/images/scrolly-1.webp',
+    '/images/scrolly-2.webp',
+    '/images/scrolly-3.webp',
+    '/images/scrolly-4.webp'
   ];
 
   onMount(async () => {
