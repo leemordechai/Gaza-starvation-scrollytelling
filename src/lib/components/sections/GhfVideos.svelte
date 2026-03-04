@@ -79,7 +79,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  @media (max-width: 500px) { .ghf-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .ghf-grid { grid-template-columns: 1fr; } }
 
   .ghf-card {
     display: block;

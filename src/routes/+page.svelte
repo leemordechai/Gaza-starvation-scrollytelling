@@ -6,7 +6,6 @@
   import SectionIndicator from '$lib/components/ui/SectionIndicator.svelte';
   import CopyToast from '$lib/components/ui/CopyToast.svelte';
   import Divider from '$lib/components/ui/Divider.svelte';
-  import AudioPlayer from '$lib/components/ui/AudioPlayer.svelte';
   import BackToTop from '$lib/components/ui/BackToTop.svelte';
   import MilestoneBanner from '$lib/components/ui/MilestoneBanner.svelte';
   import PageScroll from '$lib/components/ui/PageScroll.svelte';
@@ -71,7 +70,6 @@
 <SiteNav />
 <MobileMenu />
 <SectionIndicator />
-<AudioPlayer />
 <BackToTop />
 <MilestoneBanner />
 <PageScroll />

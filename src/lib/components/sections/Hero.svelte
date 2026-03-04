@@ -218,6 +218,10 @@
   .hero-meta :global(.byline) { color: var(--accent); font-weight: 700; }
   .hero-meta :global(.sep) { color: var(--border-mid); }
 
+  @media (max-width: 900px) {
+    .hero-title { white-space: normal; }
+  }
+
   .scroll-cue {
     position: absolute; bottom: 2rem; left: 50%;
     transform: translateX(-50%); display: flex;

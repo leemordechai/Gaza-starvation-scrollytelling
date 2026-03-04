@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { browser } from '$app/environment';
   import { reveal } from '$lib/actions/reveal';
+  import { viewport } from '$lib/actions/viewport';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import rawData from '$lib/data/aidTrucks.json';
   import { aidBlockade } from '$lib/data/story.js';
@@ -27,6 +28,9 @@
   let isTouchDevice = $state(false);
   let pinnedMonth: number | null = $state(null);
   let showTapHint = $derived(isTouchDevice && pinnedMonth === null);
+  let chartVisible = $state(false);
+  let revealCounter = $state(0);
+  let revealKey = $derived(chartVisible ? `${metric}-${revealCounter}` : 'hidden');
 
   // ── Derived ────────────────────────────────────────────────────────────────
   let subSeries = $derived(mode === 'classification' ? byClassificationMerged : byOrg);
@@ -218,7 +222,7 @@
     return xPos(idx) - halfStepL + frac * (halfStepL + halfStepR);
   }
 
-  type CeasefireBand = { x1: number; x2: number; midX: number; label: string; sub: string };
+  type CeasefireBand = { x1: number; x2: number; midX: number; line1: string; line2: string };
 
   const ceasefireBands: CeasefireBand[] = (() => {
     const bands: CeasefireBand[] = [];
@@ -228,7 +232,7 @@
     const cf1x2 = xPosFrac('2023-12', 1);
     if (cf1x1 > 0 && cf1x2 > 0) {
       bands.push({ x1: cf1x1, x2: cf1x2, midX: (cf1x1 + cf1x2) / 2,
-        label: 'הפסקת האש הראשונה', sub: '23 נוב – 1 דצמ 2023' });
+        line1: 'הפסקת האש', line2: 'הראשונה' });
     }
 
     // 2. Second ceasefire: Jan 18 – Mar 18, 2025
@@ -236,7 +240,7 @@
     const cf2x2 = xPosFrac('2025-03', 18);
     if (cf2x1 > 0 && cf2x2 > 0) {
       bands.push({ x1: cf2x1, x2: cf2x2, midX: (cf2x1 + cf2x2) / 2,
-        label: 'הפסקת האש השנייה', sub: '18 ינו – 18 מרץ 2025' });
+        line1: 'הפסקת האש', line2: 'השנייה' });
     }
 
     // 3. Third ceasefire: Oct 10, 2025 onwards (to end of chart)
@@ -245,7 +249,7 @@
     if (cf3x1 > 0) {
       bands.push({ x1: cf3x1, x2: Math.min(cf3x2, W - PAD.right),
         midX: (cf3x1 + Math.min(cf3x2, W - PAD.right)) / 2,
-        label: 'הפסקת האש השלישית', sub: 'מ-10 אוק 2025' });
+        line1: 'הפסקת האש', line2: 'השלישית' });
     }
 
     return bands;
@@ -357,7 +361,7 @@
     <div class="at-chart-wrap reveal" use:reveal>
 
       <!-- SVG chart -->
-      <div class="at-chart-container">
+      <div class="at-chart-container" use:viewport={{ onEnter: () => { chartVisible = true; }, onLeave: () => { chartVisible = false; revealCounter++; }, threshold: 0.15 }}>
         <svg
           bind:this={svgEl}
           viewBox="0 0 {W} {H}"
@@ -369,10 +373,19 @@
           onpointerleave={onPointerLeave}
           onpointerdown={onPointerDown}
         >
+          <!-- Static defs: gradient always present -->
+          <defs>
+            <linearGradient id="totalGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02"/>
+            </linearGradient>
+          </defs>
+
           <!-- Ceasefire highlight bands (rendered first, behind everything) -->
           {#each ceasefireBands as band, bi}
             {@const bandW = band.x2 - band.x1}
             {@const labelX = Math.max(PAD.left + bandW / 2, Math.min(band.midX, W - PAD.right - bandW / 2))}
+            {@const anchor = 'middle'}
             <rect
               x={band.x1}
               y={PAD.top}
@@ -380,13 +393,11 @@
               height={CH}
               class="at-ceasefire-band"
             />
-            <!-- Label above chart area — name only, no date sub-label -->
-            <text
-              x={labelX}
-              y={bi === 1 ? PAD.top - 22 : PAD.top - 12}
-              class="at-ceasefire-label"
-              text-anchor="middle"
-            >{band.label}</text>
+            <!-- Two-row label above chart area -->
+            <text x={labelX} text-anchor={anchor}>
+              <tspan x={labelX} y={PAD.top - 14} class="at-ceasefire-label">{band.line1}</tspan>
+              <tspan x={labelX} dy="10" class="at-ceasefire-label">{band.line2}</tspan>
+            </text>
             <!-- Tick line connecting label to band top -->
             <line
               x1={band.midX} y1={PAD.top - 3}
@@ -431,33 +442,34 @@
             class="at-axis-line"
           />
 
-          <!-- Total area fill -->
-          <path
-            d={totalArea}
-            class="at-total-area"
-          />
+          <!-- Lines + area wrapped in a reveal group — clip-path: inset() wipes from right to left on entry -->
+          {#if chartVisible}
+            {#key revealKey}
+              <g class="at-reveal-g">
+                <!-- Total area fill -->
+                <path d={totalArea} class="at-total-area"/>
 
-          <!-- Sub-series lines (dimmer) -->
-          {#each subSeries as sub}
-            {@const isHov = hoveredSub === sub.key}
-            <path
-              role="graphics-symbol"
-              aria-label={sub.key}
-              d={buildPath(sub.series)}
-              class="at-sub-line"
-              class:at-sub-line--hovered={isHov}
-              class:at-sub-line--dimmed={hoveredSub !== null && !isHov}
-              stroke={getColor(sub.key)}
-              onmouseenter={() => { hoveredSub = sub.key; }}
-              onmouseleave={() => { hoveredSub = null; }}
-            />
-          {/each}
+                <!-- Sub-series lines (dimmer) -->
+                {#each subSeries as sub}
+                  {@const isHov = hoveredSub === sub.key}
+                  <path
+                    role="graphics-symbol"
+                    aria-label={sub.key}
+                    d={buildPath(sub.series)}
+                    class="at-sub-line"
+                    class:at-sub-line--hovered={isHov}
+                    class:at-sub-line--dimmed={hoveredSub !== null && !isHov}
+                    stroke={getColor(sub.key)}
+                    onmouseenter={() => { hoveredSub = sub.key; }}
+                    onmouseleave={() => { hoveredSub = null; }}
+                  />
+                {/each}
 
-          <!-- Total line (drawn on top) -->
-          <path
-            d={totalPath}
-            class="at-total-line"
-          />
+                <!-- Total line (drawn on top) -->
+                <path d={totalPath} class="at-total-line"/>
+              </g>
+            {/key}
+          {/if}
 
           <!-- Gap band (blockade period) -->
           {#if gapIndices}
@@ -468,12 +480,10 @@
               height={CH}
               class="at-gap-band"
             />
-            <text
-              x={gapIndices.midX}
-              y={PAD.top + 14}
-              class="at-gap-label"
-              text-anchor="middle"
-            >מצור מוחלט</text>
+            <text x={gapIndices.midX} text-anchor="middle">
+              <tspan x={gapIndices.midX} y={PAD.top - 14} class="at-gap-label at-gap-label--small">מצור</tspan>
+              <tspan x={gapIndices.midX} dy="10" class="at-gap-label at-gap-label--small">מוחלט</tspan>
+            </text>
           {/if}
 
           <!-- Tooltip vertical rule -->
@@ -712,6 +722,15 @@
     filter: drop-shadow(0 0 6px rgba(196,162,74,0.4));
   }
 
+  /* Chart reveal animation — wipes from right to left using clip-path: inset() on the SVG <g> */
+  @keyframes at-reveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+  :global(.at-reveal-g) {
+    animation: at-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   /* Ceasefire bands */
   .at-ceasefire-band {
     fill: #2a6b3a;
@@ -727,12 +746,6 @@
     fill: #4aaa6a;
     opacity: 0.85;
     pointer-events: none;
-  }
-
-  .at-ceasefire-label--sub {
-    font-size: 7px;
-    font-weight: 400;
-    opacity: 0.6;
   }
 
   .at-ceasefire-tick {
@@ -760,11 +773,8 @@
   }
 
   .at-gap-label--small {
-    font-size: 8.5px;
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    fill: #c04030;
-    opacity: 0.7;
+    font-size: 8px;
+    letter-spacing: 0.05em;
   }
 
   /* Tooltip rule + dot */

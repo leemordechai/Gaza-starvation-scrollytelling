@@ -144,6 +144,7 @@
         <div
           class="ap-phase"
           class:ap-phase--blockade={phase.isBlockade}
+          class:ap-phase--revealed={visible[i]}
           data-phase-idx={i}
           bind:this={phaseEls[i]}
         >
@@ -160,7 +161,7 @@
             {#if phase.isBlockade}
               <div class="ap-blockade-void" class:ap-blockade-void--visible={visible[i]}>
                 <span class="ap-blockade-zero">0</span>
-                <span class="ap-blockade-label">חסימה מוחלטת · <span bind:this={daySpanEl}>79</span> יום</span>
+                <span class="ap-blockade-label">מצור מוחלט · <span bind:this={daySpanEl}>79</span> יום</span>
               </div>
             {:else}
               {@const order = shuffledIndices(phase.iconCount, i * 997 + 42)}
@@ -232,6 +233,13 @@
     padding: 2rem 0;
     border-top: 1px solid var(--border-mid);
     align-items: start;
+    /* Reveal: start fully clipped from the right (RTL wipe), animate to fully visible */
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ap-phase--revealed {
+    clip-path: inset(0 0% 0 0);
   }
 
   .ap-phase--blockade {
