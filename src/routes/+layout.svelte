@@ -11,6 +11,8 @@
   import '@fontsource/barlow-condensed/600.css';
   import '@fontsource/barlow-condensed/700.css';
   import '@fontsource/barlow-condensed/800.css';
+  import '@fontsource/ibm-plex-mono/400.css';
+  import '@fontsource/ibm-plex-mono/700.css';
   import '../app.css';
 
   import { onMount } from 'svelte';

@@ -84,4 +84,9 @@
     color: var(--text-muted);
     letter-spacing: 0.04em;
   }
+
+  @media (max-width: 600px) {
+    .footer-link { font-size: 0.8rem; padding: 0.35rem 0; }
+    .footer-bottom p { font-size: 0.72rem; }
+  }
 </style>

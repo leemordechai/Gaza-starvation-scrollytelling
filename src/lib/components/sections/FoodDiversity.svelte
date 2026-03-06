@@ -226,7 +226,7 @@
 
   /* ===== Section ===== */
   .fd-section {
-    padding: 5rem 0 2rem;
+    padding: clamp(2.5rem, 7vw, 5rem) 0 2rem;
   }
 
   /* ===== Layout: sticky viz + scrolling text ===== */
@@ -238,7 +238,7 @@
     margin-top: 3rem;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-layout {
       grid-template-columns: 1fr;
       gap: 0;
@@ -251,7 +251,7 @@
     top: 90px;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-sticky {
       position: sticky;
       top: 56px;
@@ -272,7 +272,7 @@
     border-color: var(--accent);
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-viz {
       padding: 1rem 1rem 0.75rem;
       background: var(--bg-card);
@@ -314,7 +314,7 @@
     letter-spacing: 0.03em;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-period-label { font-size: 1.05rem; }
   }
 
@@ -416,7 +416,7 @@
     letter-spacing: 0.02em;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-label {
       width: 70px;
       font-size: 0.52rem;
@@ -519,8 +519,9 @@
     opacity: 0.5;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-val { font-size: 0.6rem; width: 24px; }
+    .fd-divider-label { font-size: 0.58rem; opacity: 0.75; }
   }
 
   /* ===== Day labels ===== */
@@ -536,7 +537,7 @@
     flex-shrink: 0;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-day-spacer { width: 70px; }
   }
 
@@ -563,7 +564,7 @@
     flex-shrink: 0;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-day-spacer-right { width: 24px; }
   }
 
@@ -584,9 +585,9 @@
     padding: 3rem 0 10rem;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-narrative {
-      padding: 2rem 0 6rem;
+      padding: 1.5rem 0 4rem;
     }
   }
 
@@ -600,7 +601,7 @@
     transition: opacity 0.5s ease;
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .fd-step {
       min-height: 0;
       opacity: 1;

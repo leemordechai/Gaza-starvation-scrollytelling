@@ -26,6 +26,7 @@
   import FoodDiversity from '$lib/components/sections/FoodDiversity.svelte';
   import PriceExplorer from '$lib/components/sections/PriceExplorer.svelte';
   import GhfVideos from '$lib/components/sections/GhfVideos.svelte';
+  import IntentWall from '$lib/components/sections/IntentWall.svelte';
   import NarrativeBlock from '$lib/components/sections/NarrativeBlock.svelte';
   import Analysis from '$lib/components/sections/Analysis.svelte';
   import Footer from '$lib/components/Footer.svelte';
@@ -95,6 +96,17 @@
       </div>
     {/each}
   </div>
+
+  <Divider variant="gem" />
+
+  <div class="snap-point" aria-hidden="true"></div>
+
+  <!-- Intent preface paragraph -->
+  <section class="intent-preface container" dir="rtl">
+    <p class="reveal" use:reveal>לאורך המלחמה, גורמים בכירים בישראל התבטאו בעד עצירת הסיוע ההומניטרי. התבטאויות אלו פורסמו פעמים רבות בכלי התקשורת הישראליים וברשתות החברתיות, כמעט ללא ביקורת ציבורית. הצהרות אלו והיעדר ההתנגדות להן על ידי מוסדות מדינה בתוך ישראל מעידות על כוונותיהם של גורמים רבים בתוך שירות המדינה, ועל קיומו של שיח שבו הרעבת עזה הייתה לגיטימית ואף רצויה.</p>
+  </section>
+
+  <IntentWall />
 
   <Divider variant="gem" />
 
@@ -324,6 +336,17 @@
     color: var(--sand);
     font-family: var(--font-body);
     font-weight: 400;
+  }
+
+  /* Intent preface */
+  .intent-preface {
+    padding: 3rem 0 1.5rem;
+  }
+  .intent-preface p {
+    font-size: clamp(0.97rem, 1.6vw, 1.08rem);
+    line-height: 1.82;
+    color: var(--text);
+    font-family: var(--font-body);
   }
 
   /* mark.inv styles and animation live in app.css (global) */

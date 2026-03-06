@@ -38,7 +38,7 @@
 </section>
 
 <style>
-  .analysis-section { padding: 5rem 0; background: var(--bg-section); }
+  .analysis-section { padding: clamp(2.5rem, 7vw, 5rem) 0; background: var(--bg-section); }
 
   .analysis-body { font-size: 1.02rem; line-height: 1.82; color: var(--text); max-width: 720px; }
   .analysis-body :global(p) { margin-bottom: 1.6rem; }

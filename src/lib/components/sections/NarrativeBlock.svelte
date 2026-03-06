@@ -24,8 +24,8 @@
     color: var(--text);
     line-height: 1.25;
     margin-bottom: 1.6rem;
-    border-right: 3px solid var(--accent);
-    padding-right: 1rem;
+    border-inline-start: 3px solid var(--accent);
+    padding-inline-start: 1rem;
   }
 
   .nb-p {

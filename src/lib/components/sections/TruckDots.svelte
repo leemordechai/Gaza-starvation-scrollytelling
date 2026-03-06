@@ -5,9 +5,9 @@
   import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
   import { animateCounter } from '$lib/utils/counter';
   import phasesData from '$lib/data/aidPhases.json';
-  import { aidPhases as aidPhasesText } from '$lib/data/story.js';
 
   // ── Grid config ───────────────────────────────────────────────────────────
+  // 600 cells = max trucks in any phase; 30 columns × 20 rows
   const GRID_TOTAL = 600;
   const COLS = 30;
 
@@ -17,6 +17,7 @@
     activeCount: Math.min(p.avgPerDay, GRID_TOTAL),
   }));
 
+  // Precompute a seeded shuffle per phase so active cells aren't always top-left
   function seededShuffle(n: number, seed: number): number[] {
     const arr = Array.from({ length: n }, (_, i) => i);
     let s = seed;
@@ -25,8 +26,10 @@
       const j = Math.abs(s) % (i + 1);
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    return arr;
+    return arr; // arr[i] = display-order index; position i is active if arr[i] < activeCount
   }
+  // For each phase, shuffledOrder[phaseIdx] maps cell index → truck index
+  // A cell i is active if shuffledOrder[i] < activeCount
   const shuffles = phases.map((_, i) => seededShuffle(GRID_TOTAL, i * 997 + 42));
 
   // ── State ─────────────────────────────────────────────────────────────────
@@ -39,6 +42,8 @@
   let isBlockade = $derived(current.isBlockade);
   let shuffle    = $derived(shuffles[activePhase]);
 
+  // Stagger delay per cell: active cells animate in left-to-right, top-to-bottom
+  // Cap at 800ms total so 500 trucks finish in under a second
   function cellDelay(cellIdx: number, activeCount: number): number {
     if (activeCount === 0) return 0;
     return Math.round((cellIdx / GRID_TOTAL) * 800);
@@ -83,9 +88,13 @@
   });
 </script>
 
-<section class="ap-section section-topo" id="aid-phases">
+<section class="td-section section-topo" id="truck-dots">
   <div class="container-wide">
-    <SectionHead label={aidPhasesText.sectionLabel} title={aidPhasesText.sectionTitle} sub={aidPhasesText.sectionSub} />
+    <SectionHead
+      label="נתח נתונים"
+      title="כמה משאיות נכנסו לרצועה?"
+      sub="שישה שלבים, שנתיים וחצי"
+    />
 
     <div class="td-layout">
 
@@ -165,7 +174,7 @@
 
 <style>
   /* ── Section ──────────────────────────────────────────────────────────── */
-  .ap-section {
+  .td-section {
     padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(3rem, 8vw, 6rem);
   }
 
@@ -238,6 +247,8 @@
   /* ── Waffle grid ──────────────────────────────────────────────────────── */
   .td-grid-wrap {
     position: relative;
+    /* Clip rows that would push below the viewport on short/laptop screens.
+       Info bar ≈ 4.5rem, scale note ≈ 1.5rem, gaps ≈ 1.5rem, sticky top = 70px */
     max-height: calc(var(--vh, 1vh) * 100 - 70px - 8rem);
     overflow: hidden;
   }
@@ -287,6 +298,7 @@
     letter-spacing: 0.08em;
     text-align: center;
     margin: 0;
+    /* position below the days row */
     position: absolute;
     bottom: 18%;
     left: 0; right: 0;
@@ -300,7 +312,7 @@
   }
 
   .td-cell {
-    aspect-ratio: 935 / 655;
+    aspect-ratio: 935 / 655; /* matches truck image proportions */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -326,6 +338,7 @@
     to { opacity: 1; }
   }
 
+  /* Truck image fills its cell */
   .td-truck {
     width: 100%;
     height: 100%;
@@ -421,24 +434,41 @@
 
   /* ── Small tablet / large phone (700px and below) ────────────────────── */
   @media (max-width: 700px) {
+    /* Stack: grid on top, narrative below */
     .td-layout { grid-template-columns: 1fr; gap: 0; }
+
+    /* Sticky panel sits just below the nav bar */
     .td-sticky { position: sticky; top: 56px; z-index: 5; }
+
+    /* Reduce grid columns to 20 so trucks stay visible */
     .td-grid { grid-template-columns: repeat(20, 1fr); }
+
+    /* Recalculate max-height for mobile nav offset */
     .td-grid-wrap { max-height: calc(var(--vh, 1vh) * 100 - 56px - 8rem); }
+
+    /* Counter larger on small screens where 4vw is too small */
     .td-counter { font-size: clamp(2rem, 7vw, 2.8rem); }
+
+    /* Blockade days — scale for narrow screens */
     .td-blockade-num      { font-size: clamp(5rem, 22vw, 10rem); }
     .td-blockade-daylabel { font-size: clamp(1.4rem, 6vw, 3rem); }
+
+    /* Steps are all visible when stacked; remove min-height */
     .td-step { min-height: 0; opacity: 1; padding: 1.5rem 0; }
     .td-narrative { padding: 1rem 0 4rem; }
   }
 
   /* ── Phone (480px and below) ─────────────────────────────────────────── */
   @media (max-width: 480px) {
+    /* Further reduce columns so each truck cell stays legible */
     .td-grid { grid-template-columns: repeat(15, 1fr); }
+
     .td-info { flex-wrap: wrap; gap: 0.75rem; }
     .td-counter { font-size: clamp(2rem, 9vw, 2.6rem); }
+
     .td-blockade-num      { font-size: clamp(4.5rem, 26vw, 8rem); }
     .td-blockade-daylabel { font-size: clamp(1.2rem, 7vw, 2.5rem); }
+
     .td-step-heading { font-size: 1.15rem; }
     .td-step-body    { font-size: 0.85rem; }
   }

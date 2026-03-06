@@ -389,7 +389,7 @@
 </section>
 
 <style>
-  .pe-section { padding: 4rem 0 2rem; }
+  .pe-section { padding: clamp(2rem, 6vw, 4rem) 0 2rem; }
 
   .pe-layout {
     display: grid;
@@ -584,9 +584,10 @@
 
   @media (max-width: 640px) {
     .pe-layout { grid-template-columns: 1fr; gap: 1rem; }
-    .pe-selector-col { position: static; width: 100%; }
-    .pe-pills { flex-direction: row; flex-wrap: wrap; gap: 0.3rem; }
-    .pe-pill { flex-direction: row; padding: 0.38rem 0.65rem; font-size: 0.68rem; }
+    .pe-selector-col { position: static; width: 100%; max-width: 100%; }
+    .pe-pills { flex-direction: row; flex-wrap: wrap; gap: 0.3rem; max-width: 100%; overflow-x: hidden; }
+    .pe-pill { flex-direction: row; padding: 0.55rem 0.75rem; font-size: 0.78rem; min-height: 44px; white-space: normal; }
+    .pe-tab { padding: 0.55rem 0.7rem; font-size: 0.8rem; min-height: 44px; }
     .pe-section { padding: 2.5rem 0 1.5rem; }
     .pe-chart-wrap { padding: 0.85rem 0.85rem 0.6rem; }
   }

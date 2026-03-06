@@ -158,6 +158,58 @@
           <clipPath id="tr-clip-t3"><rect x="0" y="1180" width="1000" height="160"/></clipPath>
         </defs>
 
+        <!-- ══ Grass patches — flat top-down, before stop 1 ══ -->
+        <!-- Road: M500,50 curves to x≈830,y=320. Road half-width=14px.
+             Left road edge at y=88≈646, y=176≈746, y=268≈806.
+             Right road edge at y=62≈848, y=130≈860, y=200≈818, y=260≈836.
+             Right wall: x=806..1056 at y=294..364. Canvas: 0..1000. -->
+        <g class="tr-grass" style="mix-blend-mode: multiply;" opacity="0.55">
+          <!-- Left side: 2 outer patches + 1 closer patch near road -->
+          <image href="/images/tr-grass-topdown.png" x="300" y="45"  width="170" height="120" transform="rotate(8,385,105)"/>
+          <image href="/images/tr-grass-topdown.png" x="270" y="170" width="190" height="135" transform="rotate(-12,365,238)"/>
+          <!-- Closer patch: moved up to clear left wall bottom (y=292). Bottom now y=292. -->
+          <image href="/images/tr-grass-topdown.png" x="620" y="182" width="160" height="110" transform="rotate(10,700,237)"/>
+          <!-- Extra patch further right, near road left edge around y=150; road left≈706 -->
+          <image href="/images/tr-grass-topdown.png" x="530" y="130" width="150" height="105" transform="rotate(-8,605,183)"/>
+          <!-- Right side: shifted left ~40 and up ~20 from previous, clear of wall (y<290) -->
+          <image href="/images/tr-grass-topdown.png" x="836" y="28"  width="155" height="110" transform="rotate(-9,914,83)"/>
+          <image href="/images/tr-grass-topdown.png" x="848" y="148" width="140" height="100" transform="rotate(14,918,198)"/>
+          <!-- Right patch 3: moved down to y=252 so top clears patch 2 bottom (y=248); bottom=292 clears wall -->
+          <image href="/images/tr-grass-topdown.png" x="834" y="252" width="130" height="40"  transform="rotate(-12,899,272)"/>
+        </g>
+
+        <!-- ══ Trees — hand-drawn green top-down, before stop 1 ══ -->
+        <g class="tr-trees" style="mix-blend-mode: multiply;">
+          <!-- Left cluster: 2 trees moved right (near road), rest stay outer -->
+          <image href="/images/tr-tree-topdown.png" x="415" y="42"  width="44" height="44" opacity="0.82" transform="rotate(22,437,64)"/>
+          <!-- moved left: right edge=588, road left edge at y≈90≈579 — just clear -->
+          <image href="/images/tr-tree-topdown.png" x="550" y="82"  width="38" height="38" opacity="0.78" transform="rotate(33,569,101)"/>
+          <image href="/images/tr-tree-topdown.png" x="362" y="176" width="36" height="36" opacity="0.72" transform="rotate(-19,380,194)"/>
+          <!-- moved right: was x=500,y=176 → x=688,y=172; road left edge at y≈175 is ≈750, tree right=742 ✓ -->
+          <image href="/images/tr-tree-topdown.png" x="688" y="172" width="54" height="54" opacity="0.92" transform="rotate(41,715,199)"/>
+          <image href="/images/tr-tree-topdown.png" x="424" y="268" width="42" height="42" opacity="0.80" transform="rotate(-29,445,289)"/>
+          <image href="/images/tr-tree-topdown.png" x="338" y="100" width="40" height="40" opacity="0.74" transform="rotate(15,358,120)"/>
+          <image href="/images/tr-tree-topdown.png" x="328" y="224" width="38" height="38" opacity="0.70" transform="rotate(-34,347,243)"/>
+          <!-- Right cluster: shifted left ~40 and up ~20, clear of wall (y<290) and road (x<820) -->
+          <!-- road right edge at y=62≈848; trees start x=820 so left of road edge ✓ -->
+          <image href="/images/tr-tree-topdown.png" x="820" y="42"  width="50" height="50" opacity="0.88" transform="rotate(-27,845,67)"/>
+          <image href="/images/tr-tree-topdown.png" x="818" y="174" width="52" height="52" opacity="0.90" transform="rotate(-36,844,200)"/>
+          <image href="/images/tr-tree-topdown.png" x="874" y="76"  width="36" height="36" opacity="0.75" transform="rotate(38,892,94)"/>
+          <image href="/images/tr-tree-topdown.png" x="870" y="204" width="38" height="38" opacity="0.82" transform="rotate(31,889,223)"/>
+          <image href="/images/tr-tree-topdown.png" x="916" y="48"  width="34" height="34" opacity="0.70" transform="rotate(-14,933,65)"/>
+          <image href="/images/tr-tree-topdown.png" x="910" y="142" width="40" height="40" opacity="0.76" transform="rotate(27,930,162)"/>
+        </g>
+
+        <!-- ══ Concrete walls — just after stop 1 ══ -->
+        <!-- Left: x=540, width=340 (right edge=880), height=70 -->
+        <!-- Right: x=806, width=250 (right edge=1056, -10 from prev 1066), height=70 -->
+        <g class="tr-walls" style="mix-blend-mode: multiply;" opacity="0.92">
+          <image href="/images/tr-wall-topdown.png" x="540" y="298" width="340" height="70"
+            transform="rotate(-4,710,333)" opacity="0.95"/>
+          <image href="/images/tr-wall-topdown.png" x="806" y="294" width="250" height="70"
+            transform="rotate(-4,931,329)" opacity="0.95"/>
+        </g>
+
         <!-- Road surface: paved black at start, degrading to dirt by end -->
         <!-- Paved section (full, clipped to 710): dark asphalt -->
         <path clip-path="url(#tr-clip-good)" d={ROUTE_D} fill="none" stroke="#2a2420" stroke-width="28" stroke-linecap="round"/>
@@ -372,7 +424,7 @@
   .tr-section { position: relative; }
 
   .tr-header {
-    padding: 4rem 0 1.5rem;
+    padding: clamp(2rem, 6vw, 4rem) 0 1.5rem;
   }
 
   .tr-header-label {

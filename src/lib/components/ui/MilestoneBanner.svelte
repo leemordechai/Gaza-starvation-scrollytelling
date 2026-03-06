@@ -51,6 +51,7 @@
     pointer-events: none;
     transition: opacity 0.35s ease, transform 0.35s ease;
     white-space: nowrap;
+    max-width: calc(100vw - 2rem);
   }
 
   .mb-banner--visible {

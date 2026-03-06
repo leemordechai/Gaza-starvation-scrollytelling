@@ -74,7 +74,10 @@
   }
   .nav-links a:hover { color: var(--accent); }
   .nav-links a.active { color: var(--accent); }
-  @media (max-width: 600px) { .nav-links { display: none; } }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .site-nav { padding: 0 1.25rem; }
+  }
 
   .nav-time {
     font-family: var(--font-ui);
@@ -112,5 +115,5 @@
   .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-burger.open span:nth-child(2) { opacity: 0; }
   .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-  @media (max-width: 768px) { .nav-burger { display: flex; } }
+  @media (max-width: 768px) { .nav-burger { display: flex; width: 44px; height: 44px; } }
 </style>

@@ -48,7 +48,7 @@
 
 <style>
   .measure-section {
-    padding: 4rem 0 3rem;
+    padding: clamp(2rem, 6vw, 4rem) 0 clamp(1.5rem, 4vw, 3rem);
   }
 
   .measure-head {

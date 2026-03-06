@@ -286,4 +286,8 @@
     letter-spacing: 0.02em;
     line-height: 1.6;
   }
+
+  @media (max-width: 480px) {
+    .fc-card { padding: 1.25rem 1.25rem 1.25rem; }
+  }
 </style>

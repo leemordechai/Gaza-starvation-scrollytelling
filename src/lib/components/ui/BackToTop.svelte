@@ -26,8 +26,8 @@
     inset-inline-end: 1.5rem;
     bottom: 2rem;
     z-index: 500;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: rgba(12, 11, 8, 0.88);
     border: 1px solid rgba(196, 162, 74, 0.35);
@@ -53,5 +53,9 @@
     border-color: rgba(196, 162, 74, 0.8);
     color: rgba(196, 162, 74, 0.9);
     background: rgba(12, 11, 8, 0.95);
+  }
+
+  @media (max-width: 600px) {
+    .btt-btn { width: 44px; height: 44px; inset-inline-end: 1rem; bottom: 1.25rem; }
   }
 </style>

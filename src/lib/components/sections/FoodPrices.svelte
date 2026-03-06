@@ -427,7 +427,7 @@
 </section>
 
 <style>
-  .fp-section { padding: 4rem 0 2rem; }
+  .fp-section { padding: clamp(2rem, 6vw, 4rem) 0 2rem; }
 
   /* Steps first (right in RTL), chart second (left in RTL) */
   .fp-grid {
@@ -627,11 +627,16 @@
     }
   }
 
+  @media (max-width: 700px) {
+    .fp-band-label { font-size: 0.62rem; }
+    .fp-baseline-tooltip { font-size: 0.62rem; }
+  }
+
   .fp-step--active { opacity: 1; }
 
   .fp-step-num {
     font-family: var(--font-ui);
-    font-size: 4.5rem;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 800;
     line-height: 1;
     color: var(--border-mid);

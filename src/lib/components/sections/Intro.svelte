@@ -17,7 +17,7 @@
 
 <style>
   .intro-section {
-    padding: 5rem 0;
+    padding: clamp(2.5rem, 7vw, 5rem) 0;
     scroll-snap-align: start;
   }
 
@@ -36,7 +36,7 @@
   .body-text :global(p) { margin-bottom: 1.6rem; }
   .body-text > :global(p:first-of-type::first-letter) {
     font-family: var(--font-disp);
-    font-size: 4.8rem;
+    font-size: clamp(3rem, 8vw, 4.8rem);
     font-weight: 900;
     float: inline-start;
     line-height: 0.78;
@@ -46,6 +46,7 @@
   }
 
   .inline-image { margin: 2.5rem -1.5rem; }
+  @media (max-width: 400px) { .inline-image { margin: 2rem 0; } }
   @media (min-width: 860px) { .inline-image { margin: 3rem -5rem; } }
 
   .img-placeholder {

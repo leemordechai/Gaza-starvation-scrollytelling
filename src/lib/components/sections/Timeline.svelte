@@ -52,7 +52,7 @@
 </section>
 
 <style>
-  .timeline-section { padding: 5rem 0; }
+  .timeline-section { padding: clamp(2.5rem, 7vw, 5rem) 0; }
   .timeline-head { margin-bottom: 1.25rem; }
 
   .timeline-track {
@@ -189,6 +189,8 @@
   }
 
   @media (max-width: 700px) {
+    .t-expand-hint { font-size: 0.68rem; }
+    .t-detail-inner p { font-size: 0.9rem; }
     .timeline-spine { right: 20px; }
     .t-event { width: calc(100% - 48px); margin-right: 48px; }
     /* Spine at 20px from right, event margin 48px → dot offset: 48 - 20 - 7 = 21px → right: -21px... recalc:

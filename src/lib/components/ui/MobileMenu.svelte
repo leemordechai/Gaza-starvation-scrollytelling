@@ -58,9 +58,9 @@
     background: none;
     border: 1px solid var(--border-mid);
     color: var(--text-muted);
-    font-size: 0.9rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    font-size: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50%;
     cursor: pointer;
     display: flex;

@@ -71,10 +71,10 @@
 </section>
 
 <style>
-  .scrolly-section { padding: 5rem 0; }
+  .scrolly-section { padding: clamp(2.5rem, 7vw, 5rem) 0; }
   .scrolly-grid {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 5rem; align-items: start;
+    gap: clamp(2rem, 5vw, 5rem); align-items: start;
   }
   @media (max-width: 768px) { .scrolly-grid { grid-template-columns: 1fr; gap: 3rem; } }
 

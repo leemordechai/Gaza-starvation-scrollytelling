@@ -222,6 +222,12 @@
     .hero-title { white-space: normal; }
   }
 
+  @media (max-width: 600px) {
+    .section-label { font-size: 0.72rem; }
+    .hero-meta span { font-size: 0.78rem; }
+    .scroll-cue span { font-size: 0.68rem; }
+  }
+
   .scroll-cue {
     position: absolute; bottom: 2rem; left: 50%;
     transform: translateX(-50%); display: flex;

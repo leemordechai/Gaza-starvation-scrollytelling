@@ -564,7 +564,7 @@
 <style>
   /* ── Section ───────────────────────────────────────────────────────────── */
   .at-section {
-    padding: 5rem 0 3rem;
+    padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(1.5rem, 4vw, 3rem);
   }
 
   /* ── Controls ──────────────────────────────────────────────────────────── */
@@ -620,6 +620,11 @@
     background: var(--accent);
     color: #1a1509;
     font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .at-controls { gap: 1rem; }
+    .at-btn { padding: 0.6rem 0.85rem; font-size: 0.78rem; min-height: 44px; }
   }
 
   /* ── Chart wrapper ─────────────────────────────────────────────────────── */
@@ -804,7 +809,7 @@
     border-radius: 3px;
     padding: 0.75rem 0.9rem;
     min-width: 170px;
-    max-width: 220px;
+    max-width: min(220px, 85vw);
     pointer-events: none;
     z-index: 10;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 4px 24px rgba(0,0,0,0.12);
@@ -812,6 +817,13 @@
 
   .at-tooltip--right {
     transform: translateX(calc(-100% - 12px));
+  }
+
+  @media (max-width: 480px) {
+    .at-tooltip {
+      min-width: 0;
+      font-size: 0.9em;
+    }
   }
 
   .at-tooltip-month {

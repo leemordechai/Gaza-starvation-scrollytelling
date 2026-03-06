@@ -21,7 +21,7 @@
 
 <style>
   .pullquote-section {
-    padding: 7rem 0;
+    padding: clamp(3.5rem, 8vw, 7rem) 0;
     background: var(--bg-card);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
@@ -53,7 +53,7 @@
 
   .pullquote blockquote {
     font-family: var(--font-disp);
-    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.4rem);
+    font-size: clamp(1.2rem, 1.0rem + 1.5vw, 2.4rem);
     font-style: italic;
     font-weight: 400;
     line-height: 1.45;
@@ -101,4 +101,8 @@
     line-height: 1;
   }
   .pq-copy:hover { color: var(--accent); border-color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .pq-copy { width: 2.75rem; height: 2.75rem; font-size: 1.1rem; }
+  }
 </style>
