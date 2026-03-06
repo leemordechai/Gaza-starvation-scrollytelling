@@ -41,7 +41,6 @@
           >
             <a href="https://twitter.com/i/status/{tweet.id}"></a>
           </blockquote>
-          <p class="ghf-caption">{tweet.caption}</p>
         </div>
       {/each}
     </div>
@@ -76,16 +75,6 @@
     margin: 0 !important;
     max-width: 100% !important;
     width: 100% !important;
-  }
-
-  .ghf-caption {
-    font-family: var(--font-ui);
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    margin: 0;
-    text-align: end;
-    direction: rtl;
-    line-height: 1.4;
   }
 
   .ghf-source {
