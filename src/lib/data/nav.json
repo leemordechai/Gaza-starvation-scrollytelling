@@ -2,25 +2,28 @@
   "brand": "דסק הוויז׳ואל",
   "links": [
     { "label": "רקע", "href": "#background" },
+    { "label": "כוונות מוצהרות", "href": "#stated-intent" },
     { "label": "ציר זמן", "href": "#timeline" },
+    { "label": "כיצד מודדים", "href": "#measure" },
+    { "label": "שלבי הסיוע", "href": "#aid-phases" },
     { "label": "משאיות סיוע", "href": "#aid-trucks" },
     { "label": "מסע המשאית", "href": "#truck-route" },
     { "label": "מחירי מזון", "href": "#food-prices" },
-    { "label": "מחירים במלחמה", "href": "#price-explorer" },
+    { "label": "מחשבון מזון", "href": "#food-calculator" },
     { "label": "מגוון מזון", "href": "#food-diversity" },
-    { "label": "וידאו", "href": "#video" },
     { "label": "ניתוח", "href": "#analysis" }
   ],
   "indicators": [
     { "label": "רקע", "target": "#background" },
+    { "label": "כוונות מוצהרות", "target": "#stated-intent" },
     { "label": "ציר זמן", "target": "#timeline" },
+    { "label": "כיצד מודדים", "target": "#measure" },
     { "label": "שלבי הסיוע", "target": "#aid-phases" },
     { "label": "משאיות סיוע", "target": "#aid-trucks" },
     { "label": "מסע המשאית", "target": "#truck-route" },
     { "label": "מחירי מזון", "target": "#food-prices" },
-    { "label": "מחירים במלחמה", "target": "#price-explorer" },
+    { "label": "מחשבון מזון", "target": "#food-calculator" },
     { "label": "מגוון מזון", "target": "#food-diversity" },
-    { "label": "GHF וידאו", "target": "#video" },
     { "label": "ניתוח", "target": "#analysis" }
   ]
 }
