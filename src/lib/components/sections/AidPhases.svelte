@@ -63,11 +63,23 @@
       if (!result) return;
       const { ScrollTrigger } = result;
 
+      // Reset to phase 0 whenever the section scrolls into view from above
+      const sectionEl = document.querySelector('.ap-section');
+      if (sectionEl) {
+        const reset = ScrollTrigger.create({
+          trigger: sectionEl,
+          start: 'top bottom',
+          onEnter:     () => { activePhase = 0; },
+          onEnterBack: () => { activePhase = 0; },
+        });
+        triggers.push(reset);
+      }
+
       document.querySelectorAll('.td-step').forEach((el, i) => {
         const st = ScrollTrigger.create({
           trigger: el,
-          start: 'top center',
-          end: 'bottom center',
+          start: 'top 60%',
+          end: 'bottom 60%',
           onEnter:     () => { activePhase = i; },
           onEnterBack: () => { activePhase = i; },
         });
@@ -83,7 +95,7 @@
   });
 </script>
 
-<section class="ap-section section-topo" id="aid-phases">
+<section class="ap-section section-topo">
   <div class="container-wide">
     <SectionHead label={aidPhasesText.sectionLabel} title={aidPhasesText.sectionTitle} sub={aidPhasesText.sectionSub} />
 
@@ -149,7 +161,7 @@
       <!-- ── Scrolling narrative ─────────────────────────────────────────── -->
       <div class="td-narrative">
         {#each phases as phase, i}
-          <div class="td-step" class:td-step--active={activePhase === i} class:td-step--blockade={phase.isBlockade}>
+          <div class="td-step" id={i === 0 ? 'aid-phases' : undefined} class:td-step--active={activePhase === i} class:td-step--blockade={phase.isBlockade}>
             <span class="td-step-tag" style="color: {phase.color}; border-color: {phase.color}40;">{phase.tag}</span>
             <span class="td-step-period">{phase.period}</span>
             <h3 class="td-step-heading" style="color: {phase.color};">{phase.annotation}</h3>
@@ -349,7 +361,7 @@
 
   .td-step {
     padding: 2.5rem 0;
-    min-height: calc(var(--vh, 1vh) * 40);
+    min-height: calc(var(--vh, 1vh) * 75);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -416,7 +428,7 @@
   /* ── Tablet (900px and below) ─────────────────────────────────────────── */
   @media (max-width: 900px) {
     .td-layout { grid-template-columns: 1fr 20ch; gap: 2rem 1.5rem; }
-    .td-step { min-height: calc(var(--vh, 1vh) * 35); }
+    .td-step { min-height: calc(var(--vh, 1vh) * 65); }
   }
 
   /* ── Small tablet / large phone (700px and below) ────────────────────── */
