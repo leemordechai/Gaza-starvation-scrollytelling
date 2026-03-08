@@ -1,15 +1,15 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
-  import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
+  import { killScrollTriggers } from '$lib/utils/gsap';
   import { viewport } from '$lib/actions/viewport';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import priceData from '$lib/data/foodPrices.json';
   import { foodPrices as foodPricesText } from '$lib/data/story.js';
 
   // ── Chart geometry ────────────────────────────────────────────────────────
-  const W = 600, H = 300;
-  const PAD = { top: 28, right: 56, bottom: 44, left: 12 };
+  const W = 600, H = 420;
+  const PAD = { top: 32, right: 56, bottom: 52, left: 12 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
 
@@ -225,32 +225,35 @@
     }
   }
 
-  // ── ScrollTrigger wiring ──────────────────────────────────────────────────
+  // ── Step activation via IntersectionObserver ──────────────────────────────
   onMount(async () => {
     if (!browser) return;
     isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
-    const result = await initGsap();
-    if (!result) return;
-    const { ScrollTrigger } = result;
+    const steps = Array.from(document.querySelectorAll('.fp-step')) as HTMLElement[];
 
-    const steps = document.querySelectorAll('.fp-step');
-    const lastIdx = steps.length - 1;
-    steps.forEach((step, i) => {
-      const isLast = i === lastIdx;
-      // For the last step (cooking gas), the step div has 40vh padding-top so its
-      // DOM top is far above the visible text. Trigger on the heading inside instead,
-      // so activation happens when the title text reaches the centre of the viewport.
-      const triggerEl = isLast ? step.querySelector('.fp-step-title') ?? step : step;
-      const st = ScrollTrigger.create({
-        trigger: triggerEl,
-        start: 'top center',
-        end: isLast ? 'bottom 15%' : 'bottom center',
-        onEnter: () => { activeStep = i; hoverPoint = null; pinnedPoint = null; },
-        onEnterBack: () => { activeStep = i; hoverPoint = null; pinnedPoint = null; },
-      });
-      triggers.push(st);
-    });
+    // Use a narrow central band (-35% top/bottom) so only the step occupying
+    // the viewport centre triggers. rootMargin shrinks the intersection root so
+    // a step must reach the middle 30% of the screen before activating.
+    const stepObs = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const idx = steps.indexOf(entry.target as HTMLElement);
+            if (idx !== -1) {
+              activeStep = idx;
+              hoverPoint = null;
+              pinnedPoint = null;
+            }
+          }
+        }
+      },
+      { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
+    );
+    steps.forEach(el => stepObs.observe(el));
+
+    const fakeKill = { kill: () => stepObs.disconnect() } as any;
+    triggers.push(fakeKill);
   });
 
   onDestroy(() => killScrollTriggers(triggers));
@@ -432,8 +435,8 @@
   /* Steps first (right in RTL), chart second (left in RTL) */
   .fp-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 3rem;
     align-items: start;
   }
   @media (max-width: 700px) {
@@ -447,13 +450,18 @@
     top: 0;
     height: calc(var(--vh, 1vh) * 100);
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     align-self: start;
+    padding: clamp(1.5rem, 3vh, 3rem) 0;
+    box-sizing: border-box;
   }
 
   @media (max-width: 700px) {
     .fp-sticky {
       position: static;
+      height: auto;
+      padding: 1rem 0;
     }
   }
 
@@ -461,7 +469,8 @@
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-top: 2px solid var(--accent);
-    padding: 1rem 1rem 0.75rem;
+    padding: 1.25rem 1.25rem 1rem;
+    width: 100%;
   }
 
   .fp-commodity-meta {
@@ -488,13 +497,13 @@
   /* ── SVG wrapper for tooltip positioning ─── */
   .fp-svg-wrap {
     position: relative;
-    min-height: 200px;
+    min-height: 240px;
   }
 
   .fp-svg {
     width: 100%;
     height: auto;
-    min-height: 180px;
+    min-height: 240px;
     display: block;
     overflow: visible;
     cursor: crosshair;
@@ -600,7 +609,7 @@
 
   .fp-step {
     padding: 1.5rem 0;
-    min-height: calc(var(--vh, 1vh) * 55);
+    min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
     justify-content: center;

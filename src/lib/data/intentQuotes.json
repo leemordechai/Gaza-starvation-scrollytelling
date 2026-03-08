@@ -1,7 +1,7 @@
 {
   "sectionLabel": "כוונות מוצהרות",
   "sectionTitle": "בפיהם שלהם",
-  "sectionSubtitle": "הצהרות מתועדות של גורמים ישראלים רשמיים על הפסקת אספקת המזון לרצועת עזה.... סננו לפי נושא, תפקיד, ושנה. העבירו את הסמן מעל כרטיס לציטוט המלא, או לחצו עליו כדי להשאיר אותו פתוח.",
+  "sectionSubtitle": "סננו לפי נושא, תפקיד, ושנה. העבירו את הסמן מעל כרטיס לציטוט המלא, או לחצו עליו כדי להשאיר אותו פתוח.",
   "quotes": [
     {
       "id": "1",
@@ -17,8 +17,8 @@
       "source_url": "https://www.ynet.co.il/news/article/b13rvrbzp",
       "size": "large",
       "cited_by_icj": "True",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "https://www.instagram.com/reel/CyLGDV4s_NR/",
+      "source_url_he": "https://www.timesofisrael.com/liveblog_entry/defense-minister-announces-complete-siege-of-gaza-no-power-food-or-fuel/"
     },
     {
       "id": "2",
@@ -35,7 +35,7 @@
       "size": "medium",
       "cited_by_icj": "True",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.aa.com.tr/en/world/no-electricity-water-fuel-for-gaza-until-israeli-prisoners-return-home-energy-minister/3016648"
     },
     {
       "id": "3",
@@ -51,8 +51,8 @@
       "source_url": "https://x.com/Israel_katz/status/1712876230762967222",
       "size": "medium",
       "cited_by_icj": "True",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "חשוב: מופיע רק באנגלית",
+      "source_url_he": "https://www.cnn.com/middleeast/live-news/israel-news-hamas-war-10-12-23/h_a699f25d96ae2f0053d7bcdffda914a0"
     },
     {
       "id": "4",
@@ -60,7 +60,7 @@
       "title": "שר הביטחון הלאומי",
       "date": "17.10.23",
       "context": "פוסט ברשת X",
-      "quote_he": "\"כל עוד חמאס לא משחרר את החטופים שבידיו -  הדבר היחיד שצריך להכניס לעזה הוא מאות טונות חומר נפץ של חיל האוויר, לא גרם של סיוע הומניטרי\".",
+      "quote_he": "\"כל עוד חמאס לא משחרר את החטופים שבידיו -  הדבר היחיד שצריך להכניס לעזה הוא מאות טונות חומר נפץ של חיל האוויר, לא גרם של סיוע הומינטרי\".",
       "quote_en": "The only thing that should enter Gaza as long as Hamas doesn't release the hostages is not a gram of humanitarian aid, but hundreds of tons of Air Force explosives.",
       "key_phrase_he": "לא גרם של סיוע הומניטרי",
       "originally_english": "False",
@@ -68,8 +68,8 @@
       "source_url": "https://x.com/itamarbengvir/status/1714340519487176791",
       "size": "large",
       "cited_by_icj": "False",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "https://x.com/itamarbengvir/status/1714340519487176791",
+      "source_url_he": "https://www.hrw.org/news/2023/12/18/israel-starvation-used-weapon-war-gaza"
     },
     {
       "id": "5",
@@ -85,8 +85,8 @@
       "source_url": "https://pbs.twimg.com/media/F_Swlg8W0AAlC5M?format=jpg&name=large",
       "size": "medium",
       "cited_by_icj": "False",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "https://x.com/bezalelsm/status/1726198721946480911/photo/1",
+      "source_url_he": "https://mondoweiss.net/2023/11/influential-israeli-national-security-leader-makes-the-case-for-genocide-in-gaza/"
     },
     {
       "id": "6",
@@ -103,7 +103,7 @@
       "size": "small",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.aa.com.tr/en/middle-east/-fuel-will-not-be-allowed-to-enter-gaza-strip-under-any-circumstances-israeli-finance-minister/3044061"
     },
     {
       "id": "7",
@@ -111,7 +111,7 @@
       "title": "חברת כנסת, הליכוד",
       "date": "23.10.23",
       "context": "נאום במליאת הכנסת",
-      "quote_he": "\"בלי רעב וצמא אצל האוכלוסייה העזתית לא נצליח לגייס משת\"פ, לא נצליח לגייס מודיעין, לא נצליח לשחד אנשים, באוכל, בשתייה, בתרופות.\" ",
+      "quote_he": "\"בלי רעב וצמא... לא נצליח לגייס משת\"פ, לא נצליח לגייס מודיעין, לא נצליח לשחד אנשים, באוכל, בשתייה, בתרופות.\" ",
       "quote_en": "Without hunger and thirst among the Gaza population, we will not be able to recruit collaborators, we will not be able to bribe people with food and drink.",
       "key_phrase_he": "בלי רעב וצמא",
       "originally_english": "False",
@@ -120,7 +120,7 @@
       "size": "large",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://law4palestine.org/wp-content/uploads/2024/01/Database-of-Israeli-Incitement-to-Genocide-LEGISLATORS.pdf"
     },
     {
       "id": "8",
@@ -137,7 +137,7 @@
       "size": "small",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.timesofisrael.com/liveblog_entry/deputy-knesset-speaker-calls-for-burning-gaza/"
     },
     {
       "id": "9",
@@ -154,27 +154,10 @@
       "size": "small",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.timesofisrael.com/far-right-minister-says-nuking-gaza-an-option-pm-suspends-him-from-cabinet-meetings/"
     },
     {
       "id": "10",
-      "speaker": "בנימין נתניהו",
-      "title": "ראש הממשלה",
-      "date": "27.1.24",
-      "context": "מסיבת עיתונאים",
-      "quote_he": "שאלה: \"מדוע ישראל לא דורשת להתנות סיוע הומניטרי בתמורה הומניטרית?\"\nתשובה: \"אמרתי: בלי סיוע הומניטרי מינימלי לא נוכל להשלים את המשימה והיעדים שלנו. לכן אנחנו נותנים את זה\"",
-      "quote_en": "We provide minimal humanitarian aid. If we want to achieve our war goals, we give the minimal aid.",
-      "key_phrase_he": "סיוע הומניטרי מינימלי",
-      "originally_english": "False",
-      "source_label": "כלכליסט",
-      "source_url": "https://www.calcalist.co.il/local_news/article/bkrys6m96",
-      "size": "large",
-      "cited_by_icj": "False",
-      "source_url_alt": "",
-      "source_url_he": ""
-    },
-    {
-      "id": "11",
       "speaker": "בצלאל סמוטריץ׳",
       "title": "שר האוצר",
       "date": "5.8.24",
@@ -187,11 +170,11 @@
       "source_url": "https://www.ynet.co.il/news/article/r10cjak50",
       "size": "large",
       "cited_by_icj": "False",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "https://www.mako.co.il/news-politics/2024_q3/Article-f139b3e8f712191027.htm",
+      "source_url_he": "https://www.haaretz.com/israel-news/2024-08-05/ty-article/israeli-finance-minister-starving-gazans-to-death-may-be-moral-but-world-wont-let-us/00000191-22e1-dd23-a7dd-2aed4b050000"
     },
     {
-      "id": "12",
+      "id": "11",
       "speaker": "ישראל כץ",
       "title": "שר הביטחון",
       "date": "16.4.25",
@@ -205,10 +188,10 @@
       "size": "medium",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.france24.com/en/live-news/20250416-israel-says-no-humanitarian-aid-will-enter-gaza"
     },
     {
-      "id": "13",
+      "id": "12",
       "speaker": "בצלאל סמוטריץ׳",
       "title": "שר האוצר",
       "date": "7.4.25",
@@ -222,10 +205,10 @@
       "size": "small",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.ynetnews.com/article/hknvzwwc1l"
     },
     {
-      "id": "14",
+      "id": "13",
       "speaker": "איתמר בן גביר",
       "title": "שר הביטחון הלאומי",
       "date": "16.4.25",
@@ -239,10 +222,10 @@
       "size": "medium",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.aa.com.tr/en/middle-east/-no-reason-for-gram-of-food-or-aid-to-enter-gaza-israel-s-ben-gvir/3539988"
     },
     {
-      "id": "15",
+      "id": "14",
       "speaker": "איתמר בן גביר",
       "title": "שר הביטחון הלאומי",
       "date": "23.4.25",
@@ -256,10 +239,10 @@
       "size": "large",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.aljazeera.com/news/2025/4/23/ben-gvir-us-republicans-support-bombing-gaza-food-and-aid-depots"
     },
     {
-      "id": "16",
+      "id": "15",
       "speaker": "משה סעדה",
       "title": "חבר כנסת, הליכוד",
       "date": "25.4.25",
@@ -272,11 +255,11 @@
       "source_url": "https://x.com/judash0/status/1915710570734522580",
       "size": "large",
       "cited_by_icj": "False",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "https://www.the7eye.org.il/543545",
+      "source_url_he": "https://deepnewz.com/middle-east/israeli-knesset-member-moshe-saada-netanyahus-likud-party-calls-to-starve-gaza-2d79d576"
     },
     {
-      "id": "17",
+      "id": "16",
       "speaker": "טלי גוטליב",
       "title": "חברת כנסת, הליכוד",
       "date": "6.5.25",
@@ -290,10 +273,10 @@
       "size": "medium",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.haaretz.com/israel-news/2025-05-10/ty-article/.premium/knesset-debate-reveals-not-everyone-thinks-starving-gazan-children-is-a-bad-thing/00000196-b6ad-dbb0-af9f-bfbf27f10000"
     },
     {
-      "id": "18",
+      "id": "17",
       "speaker": "יואב קיש",
       "title": "שר החינוך",
       "date": "2.3.25",
@@ -307,10 +290,10 @@
       "size": "small",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.timesofisrael.com/coalition-lawmakers-welcome-netanyahus-decision-to-stop-entry-of-aid-into-gaza/"
     },
     {
-      "id": "19",
+      "id": "18",
       "speaker": "גדעון סער",
       "title": "שר החוץ",
       "date": "14.5.25",
@@ -324,15 +307,15 @@
       "size": "small",
       "cited_by_icj": "False",
       "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_he": "https://www.timesofisrael.com/coalition-lawmakers-welcome-netanyahus-decision-to-stop-entry-of-aid-into-gaza/"
     },
     {
-      "id": "20",
+      "id": "19",
       "speaker": "שמונה חברי כנסת מהקואליציה",
       "title": "חברי ועדת החוץ והביטחון: ואטורי, כלנר, שקלים, סוכות, טל, בן גביר, סון הר-מלך, בצלאל",
       "date": "31.12.24",
       "context": "מכתב רשמי לשר הביטחון",
-      "quote_he": " לאחר כיתור ופינוי האוכלוסיה, ההנחיות לצה\"ל צריכות להיות ברורות:\n\n(1) השמדה מרחוק של כל מקורות האנרגיה, קרי דלק, מתקנים סולאריים וכל אמצעי רלוונטי (צינורות, כבלים, גנרטורים וכיו\"ב).\n\n(2) השמדה של כל מקורות המזון לרבות מחסנים, מים וכל אמצעי רלוונטי (משאבות מים וכיו\"ב).\n\n(3) חיסול מרחוק של כל מי שנע במרחב ולא יוצא עם דגל לבן במשך ימי המצור האפקטיבי.\n\nלאחר הפעולות הללו ימי המצור על פי שיקול דעתו של צה\"ל צריך להסתיים בהדרגה לטיהור מלא של קיני האויב.",
+      "quote_he": " לאחר כיתור ופינוי האוכלוסיה, ההנחיות לצה\"ל צריכות להיות ברורות:\r\n\r\n(1) השמדה מרחוק של כל מקורות האנרגיה, קרי דלק, מתקנים סולאריים וכל אמצעי רלוונטי (צינורות, כבלים, גנרטורים וכיו\"ב).\r\n\r\n(2) השמדה של כל מקורות המזון לרבות מחסנים, מים וכל אמצעי רלוונטי (משאבות מים וכיו\"ב).\r\n\r\n(3) חיסול מרחוק של כל מי שנע במרחב ולא יוצא עם דגל לבן במשך ימי המצור האפקטיבי.\r\n\r\nלאחר הפעולות הללו ימי המצור על פי שיקול דעתו של צה\"ל צריך להסתיים בהדרגה לטיהור מלא של קיני האויב.",
       "quote_en": "Northern Gaza must be purged of its population through sieges — including destruction of all water, food, and energy sources.",
       "key_phrase_he": "השמדה של כל מקורות המזון",
       "originally_english": "False",
@@ -340,11 +323,11 @@
       "source_url": "https://img.haarets.co.il/bs/00000194-272e-ddb6-afdd-77efe51f0000/b3/1c/0b04794c45ddbca21f9f99e9c0fd/%D7%9E%D7%9B%D7%AA%D7%91-%D7%97%D7%9B%D7%99%D7%9D-%D7%9C%D7%A9%D7%A8-%D7%94%D7%91%D7%99%D7%98%D7%97%D7%95%D7%9F-%D7%94%D7%AA%D7%95%D7%9B%D7%A0%D7%99%D7%AA-%D7%94%D7%9E%D7%91%D7%A6%D7%A2%D7%99%D7%AA-%D7%91%D7%A8%D7%A6%D7%95%D7%A2%D7%AA-%D7%A2%D7%96%D7%94.pdf",
       "size": "medium",
       "cited_by_icj": "False",
-      "source_url_alt": "",
-      "source_url_he": ""
+      "source_url_alt": "https://www.haaretz.co.il/news/politics/2025-01-02/ty-article/.premium/00000194-2727-dd68-a3be-e7e7968b0000?utm_source=chatgpt.com",
+      "source_url_he": "https://www.haaretz.com/israel-news/2025-01-03/ty-article/.premium/israeli-lawmakers-call-on-military-to-destroy-food-water-and-power-sources-in-gaza/00000194-2884-d9c2-a79e-2bc47b360000"
     },
     {
-      "id": "21",
+      "id": "20",
       "speaker": "ניסים ואטורי",
       "title": "סגן יו״ר הכנסת",
       "date": "18.11.23",
@@ -355,8 +338,8 @@
       "originally_english": "False",
       "source_label": "מאקו",
       "source_url": "https://www.mako.co.il/news-politics/2023_q4/Article-d64753c3e93eb81027.htm",
-      "size": "",
-      "cited_by_icj": "",
+      "size": "small",
+      "cited_by_icj": "False",
       "source_url_alt": "",
       "source_url_he": ""
     }

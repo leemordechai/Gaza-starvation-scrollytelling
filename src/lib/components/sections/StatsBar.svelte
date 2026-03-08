@@ -45,6 +45,13 @@
     border-bottom: 1px solid var(--border);
     background: var(--bg-card);
     padding: 3rem 0;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    scroll-snap-align: start;
+  }
+  .stats-section .container-wide {
+    width: 100%;
   }
   .stats-grid {
     display: grid;

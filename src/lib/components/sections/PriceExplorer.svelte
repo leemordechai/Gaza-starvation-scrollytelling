@@ -389,7 +389,13 @@
 </section>
 
 <style>
-  .pe-section { padding: clamp(2rem, 6vw, 4rem) 0 2rem; }
+  .pe-section {
+    padding: clamp(2rem, 6vw, 4rem) 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+  }
 
   .pe-layout {
     display: grid;
@@ -588,7 +594,7 @@
     .pe-pills { flex-direction: row; flex-wrap: wrap; gap: 0.3rem; max-width: 100%; overflow-x: hidden; }
     .pe-pill { flex-direction: row; padding: 0.55rem 0.75rem; font-size: 0.78rem; min-height: 44px; white-space: normal; }
     .pe-tab { padding: 0.55rem 0.7rem; font-size: 0.8rem; min-height: 44px; }
-    .pe-section { padding: 2.5rem 0 1.5rem; }
+    .pe-section { padding: 2.5rem 0 1.5rem; justify-content: flex-start; }
     .pe-chart-wrap { padding: 0.85rem 0.85rem 0.6rem; }
   }
 </style>

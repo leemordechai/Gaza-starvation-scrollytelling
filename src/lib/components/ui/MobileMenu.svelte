@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mobileMenuOpen, activeSection } from '$lib/stores/nav';
+  import { mobileMenuOpen, activeSection, visitedSections } from '$lib/stores/nav';
   import navData from '$lib/data/nav.json';
 
   function close() {
@@ -17,7 +17,7 @@
 <div class="mobile-menu" class:open={$mobileMenuOpen}>
   <button class="mob-close" aria-label="Close menu" onclick={close}>&times;</button>
   {#each navData.links as link}
-    <a class="mob-link" href={link.href} class:active={$activeSection === link.href.slice(1)} onclick={close}>{link.label}</a>
+    <a class="mob-link" href={link.href} class:active={$activeSection === link.href.slice(1)} class:visited={$visitedSections.has(link.href.slice(1)) && $activeSection !== link.href.slice(1)} onclick={close}>{link.label}</a>
   {/each}
 </div>
 
@@ -50,6 +50,7 @@
   }
   .mobile-menu :global(a:hover),
   .mobile-menu :global(a.active) { color: var(--accent); }
+  .mobile-menu :global(a.visited) { color: rgba(196, 162, 74, 0.5); }
 
   .mob-close {
     position: absolute;

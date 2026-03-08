@@ -50,7 +50,14 @@
 </section>
 
 <style>
-  .ghf-section { padding: clamp(2rem, 6vw, 4rem) 0; }
+  .ghf-section {
+    padding: clamp(3rem, 7vw, 5rem) 0;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+  }
   .ghf-head { margin-bottom: 2.5rem; }
 
   .ghf-grid {

@@ -63,28 +63,28 @@
       if (!result) return;
       const { ScrollTrigger } = result;
 
-      // Reset to phase 0 whenever the section scrolls into view from above
-      const sectionEl = document.querySelector('.ap-section');
-      if (sectionEl) {
-        const reset = ScrollTrigger.create({
-          trigger: sectionEl,
-          start: 'top bottom',
-          onEnter:     () => { activePhase = 0; },
-          onEnterBack: () => { activePhase = 0; },
-        });
-        triggers.push(reset);
-      }
+      // Use IntersectionObserver for step activation — avoids GSAP init-time
+      // misfires that happen when triggers are created while the section is
+      // already partially scrolled.
+      const stepEls = Array.from(document.querySelectorAll('.td-step'));
 
-      document.querySelectorAll('.td-step').forEach((el, i) => {
-        const st = ScrollTrigger.create({
-          trigger: el,
-          start: 'top 60%',
-          end: 'bottom 60%',
-          onEnter:     () => { activePhase = i; },
-          onEnterBack: () => { activePhase = i; },
-        });
-        triggers.push(st);
-      });
+      const stepObs = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              const idx = stepEls.indexOf(entry.target as HTMLElement);
+              if (idx !== -1) activePhase = idx;
+            }
+          }
+        },
+        { threshold: 0.5 }
+      );
+
+      stepEls.forEach(el => stepObs.observe(el));
+
+      // Store cleanup on the triggers array (we repurpose it for the observer)
+      const fakeKill = { kill: () => stepObs.disconnect() } as any;
+      triggers.push(fakeKill);
     });
 
     return () => window.removeEventListener('resize', setVh);
@@ -95,10 +95,15 @@
   });
 </script>
 
-<section class="ap-section section-topo">
-  <div class="container-wide">
-    <SectionHead label={aidPhasesText.sectionLabel} title={aidPhasesText.sectionTitle} sub={aidPhasesText.sectionSub} />
+<section class="ap-section section-topo" id="aid-phases">
+  <!-- Intro screen: full viewport, header centered — safe landing for page-down -->
+  <div class="ap-intro">
+    <div class="container-wide">
+      <SectionHead label={aidPhasesText.sectionLabel} title={aidPhasesText.sectionTitle} sub={aidPhasesText.sectionSub} />
+    </div>
+  </div>
 
+  <div class="container-wide">
     <div class="td-layout">
 
       <!-- ── Sticky visualization ───────────────────────────────────────── -->
@@ -161,7 +166,7 @@
       <!-- ── Scrolling narrative ─────────────────────────────────────────── -->
       <div class="td-narrative">
         {#each phases as phase, i}
-          <div class="td-step" id={i === 0 ? 'aid-phases' : undefined} class:td-step--active={activePhase === i} class:td-step--blockade={phase.isBlockade}>
+          <div class="td-step" class:td-step--active={activePhase === i} class:td-step--blockade={phase.isBlockade}>
             <span class="td-step-tag" style="color: {phase.color}; border-color: {phase.color}40;">{phase.tag}</span>
             <span class="td-step-period">{phase.period}</span>
             <h3 class="td-step-heading" style="color: {phase.color};">{phase.annotation}</h3>
@@ -178,7 +183,15 @@
 <style>
   /* ── Section ──────────────────────────────────────────────────────────── */
   .ap-section {
-    padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(3rem, 8vw, 6rem);
+    padding: 0 0 clamp(3rem, 8vw, 6rem);
+  }
+
+  /* ── Intro splash — full viewport, header centered, page-down safe ────── */
+  .ap-intro {
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    padding: clamp(2rem, 5vw, 4rem) 0;
   }
 
   /* ── Two-column layout: wide grid | narrow narrative ─────────────────── */
@@ -192,7 +205,7 @@
 
   .td-sticky {
     position: sticky;
-    top: 70px;
+    top: calc(70px + 22vh);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -250,7 +263,7 @@
   /* ── Waffle grid ──────────────────────────────────────────────────────── */
   .td-grid-wrap {
     position: relative;
-    max-height: calc(var(--vh, 1vh) * 100 - 70px - 8rem);
+    max-height: calc(var(--vh, 1vh) * 100 - 70px - 22vh - 4rem);
     overflow: hidden;
   }
 
@@ -361,7 +374,7 @@
 
   .td-step {
     padding: 2.5rem 0;
-    min-height: calc(var(--vh, 1vh) * 75);
+    min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -369,6 +382,7 @@
     opacity: 0.2;
     transition: opacity 0.5s ease;
     border-top: 1px solid var(--border);
+    scroll-snap-align: start;
   }
 
   .td-step:first-child { border-top: none; padding-top: 0; }
@@ -428,7 +442,7 @@
   /* ── Tablet (900px and below) ─────────────────────────────────────────── */
   @media (max-width: 900px) {
     .td-layout { grid-template-columns: 1fr 20ch; gap: 2rem 1.5rem; }
-    .td-step { min-height: calc(var(--vh, 1vh) * 65); }
+    .td-step { min-height: calc(var(--vh, 1vh) * 100); }
   }
 
   /* ── Small tablet / large phone (700px and below) ────────────────────── */

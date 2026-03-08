@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
   import { fade } from 'svelte/transition';
-  import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
+  import { killScrollTriggers } from '$lib/utils/gsap';
   import { reveal } from '$lib/actions/reveal';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import data from '$lib/data/foodDiversity.json';
@@ -52,23 +52,28 @@
     return 0.18 + fill * 0.82;
   }
 
-  onMount(async () => {
+  onMount(() => {
     if (!browser) return;
-    const result = await initGsap();
-    if (!result) return;
-    const { ScrollTrigger } = result;
 
-    const stepEls = document.querySelectorAll('.fd-step');
-    stepEls.forEach((el, i) => {
-      const st = ScrollTrigger.create({
-        trigger: el,
-        start: 'top center',
-        end: 'bottom center',
-        onEnter: () => { activeStep = i; },
-        onEnterBack: () => { activeStep = i; },
-      });
-      triggers.push(st);
-    });
+    const stepEls = Array.from(document.querySelectorAll('.fd-step')) as HTMLElement[];
+
+    const stepObs = new IntersectionObserver(
+      (entries) => {
+        let best = -1;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const idx = stepEls.indexOf(entry.target as HTMLElement);
+            if (idx > best) best = idx;
+          }
+        }
+        if (best !== -1) activeStep = best;
+      },
+      { threshold: [0.3, 0.5] }
+    );
+    stepEls.forEach(el => stepObs.observe(el));
+
+    const fakeKill = { kill: () => stepObs.disconnect() } as any;
+    triggers.push(fakeKill);
   });
 
   onDestroy(() => {
@@ -248,7 +253,7 @@
   /* ===== Sticky panel ===== */
   .fd-sticky {
     position: sticky;
-    top: 90px;
+    top: calc(var(--vh, 1vh) * 10);
   }
 
   @media (max-width: 760px) {

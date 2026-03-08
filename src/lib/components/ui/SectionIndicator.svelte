@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
-  import { activeSection } from '$lib/stores/nav';
+  import { activeSection, visitedSections } from '$lib/stores/nav';
   import navData from '$lib/data/nav.json';
 
   let observer: IntersectionObserver | undefined;
@@ -14,6 +14,7 @@
         for (const entry of entries) {
           if (entry.isIntersecting && entry.target.id) {
             activeSection.set(entry.target.id);
+            visitedSections.update(s => { const next = new Set(s); next.add(entry.target.id); return next; });
           }
         }
       },

@@ -132,7 +132,7 @@
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: rgba(6, 5, 3, 0.38);
+    background: rgba(6, 5, 3, 0.55);
   }
 
   /* Tight spotlight on face when zoomed in — fades as we zoom out */
@@ -201,11 +201,12 @@
 
   .hero-dek {
     font-family: var(--font-body); font-size: clamp(0.95rem, 1.8vw, 1.2rem);
-    font-weight: 300; line-height: 1.65; color: var(--sand);
+    font-weight: 400; line-height: 1.65; color: #f0e8d8;
     max-width: 620px; margin: 0 auto 2.5rem;
     text-align: center;
     text-wrap: balance;
     hyphens: auto;
+    text-shadow: 0 1px 12px rgba(0,0,0,0.85), 0 2px 4px rgba(0,0,0,0.6);
   }
   .hero-meta {
     display: flex; align-items: center; justify-content: center;

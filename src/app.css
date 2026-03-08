@@ -69,6 +69,24 @@ body {
 }
 
 /* ===================================
+   PAGE-DOWN FRIENDLINESS
+   Each major section occupies at least one full viewport so pressing
+   Page Down advances to the next section's title, not the bottom of
+   the previous one.
+=================================== */
+.fp-section,
+.fd-section,
+.pe-section,
+.ap-section,
+.at-section,
+.timeline-section,
+.tr-section,
+.nb-section,
+.analysis-section {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* ===================================
    SECTION TOPO TEXTURE
 =================================== */
 .section-topo {

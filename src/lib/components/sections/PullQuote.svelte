@@ -27,6 +27,11 @@
     border-bottom: 1px solid var(--border);
     position: relative;
     overflow: hidden;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
   }
   .pullquote-section::before {
     content: '\201D';
@@ -53,13 +58,13 @@
 
   .pullquote blockquote {
     font-family: var(--font-disp);
-    font-size: clamp(1.2rem, 1.0rem + 1.5vw, 2.4rem);
+    font-size: clamp(1.5rem, 1.2rem + 2.2vw, 3.2rem);
     font-style: italic;
     font-weight: 400;
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--sand);
     margin-bottom: 1.75rem;
-    max-width: 26ch;
+    max-width: 24ch;
     margin-inline: auto;
   }
 

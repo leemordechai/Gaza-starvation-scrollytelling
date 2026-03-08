@@ -203,6 +203,8 @@
     padding: clamp(3rem, 8vw, 6rem) 0 clamp(3rem, 8vw, 5rem);
     direction: rtl;
     font-family: var(--font-body);
+    min-height: calc(var(--vh, 1vh) * 100);
+    scroll-snap-align: start;
   }
 
   .section-header {

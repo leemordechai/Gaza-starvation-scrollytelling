@@ -97,8 +97,6 @@
     {/each}
   </div>
 
-  <Divider variant="gem" />
-
   <div class="snap-point" aria-hidden="true"></div>
 
   <!-- Guterres quote -->
@@ -106,9 +104,10 @@
 
   <Divider variant="topo" />
 
-  <!-- Bridging paragraphs: intro + first three items, centered -->
+  <!-- Bridging paragraphs: intro (as title) + first three items, centered -->
   <section id="food-characteristics" class="bridge-block bridge-block--centered container">
-    {#each [bridge.intro, ...bridge.items.slice(0, 3)] as item}
+    <h3 class="bridge-title">{@html sanitizeText(bridge.intro)}</h3>
+    {#each bridge.items.slice(0, 3) as item}
       <p>{@html sanitizeText(item)}</p>
     {/each}
   </section>
@@ -124,14 +123,16 @@
 
   <Timeline />
 
-  <Divider variant="gem" />
-
   <div class="snap-point" aria-hidden="true"></div>
 
-  <!-- Intent preface paragraph -->
-  <section class="intent-preface container" dir="rtl">
-    <p class="reveal" use:reveal>לאורך המלחמה, גורמים בכירים בישראל התבטאו בעד עצירת הסיוע ההומניטרי. התבטאויות אלו פורסמו פעמים רבות בכלי התקשורת הישראליים וברשתות החברתיות, כמעט ללא ביקורת ציבורית. הצהרות אלו והיעדר ההתנגדות להן על ידי מוסדות מדינה בתוך ישראל מעידות על כוונותיהם של גורמים רבים בתוך שירות המדינה, ועל קיומו של שיח שבו הרעבת עזה הייתה לגיטימית ואף רצויה.</p>
-  </section>
+  <!-- Intent preface — sticky paragraph centered vertically -->
+  <div class="intent-preface-scroll" aria-label="רקע">
+    <div class="intent-preface-sticky">
+      <div class="intent-preface-inner container" dir="rtl">
+        <p>ב-9 באוקטובר 2023 הכריז שר הבטחון דאז יואב גלנט על סגירת הרצועה לכניסת מזון, חשמל ומים. מאז - בין אם כאמצעי ובין אם כמטרה בפני עצמה - המשיכו שרים וחברי כנסת ישראלים להצהיר כי השלכות המצור - רעב כבד, ותמותה מרעב ומחלות - הן לגיטימיות ואף רצויות. התבטאויות אלו פורסמו פעמים רבות בכלי התקשורת הישראליים וברשתות החברתיות, כמעט ללא ביקורת ציבורית. הצהרות אלו והיעדר ההתנגדות להן על ידי מוסדות מדינה בתוך ישראל מעידות על כוונותיהם של גורמים רבים בתוך שירות המדינה.</p>
+      </div>
+    </div>
+  </div>
 
   <IntentWall />
 
@@ -154,28 +155,18 @@
 
   <GhfVideos />
 
-  <Divider variant="gem" />
-
   <div class="snap-point" aria-hidden="true"></div>
 
   <StatsBar />
-
-  <Divider variant="topo" />
 
   <div class="snap-point" aria-hidden="true"></div>
 
   <!-- How we measure hunger -->
   <MeasureSection />
 
-  <Divider variant="topo" />
-
   <div class="snap-point" aria-hidden="true"></div>
 
   <AidPhases />
-
-  <Divider variant="topo" />
-
-  <div class="snap-point" aria-hidden="true"></div>
 
   <AidTrucks />
 
@@ -201,8 +192,6 @@
 
   <FoodCalculator />
 
-  <Divider variant="topo" />
-
   <!-- Famine deaths narrative -->
   <section class="famine-block nb-section snap-target">
     <div class="container">
@@ -222,15 +211,11 @@
   <!-- Witness testimony -->
   <PullQuote quote={witnessTestimony.quote} attribution={witnessTestimony.attribution} small />
 
-  <Divider variant="gem" />
-
   <div class="section-wipe" use:reveal aria-hidden="true"></div>
 
   <div class="snap-point" aria-hidden="true"></div>
 
   <FoodDiversity />
-
-  <Divider variant="gem" />
 
   <div class="snap-point" aria-hidden="true"></div>
 
@@ -318,6 +303,10 @@
     text-align: center;
     padding: 4rem 0;
     scroll-snap-align: start;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .bridge-block--centered p {
     max-width: 36ch;
@@ -326,33 +315,71 @@
   }
   .bridge-block--snap {
     scroll-snap-align: start;
-    min-height: calc(var(--vh, 1vh) * 60);
+    min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     align-items: center;
   }
+  .bridge-title {
+    font-family: var(--font-disp);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    color: var(--accent-light);
+    margin-bottom: 1.8rem;
+    line-height: 1.3;
+    max-width: 36ch;
+    margin-inline: auto;
+  }
   .bridge-block p {
-    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
     line-height: 1.72;
     color: var(--sand);
     font-family: var(--font-body);
     font-weight: 400;
   }
 
-  /* Intent preface */
-  .intent-preface {
-    padding: 3rem 0 1.5rem;
+  /* Intent preface — sticky scroll */
+  .intent-preface-scroll {
+    height: calc(var(--vh, 1vh) * 100);
+    position: relative;
   }
-  .intent-preface p {
-    font-size: clamp(0.97rem, 1.6vw, 1.08rem);
-    line-height: 1.82;
+  .intent-preface-sticky {
+    position: sticky;
+    top: 0;
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+  }
+  .intent-preface-inner {
+    animation: ip-fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+  .intent-preface-inner p {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.9;
     color: var(--text);
     font-family: var(--font-body);
+    max-width: 68ch;
+  }
+  @keyframes ip-fade-up {
+    from { opacity: 0; transform: translateY(3rem); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* Fallback for browsers without scroll-timeline support */
+  @supports not (animation-timeline: view()) {
+    .intent-preface-inner {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
   }
 
   /* mark.inv styles and animation live in app.css (global) */
 
   /* Famine block layout */
-  .famine-block.nb-section { padding: 3rem 0 2rem; }
+  .famine-block.nb-section { padding: 3rem 0 2rem; min-height: calc(var(--vh, 1vh) * 100); display: flex; align-items: center; }
   .famine-block .nb-p {
     font-size: 1.02rem;
     line-height: 1.82;

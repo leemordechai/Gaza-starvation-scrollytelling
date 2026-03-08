@@ -1,6 +1,5 @@
 <script lang="ts">
   import { reveal } from '$lib/actions/reveal';
-  import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import { measureSection } from '$lib/data/story.js';
   import { sanitizeText } from '$lib/utils/sanitize';
   import { onMount } from 'svelte';
@@ -27,13 +26,6 @@
 
 <section class="measure-section" id="measure">
   <div class="container">
-    <div class="measure-head" use:reveal>
-      <SectionHead
-        label={measureSection.label}
-        title={measureSection.title}
-        sub=""
-      />
-    </div>
     <div class="measure-body">
       {#each measureSection.paragraphs as paragraph, i}
         {#if i === 0}
@@ -48,21 +40,21 @@
 
 <style>
   .measure-section {
-    padding: clamp(2rem, 6vw, 4rem) 0 clamp(1.5rem, 4vw, 3rem);
-  }
-
-  .measure-head {
-    margin-bottom: 2rem;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    padding: clamp(3rem, 7vw, 5rem) 0;
   }
 
   .measure-body {
-    font-size: 1.02rem;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
     line-height: 1.82;
     color: var(--text);
+    font-family: var(--font-body);
   }
 
   .measure-body :global(p) {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.6rem;
   }
 
   /* mark.inv inside this section: pseudo-element RTL wipe via class toggle */

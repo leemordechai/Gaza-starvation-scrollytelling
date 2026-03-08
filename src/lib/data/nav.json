@@ -1,5 +1,5 @@
 {
-  "brand": "דסק הוויז׳ואל",
+  "brand": "הרעבת עזה",
   "links": [
     { "label": "רקע", "href": "#background" },
     { "label": "ציר זמן", "href": "#timeline" },
@@ -9,7 +9,6 @@
     { "label": "משאיות סיוע", "href": "#aid-trucks" },
     { "label": "מסע המשאית", "href": "#truck-route" },
     { "label": "מחירי מזון", "href": "#food-prices" },
-    { "label": "מחשבון מזון", "href": "#food-calculator" },
     { "label": "מגוון מזון", "href": "#food-diversity" },
     { "label": "ניתוח", "href": "#analysis" }
   ],
@@ -22,7 +21,6 @@
     { "label": "משאיות סיוע", "target": "#aid-trucks" },
     { "label": "מסע המשאית", "target": "#truck-route" },
     { "label": "מחירי מזון", "target": "#food-prices" },
-    { "label": "מחשבון מזון", "target": "#food-calculator" },
     { "label": "מגוון מזון", "target": "#food-diversity" },
     { "label": "ניתוח", "target": "#analysis" }
   ]

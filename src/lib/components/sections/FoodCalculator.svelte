@@ -79,7 +79,11 @@
 
 <style>
   .fc-section {
-    padding: 2rem 0 4rem;
+    padding: clamp(2rem, 5vh, 4rem) 0;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
   }
 
   .fc-card {

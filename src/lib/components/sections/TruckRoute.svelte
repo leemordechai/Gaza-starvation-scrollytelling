@@ -80,11 +80,21 @@
     const initAngle = Math.atan2(pt8.y - pt0.y, pt8.x - pt0.x) * (180 / Math.PI);
     gsap.set(truckIconEl, { x: pt0.x, y: pt0.y, rotation: initAngle, transformOrigin: '50% 50%' });
 
+    function resetTruck() {
+      gsap.set(truckIconEl, { x: pt0.x, y: pt0.y, rotation: initAngle, transformOrigin: '50% 50%' });
+      svgEl.setAttribute('viewBox', `0 0 ${VB_W} ${VB_H}`);
+      trailPathEl.style.strokeDashoffset = String(pathLen);
+      activeStop = -1;
+    }
+
     const st = ScrollTrigger.create({
       trigger: scrollContainer,
       start: 'top top',
       end: 'bottom bottom',
       scrub: 0.5,
+      invalidateOnRefresh: true,
+      onEnter: () => { activeStop = -1; },
+      onLeaveBack: () => { resetTruck(); },
       onUpdate: (self: any) => {
         const progress = self.progress;
         const dist = progress * pathLen;
@@ -113,7 +123,35 @@
     });
     triggers.push(st);
 
-    return () => window.removeEventListener('resize', setHeight);
+    // Use IntersectionObserver to detect when section scrolls into view from above,
+    // ensuring truck always starts at position 0
+    const sectionEl = scrollContainer.closest('.tr-section') as HTMLElement;
+    const resetObs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Section just entered viewport — if scroll is near the top of section, reset truck
+          const rect = sectionEl.getBoundingClientRect();
+          if (rect.top > -window.innerHeight * 0.5) {
+            resetTruck();
+            ScrollTrigger.refresh();
+          }
+        }
+      },
+      { threshold: 0.01, rootMargin: '0px' }
+    );
+    resetObs.observe(sectionEl || scrollContainer);
+
+    // Delayed refresh so layout (fonts, images, min-height) is fully settled
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+      // After refresh, if section is above viewport, truck is at start anyway;
+      // if section is already partially visible, let GSAP position it correctly
+    }, 300);
+
+    return () => {
+      window.removeEventListener('resize', setHeight);
+      resetObs.disconnect();
+    };
   });
 
   onDestroy(() => killScrollTriggers(triggers));

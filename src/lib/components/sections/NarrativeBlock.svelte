@@ -14,7 +14,11 @@
 
 <style>
   .nb-section {
-    padding: 3rem 0 2rem;
+    padding: clamp(3rem, 7vw, 5rem) 0;
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
   }
 
   .nb-title {

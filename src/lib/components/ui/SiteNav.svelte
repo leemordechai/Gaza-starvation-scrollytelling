@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { navVisible, mobileMenuOpen } from '$lib/stores/nav';
-  import { activeSection } from '$lib/stores/nav';
+  import { navVisible, mobileMenuOpen, activeSection, visitedSections } from '$lib/stores/nav';
   import { scrollProgress } from '$lib/stores/scroll';
   import navData from '$lib/data/nav.json';
 
@@ -16,10 +15,10 @@
 </script>
 
 <nav class="site-nav" class:visible={$navVisible}>
-  <div class="nav-logo">{navData.brand}</div>
+  <a class="nav-logo" href="#" aria-label="חזרה לתחילת העמוד">{navData.brand}</a>
   <ul class="nav-links">
     {#each navData.links as link}
-      <li><a href={link.href} class:active={$activeSection === link.href.slice(1)}>{link.label}</a></li>
+      <li><a href={link.href} class:active={$activeSection === link.href.slice(1)} class:visited={$visitedSections.has(link.href.slice(1)) && $activeSection !== link.href.slice(1)}>{link.label}</a></li>
     {/each}
   </ul>
   <span class="nav-time" class:visible={showTime}>{timeText}</span>
@@ -55,6 +54,7 @@
     letter-spacing: 0.18em;
     color: var(--accent);
     text-transform: uppercase;
+    text-decoration: none;
   }
 
   .nav-links {
@@ -68,15 +68,19 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgba(180, 160, 130, 0.75);
     text-decoration: none;
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--accent); }
   .nav-links a.active { color: var(--accent); }
-  @media (max-width: 600px) {
+  .nav-links a.visited { color: rgba(196, 162, 74, 0.5); }
+  @media (max-width: 768px) {
     .nav-links { display: none; }
-    .site-nav { padding: 0 1.25rem; }
+  }
+  @media (max-width: 600px) {
+    .site-nav { padding: 0 1.25rem; justify-content: flex-start; gap: 0.75rem; }
+    .nav-logo { flex: 1; }
   }
 
   .nav-time {
