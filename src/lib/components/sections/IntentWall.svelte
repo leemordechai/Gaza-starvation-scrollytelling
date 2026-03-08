@@ -1,152 +1,203 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import data from '$lib/data/intentQuotes.json';
+  import { reveal } from '$lib/actions/reveal';
+  import rawData from '$lib/data/intentQuotes.json';
 
-  const quotes = data.quotes;
+  type Q = Omit<typeof rawData.quotes[0], 'cited_by_icj'> & { cited_by_icj: boolean };
 
-  let wallEl: HTMLElement;
-  let visible = $state<Set<number>>(new Set());
+  const quotes: Q[] = rawData.quotes.map(q => ({
+    ...q,
+    size: (q.size || 'small') as 'small' | 'medium' | 'large',
+    cited_by_icj: q.cited_by_icj === 'True',
+  }));
 
-  // Tooltip state — pinned=true when user clicked to lock it open
-  let tooltip = $state<{ q: typeof quotes[0]; x: number; y: number; pinned: boolean } | null>(null);
-  let tooltipEl: HTMLElement;
-
-  onMount(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = Number((entry.target as HTMLElement).dataset.id);
-            visible = new Set([...visible, id]);
-          }
-        });
-      },
-      { threshold: 0.08 }
-    );
-
-    wallEl.querySelectorAll('.quote-card').forEach(card => obs.observe(card));
-    return () => obs.disconnect();
-  });
-
-  function showTooltip(e: MouseEvent, q: typeof quotes[0]) {
-    if (tooltip?.pinned) return; // don't replace a pinned tooltip on hover
-    const wall = wallEl.getBoundingClientRect();
-    tooltip = { q, x: e.clientX - wall.left, y: e.clientY - wall.top, pinned: false };
+  // ── Date parsing → numeric sort key ──────────────────────────────────────
+  function parseDateKey(d: string): number {
+    const m = d.match(/^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$/);
+    if (!m) return 9999_0000;
+    const yr = m[3].length === 2 ? 2000 + parseInt(m[3]) : parseInt(m[3]);
+    return yr * 10000 + parseInt(m[2]) * 100 + parseInt(m[1]);
+  }
+  function dateYear(d: string): number {
+    const m = d.match(/\.(\d{2,4})$/);
+    if (!m) return 0;
+    return m[1].length === 2 ? 2000 + parseInt(m[1]) : parseInt(m[1]);
   }
 
-  function moveTooltip(e: MouseEvent) {
-    if (!tooltip || tooltip.pinned) return;
-    const wall = wallEl.getBoundingClientRect();
-    tooltip = { ...tooltip, x: e.clientX - wall.left, y: e.clientY - wall.top };
+  const sorted = [...quotes].sort((a, b) => parseDateKey(a.date) - parseDateKey(b.date));
+
+  // ── Filters ───────────────────────────────────────────────────────────────
+  const keywords = [
+    { id: 'food',   label: 'מזון',  test: (q: Q) => /מזון|אוכל|מאפיה|גרגר/.test(q.quote_he) },
+    { id: 'water',  label: 'מים',   test: (q: Q) => /מים|טיפת/.test(q.quote_he) },
+    { id: 'fuel',   label: 'דלק',   test: (q: Q) => /דלק/.test(q.quote_he) },
+    { id: 'hunger', label: 'רעב',   test: (q: Q) => /רעב|ירעיב|להרעיב|ארעיב/.test(q.quote_he) },
+    { id: 'aid',    label: 'סיוע',  test: (q: Q) => /סיוע|הומניטרי/.test(q.quote_he) },
+  ];
+
+  function roleCategory(q: Q): 'minister' | 'mk' | 'other' {
+    const t = q.title;
+    if (/^שר/.test(t) || /ראש הממשלה/.test(t)) return 'minister';
+    if (/ח["״]כ|חבר.?כנסת|חברת.?כנסת|סגן יו["״]ר|יו["״]ר/.test(t)) return 'mk';
+    return 'other';
+  }
+  const roles = [
+    { id: 'minister', label: 'שרים',        test: (q: Q) => roleCategory(q) === 'minister' },
+    { id: 'mk',       label: 'חברי כנסת',   test: (q: Q) => roleCategory(q) === 'mk' },
+    { id: 'other',    label: 'אחרים',        test: (q: Q) => roleCategory(q) === 'other' },
+  ];
+  const years = [
+    { id: '2023', label: '2023', test: (q: Q) => dateYear(q.date) === 2023 },
+    { id: '2024', label: '2024', test: (q: Q) => dateYear(q.date) === 2024 },
+    { id: '2025', label: '2025', test: (q: Q) => dateYear(q.date) === 2025 },
+  ];
+
+  let activeKw   = $state(new Set<string>());
+  let activeRole = $state(new Set<string>());
+  let activeYear = $state(new Set<string>());
+  let expandAll   = $state(false);
+  let lockedCards = $state(new Set<string>());
+  let hoveredCard = $state<string | null>(null);
+
+  const NUM_COLS = 4;
+  const echoColumns: Q[][] = Array.from({ length: NUM_COLS }, () => []);
+  for (let i = 0; i < sorted.length; i++) {
+    echoColumns[i % NUM_COLS].push(sorted[i]);
   }
 
-  function hideTooltip() {
-    if (tooltip?.pinned) return;
-    tooltip = null;
+  function toggle(set: Set<string>, id: string): Set<string> {
+    const next = new Set(set);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return next;
   }
 
-  function pinTooltip(e: MouseEvent, q: typeof quotes[0]) {
-    e.stopPropagation();
-    const wall = wallEl.getBoundingClientRect();
-    tooltip = { q, x: e.clientX - wall.left, y: e.clientY - wall.top, pinned: true };
+  function echoMatches(q: Q): boolean {
+    const kwOk   = activeKw.size   === 0 || [...activeKw].some(id   => keywords.find(k => k.id === id)?.test(q)   ?? false);
+    const roleOk = activeRole.size === 0 || [...activeRole].some(id => roles.find(r => r.id === id)?.test(q)       ?? false);
+    const yearOk = activeYear.size === 0 || [...activeYear].some(id => years.find(y => y.id === id)?.test(q)       ?? false);
+    return kwOk && roleOk && yearOk;
   }
 
-  function dismissPinned() {
-    if (tooltip?.pinned) tooltip = null;
-  }
-
-  function highlightQuote(quote: string, keyPhrase: string): string {
-    if (!keyPhrase) return quote;
-    const escaped = keyPhrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return quote.replace(new RegExp(`(${escaped})`, 'g'), '<mark>$1</mark>');
+  // Highlight key phrase inside full quote text
+  function highlightPhrase(text: string, phrase: string): string {
+    if (!phrase) return text;
+    const clean = phrase.replace(/^[\u201c\u201d\u05f4"]+|[\u201c\u201d\u05f4"]+$/g, '').trim();
+    if (!clean) return text;
+    const idx = text.indexOf(clean);
+    if (idx === -1) return text;
+    const before = text.slice(0, idx);
+    const after  = text.slice(idx + clean.length);
+    return `${before}<mark class="iw-highlight">${clean}</mark>${after}`;
   }
 </script>
 
-<section class="intent-section section-topo" id="stated-intent">
+<section class="intent-section section-topo" id="stated-intent" dir="rtl">
   <div class="container-wide">
     <div class="section-header">
-      <span class="sh-label">{data.sectionLabel}</span>
-      <h2 class="sh-title">{data.sectionTitle}</h2>
-      <p class="sh-sub">{data.sectionSubtitle}</p>
+      <span class="sh-label">{rawData.sectionLabel}</span>
+      <h2 class="sh-title">{rawData.sectionTitle}</h2>
+      <p class="sh-sub">{rawData.sectionSubtitle}</p>
     </div>
-  </div>
 
-  <p class="wall-footer">העבירו את הסמן מעל כל כרטיס לציטוט המלא · לחצו לנעילת הציטוט</p>
+    <!-- Filter bar -->
+    <div class="iw-filterbar">
+      <div class="iw-pills">
+        <span class="iw-cat-label iw-cat-label--topic">תמות</span>
+        {#each keywords as kw}
+          <button
+            class="iw-pill iw-pill--topic"
+            class:iw-pill--active={activeKw.has(kw.id)}
+            onclick={() => activeKw = toggle(activeKw, kw.id)}
+          >{kw.label}</button>
+        {/each}
 
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div
-    class="wall"
-    bind:this={wallEl}
-    onmousemove={moveTooltip}
-    onmouseleave={hideTooltip}
-    onclick={dismissPinned}
-  >
-    {#each quotes as q}
-      {@const isVisible = visible.has(Number(q.id))}
-      <div
-        class="quote-card size-{q.size}"
-        class:visible={isVisible}
-        class:active={tooltip?.q === q}
-        data-id={q.id}
-        role="article"
-        onmouseenter={(e) => showTooltip(e, q)}
-        onclick={(e) => pinTooltip(e, q)}
-      >
-        <div class="card-inner">
-          <div class="key-phrase" dir="rtl">״{q.key_phrase_he}״</div>
-          <div class="speaker-block">
-            <span class="speaker-name">{q.speaker}</span>
-            <span class="speaker-title">{q.title}</span>
-          </div>
-        </div>
-      </div>
-    {/each}
+        <span class="iw-pill-sep" aria-hidden="true"></span>
 
-    <!-- Floating tooltip -->
-    {#if tooltip}
-      {@const q = tooltip.q}
-      {@const flipX = tooltip.x > 600}
-      {@const flipY = tooltip.y > 400}
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div
-        class="tooltip"
-        class:flip-x={flipX}
-        class:flip-y={flipY}
-        class:pinned={tooltip.pinned}
-        bind:this={tooltipEl}
-        style="--tx: {tooltip.x}px; --ty: {tooltip.y}px"
-        dir="rtl"
-        onclick={(e) => e.stopPropagation()}
-      >
-        {#if tooltip.pinned}
-          <button class="tt-close" onclick={dismissPinned} aria-label="סגור">✕</button>
+        <span class="iw-cat-label iw-cat-label--role">בעלי תפקידים</span>
+        {#each roles as r}
+          <button
+            class="iw-pill iw-pill--role"
+            class:iw-pill--active={activeRole.has(r.id)}
+            onclick={() => activeRole = toggle(activeRole, r.id)}
+          >{r.label}</button>
+        {/each}
+
+        <span class="iw-pill-sep" aria-hidden="true"></span>
+
+        <span class="iw-cat-label iw-cat-label--year">שנה</span>
+        {#each years as y}
+          <button
+            class="iw-pill iw-pill--year"
+            class:iw-pill--active={activeYear.has(y.id)}
+            onclick={() => activeYear = toggle(activeYear, y.id)}
+          >{y.label}</button>
+        {/each}
+
+        {#if activeKw.size > 0 || activeRole.size > 0 || activeYear.size > 0}
+          <span class="iw-pill-sep" aria-hidden="true"></span>
+          <button class="iw-pill iw-pill--clear" onclick={() => { activeKw = new Set(); activeRole = new Set(); activeYear = new Set(); }}>× נקה הכל</button>
         {/if}
-        <div class="tt-meta">
-          <span class="tt-speaker">{q.speaker}</span>
-          <span class="tt-role">{q.title}</span>
-        </div>
-        <div class="tt-quote">
-          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          {@html highlightQuote(q.quote_he, q.key_phrase_he)}
-        </div>
-        {#if q.originally_english === 'True'}
-          <div class="tt-en" dir="ltr">"{q.quote_en}"</div>
-        {/if}
-        <div class="tt-footer">
-          <a
-            class="tt-context"
-            href={q.source_url}
-            target="_blank"
-            rel="noopener noreferrer"
-          ><span class="tt-arrow">↗</span><span class="tt-context-text" dir="rtl">{q.context}</span></a><span class="tt-date">, {q.date}</span>
-        </div>
       </div>
-    {/if}
+
+      <button
+        class="iw-expand-btn"
+        onclick={() => { expandAll = !expandAll; lockedCards = new Set(); hoveredCard = null; }}
+        aria-pressed={expandAll}
+      >{expandAll ? '▴ כווץ הכל' : '▾ פתח הכל'}</button>
+    </div>
+
+    <!-- 4-column card grid -->
+    <div class="iw-grid">
+      {#each echoColumns as col}
+        <div class="iw-col">
+          {#each col as q (q.id)}
+            {@const matches = echoMatches(q)}
+            {@const anyActive = activeKw.size > 0 || activeRole.size > 0 || activeYear.size > 0}
+            {@const isLocked = lockedCards.has(q.id)}
+            {@const isOpen = expandAll || isLocked || hoveredCard === q.id}
+            <div
+              class="iw-card"
+              class:iw-card--open={isOpen}
+              class:iw-card--locked={isLocked}
+              class:iw-card--match={matches}
+              class:iw-card--dim={!matches && anyActive}
+              class:iw-card--minister={roleCategory(q) === 'minister'}
+              class:iw-card--mk={roleCategory(q) === 'mk'}
+              onmouseenter={() => { if (!expandAll && !isLocked) hoveredCard = q.id; }}
+              onmouseleave={() => { if (hoveredCard === q.id) hoveredCard = null; }}
+              onclick={() => { lockedCards = toggle(lockedCards, q.id); hoveredCard = null; }}
+              role="button"
+              tabindex="0"
+              onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lockedCards = toggle(lockedCards, q.id); } }}
+              aria-expanded={isOpen}
+              use:reveal
+            >
+              <p class="iw-phrase">״{q.key_phrase_he}״</p>
+
+              <div class="iw-details" class:iw-details--open={isOpen}>
+                <div class="iw-details-inner">
+                  <p class="iw-full-quote">{@html highlightPhrase(q.quote_he, q.key_phrase_he)}</p>
+                  {#if q.originally_english === 'True' && q.quote_en}
+                    <p class="iw-en-quote" dir="ltr">"{q.quote_en}"</p>
+                  {/if}
+                  <div class="iw-foot">
+                    <span class="iw-role-tag iw-role-tag--{roleCategory(q)}">
+                      {roleCategory(q) === 'minister' ? 'שר/ה' : roleCategory(q) === 'mk' ? 'ח״כ' : 'אחר'}
+                    </span>
+                    <span class="iw-speaker">{q.speaker}</span>
+                    <span class="iw-meta">{q.title} · {q.date}</span>
+                    <a class="iw-src-link" href={q.source_url} target="_blank" rel="noopener noreferrer" onclick={(e) => e.stopPropagation()}>↗ {q.source_label}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {/each}
+        </div>
+      {/each}
+    </div>
   </div>
 </section>
 
 <style>
-  /* ── Section shell ─────────────────────────────────────────── */
   .intent-section {
     background: var(--bg-section);
     padding: clamp(3rem, 8vw, 6rem) 0 clamp(3rem, 8vw, 5rem);
@@ -154,271 +205,220 @@
     font-family: var(--font-body);
   }
 
-  /* ── Header ────────────────────────────────────────────────── */
   .section-header {
-    margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
   }
 
-  /* ── Masonry wall ──────────────────────────────────────────── */
-  .wall {
-    columns: 4 260px;
-    column-gap: 10px;
-    padding: 0 clamp(0.75rem, 3vw, 2rem);
-    position: relative; /* tooltip positioned inside */
+  /* ── Filter bar ─────────────────────────────────────────────── */
+  .iw-filterbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-bottom: 1.4rem;
+    flex-wrap: wrap;
+  }
+  .iw-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+  }
+  .iw-cat-label {
+    font-family: var(--font-ui);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+  }
+  .iw-cat-label--topic { background: rgba(192,53,40,0.08); color: var(--accent); }
+  .iw-cat-label--role  { background: rgba(139,74,58,0.08); color: var(--sand); }
+  .iw-cat-label--year  { background: rgba(106,88,85,0.08); color: var(--text-muted); }
+
+  .iw-pill-sep {
+    display: inline-block;
+    width: 2px;
+    height: 1.4em;
+    background: var(--text-muted);
+    opacity: 0.4;
+    margin: 0 0.5rem;
+    align-self: center;
+    border-radius: 1px;
+  }
+  .iw-pill {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    background: none;
+    border-radius: 20px;
+    padding: 0.22rem 0.7rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    color: var(--accent);
+    border: 1.5px solid rgba(192,53,40,0.3);
+  }
+  .iw-pill:hover { background: rgba(192,53,40,0.07); border-color: var(--accent); }
+  .iw-pill--active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .iw-pill--role { color: var(--sand); border-color: rgba(139,74,58,0.35); }
+  .iw-pill--role:hover { background: rgba(139,74,58,0.07); border-color: var(--sand); }
+  .iw-pill--role.iw-pill--active { background: var(--sand); border-color: var(--sand); color: #fff; }
+
+  .iw-pill--year { color: var(--text-muted); border-color: var(--border-mid); }
+  .iw-pill--year:hover { background: rgba(106,88,85,0.07); border-color: var(--text-muted); }
+  .iw-pill--year.iw-pill--active { background: var(--text-muted); border-color: var(--text-muted); color: #fff; }
+
+  .iw-pill--clear { background: none; border-style: dashed; color: var(--text-muted); border-color: var(--border-mid); font-size: calc(var(--text-xs) - 0.04rem); }
+  .iw-pill--clear:hover { color: var(--accent); border-color: var(--accent); background: none; }
+
+  .iw-expand-btn {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    background: none;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 4px;
+    padding: 0.28rem 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .iw-expand-btn:hover,
+  .iw-expand-btn[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+
+  /* ── Grid: explicit columns, left-to-right row-major order ─── */
+  .iw-grid {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .iw-col {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
   }
 
-  @media (max-width: 900px) {
-    .wall { columns: 2 220px; }
-  }
-  @media (max-width: 540px) {
-    .wall { columns: 1; }
-  }
-
-  /* ── Quote card ────────────────────────────────────────────── */
-  .quote-card {
+  /* ── Cards ──────────────────────────────────────────────────── */
+  .iw-card {
     display: block;
-    width: 100%;
-    break-inside: avoid;
-    margin-bottom: 10px;
+    position: relative;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-top: 3px solid var(--border-mid);
-    text-align: right;
-    position: relative;
-    overflow: hidden;
-
-    /* Reveal animation */
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.55s ease,
-      transform 0.55s ease,
-      border-top-color 0.2s ease,
-      box-shadow 0.2s ease,
-      background 0.2s ease;
-  }
-
-  .quote-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Stagger */
-  .quote-card:nth-child(4n+1) { transition-delay: 0.05s; }
-  .quote-card:nth-child(4n+2) { transition-delay: 0.12s; }
-  .quote-card:nth-child(4n+3) { transition-delay: 0.19s; }
-  .quote-card:nth-child(4n+4) { transition-delay: 0.26s; }
-
-  .quote-card:hover,
-  .quote-card.active {
-    border-top-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent-dim), 0 4px 16px rgba(0,0,0,0.08);
-    background: var(--bg);
+    padding: 0.7rem 0.8rem 0.6rem;
     cursor: pointer;
+    transition: opacity 0.22s, filter 0.22s, border-top-color 0.18s, box-shadow 0.18s;
   }
-
-  .card-inner {
-    padding: clamp(0.85rem, 2vw, 1.1rem);
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
+  .iw-card:hover,
+  .iw-card--open         { border-top-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-dim), 0 4px 14px rgba(0,0,0,0.07); }
+  .iw-card--locked::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
   }
+  .iw-card--match         { border-top-color: var(--accent); }
+  .iw-card--dim           { opacity: 0.12; filter: grayscale(0.7); pointer-events: none; }
+  .iw-card--minister:not(.iw-card--dim) { border-top-color: var(--accent-light); }
+  .iw-card--mk:not(.iw-card--dim)       { border-top-color: var(--sand); }
 
-  /* ── Key phrase ────────────────────────────────────────────── */
-  .key-phrase {
+  .iw-phrase {
     font-family: var(--font-disp);
-    font-size: clamp(0.92rem, 1.6vw, 1.05rem);
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.45;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.45rem;
-  }
-
-  /* uniform font size across all card sizes */
-
-  /* ── Speaker block ─────────────────────────────────────────── */
-  .speaker-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.12rem;
-  }
-
-  .speaker-name {
-    font-family: var(--font-ui);
     font-size: var(--text-sm);
     font-weight: 700;
-    color: var(--accent);
+    line-height: 1.4;
+    color: var(--text);
+    margin: 0;
   }
 
-  .speaker-title {
+  /* ── Expandable details ─────────────────────────────────────── */
+  .iw-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.22s ease;
+  }
+  .iw-details--open { grid-template-rows: 1fr; }
+  .iw-details-inner { overflow: hidden; }
+
+  .iw-full-quote {
     font-family: var(--font-body);
     font-size: var(--text-xs);
-    color: var(--text-muted);
-    font-style: italic;
-    line-height: 1.35;
-  }
-
-  .speaker-date {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: var(--border-mid);
-  }
-
-  /* ── Floating tooltip ──────────────────────────────────────── */
-  .tooltip {
-    position: absolute;
-    top: var(--ty);
-    left: var(--tx);
-    transform: translate(16px, -50%);
-    width: clamp(260px, 28vw, 400px);
-    background: var(--bg);
-    border: 1px solid var(--border-mid);
-    border-top: 3px solid var(--accent);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
-    padding: 1rem 1.1rem;
-    pointer-events: none;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    animation: ttFade 0.15s ease;
-  }
-
-  .tooltip.pinned {
-    pointer-events: all;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.1);
-    border-top-color: var(--accent-light);
-  }
-
-  /* Flip horizontally when near right edge */
-  .tooltip.flip-x {
-    transform: translate(calc(-100% - 16px), -50%);
-  }
-
-  /* Flip vertically when near bottom */
-  .tooltip.flip-y {
-    transform: translate(16px, calc(-100% + 2rem));
-  }
-  .tooltip.flip-x.flip-y {
-    transform: translate(calc(-100% - 16px), calc(-100% + 2rem));
-  }
-
-  @keyframes ttFade {
-    from { opacity: 0; transform: translate(16px, calc(-50% + 6px)); }
-    to   { opacity: 1; transform: translate(16px, -50%); }
-  }
-  /* Note: flip variants won't re-animate perfectly, acceptable tradeoff */
-
-  .tt-quote {
-    font-family: var(--font-disp);
-    font-size: var(--text-sm);
-    line-height: 1.72;
+    line-height: 1.65;
     color: var(--text);
     border-right: 2px solid var(--accent);
-    padding-right: 0.7rem;
+    padding-right: 0.6rem;
+    margin: 0.55rem 0 0.4rem;
+    font-style: italic;
   }
-
-  .tt-quote :global(mark) {
+  /* :global needed — injected via {@html} */
+  :global(.iw-highlight) {
     background: var(--accent-dim);
     color: var(--accent-light);
-    border-radius: 2px;
-    padding: 0 2px;
+    font-style: normal;
     font-weight: 700;
+    padding: 0 2px;
+    border-radius: 2px;
   }
-
-  .tt-en {
+  .iw-en-quote {
     font-family: var(--font-body);
     font-size: var(--text-xs);
-    line-height: 1.6;
-    color: var(--text-muted);
     font-style: italic;
+    line-height: 1.55;
+    color: var(--text-muted);
     direction: ltr;
     border-left: 2px solid var(--border);
-    padding-left: 0.65rem;
+    padding-left: 0.55rem;
+    margin-bottom: 0.4rem;
   }
-
-  .tt-close {
-    position: absolute;
-    top: 0.4rem;
-    left: 0.5rem;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.7rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0.2rem 0.3rem;
-    opacity: 0.6;
-    transition: opacity 0.15s;
-  }
-  .tt-close:hover { opacity: 1; }
-
-  .tt-meta {
+  .iw-foot {
     display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem 0.5rem;
     border-top: 1px solid var(--border);
     padding-top: 0.4rem;
+    font-family: var(--font-ui);
   }
-
-  .tt-speaker {
+  .iw-role-tag {
+    display: inline-block;
+    font-size: 0.5rem;
     font-weight: 700;
-    color: var(--accent);
+    letter-spacing: 0.06em;
+    padding: 0.08rem 0.32rem;
+    border-radius: 2px;
   }
-
-  .tt-role {
-    color: var(--text-muted);
-    font-style: italic;
-  }
-
-  .tt-footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    direction: ltr;
-  }
-
-  .tt-date {
-    color: var(--text-muted);
-  }
-
-  .tt-context {
-    pointer-events: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.2rem;
-    font-family: var(--font-ui);
+  .iw-role-tag--minister { background: rgba(192,53,40,0.1);  color: var(--accent-light); }
+  .iw-role-tag--mk       { background: rgba(139,74,58,0.1);  color: var(--sand); }
+  .iw-role-tag--other    { background: rgba(106,88,85,0.08); color: var(--text-muted); }
+  .iw-speaker  { font-size: var(--text-xs); font-weight: 700; color: var(--accent); }
+  .iw-meta     { font-size: var(--text-xs); color: var(--text-muted); }
+  .iw-src-link {
     font-size: var(--text-xs);
     color: var(--text-muted);
     text-decoration: none;
     border-bottom: 1px solid var(--border);
     transition: color 0.15s, border-color 0.15s;
-  }
-  .tt-context:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-  .tt-arrow {
-    flex-shrink: 0;
+    margin-inline-start: auto;
     direction: ltr;
   }
-  .tt-context-text {
-    unicode-bidi: isolate;
-  }
+  .iw-src-link:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* ── Footer caption ────────────────────────────────────────── */
-  .wall-footer {
-    text-align: center;
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    margin-top: 1.5rem;
-    padding: 0 1rem;
+  /* ── Mobile ─────────────────────────────────────────────────── */
+  @media (max-width: 700px) {
+    .iw-grid { flex-wrap: wrap; }
+    .iw-col  { flex: 1 1 45%; }
+  }
+  @media (max-width: 420px) {
+    .iw-col  { flex: 1 1 100%; }
   }
 </style>
