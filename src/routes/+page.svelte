@@ -101,17 +101,6 @@
 
   <div class="snap-point" aria-hidden="true"></div>
 
-  <!-- Intent preface paragraph -->
-  <section class="intent-preface container" dir="rtl">
-    <p class="reveal" use:reveal>לאורך המלחמה, גורמים בכירים בישראל התבטאו בעד עצירת הסיוע ההומניטרי. התבטאויות אלו פורסמו פעמים רבות בכלי התקשורת הישראליים וברשתות החברתיות, כמעט ללא ביקורת ציבורית. הצהרות אלו והיעדר ההתנגדות להן על ידי מוסדות מדינה בתוך ישראל מעידות על כוונותיהם של גורמים רבים בתוך שירות המדינה, ועל קיומו של שיח שבו הרעבת עזה הייתה לגיטימית ואף רצויה.</p>
-  </section>
-
-  <IntentWall />
-
-  <Divider variant="gem" />
-
-  <div class="snap-point" aria-hidden="true"></div>
-
   <!-- Guterres quote -->
   <PullQuote quote={pullQuote.quote} attribution={pullQuote.attribution} />
 
@@ -134,6 +123,17 @@
   <div class="snap-point" aria-hidden="true"></div>
 
   <Timeline />
+
+  <Divider variant="gem" />
+
+  <div class="snap-point" aria-hidden="true"></div>
+
+  <!-- Intent preface paragraph -->
+  <section class="intent-preface container" dir="rtl">
+    <p class="reveal" use:reveal>לאורך המלחמה, גורמים בכירים בישראל התבטאו בעד עצירת הסיוע ההומניטרי. התבטאויות אלו פורסמו פעמים רבות בכלי התקשורת הישראליים וברשתות החברתיות, כמעט ללא ביקורת ציבורית. הצהרות אלו והיעדר ההתנגדות להן על ידי מוסדות מדינה בתוך ישראל מעידות על כוונותיהם של גורמים רבים בתוך שירות המדינה, ועל קיומו של שיח שבו הרעבת עזה הייתה לגיטימית ואף רצויה.</p>
+  </section>
+
+  <IntentWall />
 
   <Divider variant="fade" />
 

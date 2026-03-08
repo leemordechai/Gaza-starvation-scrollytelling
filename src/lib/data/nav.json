@@ -2,8 +2,8 @@
   "brand": "דסק הוויז׳ואל",
   "links": [
     { "label": "רקע", "href": "#background" },
-    { "label": "כוונות מוצהרות", "href": "#stated-intent" },
     { "label": "ציר זמן", "href": "#timeline" },
+    { "label": "כוונות מוצהרות", "href": "#stated-intent" },
     { "label": "כיצד מודדים", "href": "#measure" },
     { "label": "שלבי הסיוע", "href": "#aid-phases" },
     { "label": "משאיות סיוע", "href": "#aid-trucks" },
@@ -15,8 +15,8 @@
   ],
   "indicators": [
     { "label": "רקע", "target": "#background" },
-    { "label": "כוונות מוצהרות", "target": "#stated-intent" },
     { "label": "ציר זמן", "target": "#timeline" },
+    { "label": "כוונות מוצהרות", "target": "#stated-intent" },
     { "label": "כיצד מודדים", "target": "#measure" },
     { "label": "שלבי הסיוע", "target": "#aid-phases" },
     { "label": "משאיות סיוע", "target": "#aid-trucks" },
