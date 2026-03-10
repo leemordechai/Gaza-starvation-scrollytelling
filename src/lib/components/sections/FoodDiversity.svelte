@@ -56,19 +56,25 @@
     if (!browser) return;
 
     const stepEls = Array.from(document.querySelectorAll('.fd-step')) as HTMLElement[];
+    const visible = new Set<number>();
 
     const stepObs = new IntersectionObserver(
       (entries) => {
-        let best = -1;
         for (const entry of entries) {
+          const idx = stepEls.indexOf(entry.target as HTMLElement);
+          if (idx === -1) continue;
           if (entry.isIntersecting) {
-            const idx = stepEls.indexOf(entry.target as HTMLElement);
-            if (idx > best) best = idx;
+            visible.add(idx);
+          } else {
+            visible.delete(idx);
           }
         }
-        if (best !== -1) activeStep = best;
+        if (visible.size > 0) {
+          // Pick the lowest-index visible step — the one the user is reading
+          activeStep = Math.min(...visible);
+        }
       },
-      { threshold: [0.3, 0.5] }
+      { threshold: 0.3 }
     );
     stepEls.forEach(el => stepObs.observe(el));
 
@@ -91,6 +97,7 @@
       />
     </div>
 
+    <div class="fd-inner">
     <div class="fd-layout">
       <!-- Sticky visualization -->
       <div class="fd-sticky">
@@ -99,7 +106,6 @@
           <div class="fd-period">
             <span class="fd-period-tag">{current.tag}</span>
             <h3 class="fd-period-label">{current.period}</h3>
-            <span class="fd-period-sub">{current.sublabel}</span>
           </div>
 
           <!-- Score bar -->
@@ -115,19 +121,18 @@
                 class="fd-score-fill"
                 style="width: {scorePct}%;"
               ></div>
-              <!-- Baseline reference marker (shown after step 0) -->
-              {#if activeStep > 0}
-                <div
-                  class="fd-score-baseline"
-                  style="left: {baselinePct}%;"
-                  title="רמה טרם המלחמה: {baselinePct}%"
-                ></div>
-              {/if}
+              <!-- Baseline marker always visible at pre-war position (RTL: right-anchored) -->
+              <div
+                class="fd-score-baseline"
+                class:fd-score-baseline--no-label={activeStep > 0}
+                style="left: {100 - baselinePct}%;"
+                title="רמה לפני המלחמה: {baselinePct}%"
+              ></div>
             </div>
             {#if activeStep > 0}
               <span class="fd-score-delta">
                 {scorePct < baselinePct ? '▼' : '▲'}
-                {Math.abs(scorePct - baselinePct)}% מלפני המלחמה
+                {Math.round(Math.abs(scorePct - baselinePct) / baselinePct * 100)}% מרמת התזונה מלפני המלחמה
               </span>
             {/if}
           </div>
@@ -178,7 +183,7 @@
           <div class="fd-day-labels">
             <span class="fd-day-spacer"></span>
             <div class="fd-day-row">
-              {#each ['ב', 'ג', 'ד', 'ה', 'ו', 'ש', 'א'] as day}
+              {#each ['ש', 'ו', 'ה', 'ד', 'ג', 'ב', 'א'] as day}
                 <span class="fd-day">{day}</span>
               {/each}
             </div>
@@ -207,6 +212,7 @@
         {/each}
       </div>
     </div>
+    </div>
   </div>
 </section>
 
@@ -234,13 +240,30 @@
     padding: clamp(2.5rem, 7vw, 5rem) 0 2rem;
   }
 
+  /* ===== Narrow wrapper (80% of container-wide) ===== */
+  .fd-inner {
+    max-width: 80%;
+    margin-inline: auto;
+  }
+  @media (max-width: 760px) {
+    .fd-inner { max-width: 100%; }
+  }
+
   /* ===== Layout: sticky viz + scrolling text ===== */
   .fd-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
     align-items: start;
     margin-top: 3rem;
+  }
+
+  @media (min-width: 1400px) {
+    .fd-layout { gap: 6rem; grid-template-columns: 0.9fr 1.1fr; }
+  }
+
+  @media (max-width: 1100px) {
+    .fd-layout { gap: 3rem; }
   }
 
   @media (max-width: 760px) {
@@ -304,19 +327,12 @@
 
   .fd-period-label {
     font-family: var(--font-disp);
-    font-size: 1.3rem;
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
     font-weight: 700;
     color: var(--text);
     line-height: 1.2;
     margin: 0 0 0.1rem;
     transition: none;
-  }
-
-  .fd-period-sub {
-    font-family: var(--font-ui);
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    letter-spacing: 0.03em;
   }
 
   @media (max-width: 760px) {
@@ -378,13 +394,27 @@
 
   .fd-score-baseline {
     position: absolute;
-    top: -4px;
+    top: -18px;
     bottom: -4px;
     width: 2px;
     background: var(--text-muted);
-    opacity: 0.5;
+    opacity: 0.6;
     border-radius: 1px;
-    transition: left 0.4s ease;
+  }
+  .fd-score-baseline::before {
+    content: 'לפני המלחמה';
+    position: absolute;
+    top: 0;
+    right: 4px;
+    font-family: var(--font-ui);
+    font-size: 0.44rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .fd-score-baseline--no-label::before {
+    display: none;
   }
 
   .fd-score-delta {
@@ -412,10 +442,10 @@
 
   .fd-label {
     font-family: var(--font-ui);
-    font-size: 0.62rem;
+    font-size: clamp(0.58rem, 0.9vw, 0.68rem);
     font-weight: 600;
     color: var(--sand);
-    width: 110px;
+    width: clamp(90px, 12vw, 130px);
     flex-shrink: 0;
     text-align: right;
     letter-spacing: 0.02em;
@@ -538,7 +568,7 @@
   }
 
   .fd-day-spacer {
-    width: 110px;
+    width: clamp(90px, 12vw, 130px);
     flex-shrink: 0;
   }
 
@@ -548,6 +578,7 @@
 
   .fd-day-row {
     display: flex;
+    flex-direction: row-reverse;
     gap: 3px;
     flex: 1;
   }
@@ -596,19 +627,27 @@
     }
   }
 
+  @keyframes fd-step-reveal {
+    from { opacity: 0.2; }
+    to   { opacity: 1; }
+  }
+
   .fd-step {
     padding: 3rem 0;
     min-height: calc(var(--vh, 1vh) * 70);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    opacity: 0.25;
-    transition: opacity 0.5s ease;
+    animation: fd-step-reveal linear both;
+    animation-timeline: view();
+    /* fade in as step enters from bottom, complete at 30% from top */
+    animation-range: entry 0% cover 70%;
   }
 
   @media (max-width: 760px) {
     .fd-step {
       min-height: 0;
+      animation: none;
       opacity: 1;
       padding: 1.75rem 0;
       border-bottom: 1px solid var(--border);
@@ -616,11 +655,7 @@
     .fd-step:last-child { border-bottom: none; }
   }
 
-  .fd-step.active {
-    opacity: 1;
-  }
-
-  .fd-step-tag {
+.fd-step-tag {
     font-family: var(--font-ui);
     font-size: 0.62rem;
     font-weight: 700;
@@ -633,7 +668,7 @@
 
   .fd-step-heading {
     font-family: var(--font-disp);
-    font-size: 1.45rem;
+    font-size: clamp(1.2rem, 2vw, 1.65rem);
     font-weight: 700;
     color: var(--text);
     margin-bottom: 0.8rem;
@@ -642,9 +677,10 @@
 
   .fd-step-body {
     font-family: var(--font-body);
-    font-size: 0.97rem;
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
     line-height: 1.78;
     color: var(--text);
+    white-space: pre-line;
   }
 
   .fd-step-note {

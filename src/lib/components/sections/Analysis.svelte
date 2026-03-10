@@ -40,7 +40,7 @@
 <style>
   .analysis-section { padding: clamp(2.5rem, 7vw, 5rem) 0; background: var(--bg-section); }
 
-  .analysis-body { font-size: 1.02rem; line-height: 1.82; color: var(--text); max-width: 720px; }
+  .analysis-body { font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.82; color: var(--text); max-width: 780px; }
   .analysis-body :global(p) { margin-bottom: 1.6rem; }
 
   .closing-statement {

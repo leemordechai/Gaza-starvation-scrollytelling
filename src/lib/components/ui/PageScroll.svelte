@@ -9,19 +9,23 @@
   // Sections with IDs = major section tops.
   // Scrollytelling steps = the individual narrative cards within sticky sections.
   const STEP_SELECTORS = [
-    'section[id]',           // all named sections with IDs
+    'section[id]:not(#aid-trucks):not(#truck-route)', // named sections
+    '.chapter-head',         // chapter headers (100vh, content centered)
+    '.tr-header',            // TruckRoute section header
     '.hero-scroll-container',// hero (zoomed-in start)
     '.hero-phase-zoom',      // hero (zoomed-out end)
     '.pullquote-section',    // PullQuote components
     '.stats-section',        // StatsBar
     '.nb-section',           // NarrativeBlock
-    '.intro-bg-step',        // background context steps
+    '.intro-step',           // intro paragraphs
+    '.ch1-mid-head',          // AidTrucks title block
     '.bridge-block--centered', // bridge centered block
     '.bridge-block--snap',   // bridge snap block
     '.famine-block',         // famine deaths section
     '.fd-step',              // FoodDiversity narrative steps
     '.fp-step',              // FoodPrices narrative steps
     '.s-step',               // Scrollytelling narrative steps
+    '.td-step',              // AidPhases truck-grid narrative steps
   ].join(', ');
 
   // TruckRoute stop fractions — must match TruckRoute.svelte STOP_FRACS
@@ -35,12 +39,23 @@
   function getAnchors(): number[] {
     const els = document.querySelectorAll<HTMLElement>(STEP_SELECTORS);
     const tops: number[] = [];
+    const vh = window.innerHeight;
     els.forEach(el => {
       const rect = el.getBoundingClientRect();
-      const top = rect.top + window.scrollY - NAV_H;
       // Only include elements that are meaningfully tall (skip tiny dividers
       // that might accidentally match the selector).
       if (el.offsetHeight > 60) {
+        let top: number;
+        if (el.classList.contains('chapter-head')) {
+          // For chapter headers (100vh, content centered), scroll so the element's
+          // vertical center lands at the viewport center.
+          top = rect.top + window.scrollY + el.offsetHeight / 2 - vh / 2;
+        } else if (el.classList.contains('tr-header')) {
+          // Land tr-header just below the nav bar
+          top = rect.top + window.scrollY - NAV_H;
+        } else {
+          top = rect.top + window.scrollY - NAV_H;
+        }
         tops.push(Math.max(0, top));
       }
     });
@@ -74,10 +89,13 @@
    */
   function targetDown(anchors: number[], currentY: number, vh: number): number {
     const lo = currentY + 40;       // ignore anchors we're already past
-    const hi = currentY + vh * 1.4; // don't skip too far ahead
-    const next = anchors.find(a => a >= lo && a <= hi);
-    if (next !== undefined) return next;
-    // No anchor in range — advance by one viewport minus nav
+    const hi = currentY + vh * 1.4; // prefer nearby anchors first
+    const near = anchors.find(a => a >= lo && a <= hi);
+    if (near !== undefined) return near;
+    // No nearby anchor — jump to the next anchor regardless of distance
+    const farNext = anchors.find(a => a >= lo);
+    if (farNext !== undefined) return farNext;
+    // No anchor ahead at all — raw viewport scroll
     return currentY + (vh - NAV_H);
   }
 

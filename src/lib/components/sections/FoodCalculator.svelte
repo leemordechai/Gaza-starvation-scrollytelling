@@ -4,12 +4,14 @@
   // Median food price multiplier across all WFP-tracked commodities
   // Based on Jan 2025 WFP Market Monitor data (peak blockade period)
   const MULTIPLIER = 8.4;
+  const DAILY_WAGE_GAZA = 40; // average daily wage in Gaza, 2022 (NIS)
 
   let monthly = $state(0);
   let result = $derived(Math.round(monthly * MULTIPLIER));
   let rawRatio = $derived((monthly * MULTIPLIER) / Math.max(monthly, 1));
   let ratio = $derived(Math.min(rawRatio, 20));
   let isCapped = $derived(rawRatio > 20);
+  let daysOfWork = $derived(Math.round(result / DAILY_WAGE_GAZA));
 
   function formatNumber(n: number): string {
     return n.toLocaleString('he-IL');
@@ -65,6 +67,10 @@
               {#if isCapped}
                 <p class="fc-cap-note">הפער גבוה מ-20× — הגרף קוצץ לטובת קריאות</p>
               {/if}
+
+              <p class="fc-wage-note" dir="rtl">
+                שכר יום עבודה ממוצע בעזה לפני המלחמה (2022) עמד על כ-₪{DAILY_WAGE_GAZA} ליום — כלומר, סל המזון הזה היה עולה לתושב עזה כ-<strong>{formatNumber(daysOfWork)} ימי עבודה</strong> בחודש.
+              </p>
             </div>
           {/if}
         </div>
@@ -84,15 +90,16 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    background: var(--bg-section);
   }
 
   .fc-card {
-    background: var(--bg-section);
+    background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-top: 3px solid rgba(196, 162, 74, 0.6);
     border-radius: 3px;
-    padding: 2rem 2.25rem 1.5rem;
-    max-width: 560px;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 4vw, 3.5rem) 2.5rem;
+    max-width: 896px;
     margin: 0 auto;
   }
 
@@ -116,7 +123,7 @@
 
   .fc-title {
     font-family: var(--font-disp);
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-size: clamp(1.96rem, 4.2vw, 2.8rem);
     font-weight: 700;
     color: var(--text);
     line-height: 1.2;
@@ -173,9 +180,9 @@
     background: none;
     border: none;
     outline: none;
-    padding: 0.65rem 0;
+    padding: 0.9rem 0;
     font-family: var(--font-ui);
-    font-size: 1.1rem;
+    font-size: 1.54rem;
     font-weight: 600;
     color: var(--text);
     direction: rtl;
@@ -215,7 +222,7 @@
 
   .fc-result-amount {
     font-family: var(--font-disp);
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.8rem, 7vw, 4.2rem);
     font-weight: 900;
     color: var(--accent-light);
     line-height: 1;
@@ -279,6 +286,21 @@
     opacity: 0.7;
     font-style: italic;
     margin-top: 0.2rem;
+  }
+
+  .fc-wage-note {
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    line-height: 1.65;
+    color: var(--text);
+    border-top: 1px solid var(--border);
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    text-align: right;
+  }
+  .fc-wage-note strong {
+    color: var(--accent-light);
+    font-weight: 700;
   }
 
   .fc-source {

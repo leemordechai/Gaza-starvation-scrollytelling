@@ -37,7 +37,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2.5rem;
+    padding: 0 clamp(1.5rem, 3vw, 4rem);
     height: 54px;
     background: rgba(12, 11, 8, 0.94);
     backdrop-filter: blur(16px);
@@ -46,6 +46,12 @@
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .site-nav.visible { transform: translateY(2px); }
+
+  @media (min-width: 1400px) {
+    .site-nav { height: 60px; }
+    .nav-links { gap: 3rem; }
+    .nav-logo { font-size: 0.92rem; }
+  }
 
   .nav-logo {
     font-family: var(--font-ui);

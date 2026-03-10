@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { browser } from '$app/environment';
-  import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import { initGsap, killScrollTriggers } from '$lib/utils/gsap';
   import { animateCounter } from '$lib/utils/counter';
   import phasesData from '$lib/data/aidPhases.json';
@@ -68,16 +67,28 @@
       // already partially scrolled.
       const stepEls = Array.from(document.querySelectorAll('.td-step'));
 
+      // Track which steps are currently intersecting
+      const intersecting = new Set<HTMLElement>();
+
       const stepObs = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
+            const el = entry.target as HTMLElement;
             if (entry.isIntersecting) {
-              const idx = stepEls.indexOf(entry.target as HTMLElement);
-              if (idx !== -1) activePhase = idx;
+              intersecting.add(el);
+            } else {
+              intersecting.delete(el);
             }
           }
+          // Pick the lowest-index intersecting step (topmost visible = current phase)
+          let best = -1;
+          for (const el of intersecting) {
+            const idx = stepEls.indexOf(el);
+            if (idx !== -1 && (best === -1 || idx < best)) best = idx;
+          }
+          if (best !== -1) activePhase = best;
         },
-        { threshold: 0.5 }
+        { threshold: 0.15 }
       );
 
       stepEls.forEach(el => stepObs.observe(el));
@@ -95,11 +106,13 @@
   });
 </script>
 
-<section class="ap-section section-topo" id="aid-phases">
-  <!-- Intro screen: full viewport, header centered — safe landing for page-down -->
-  <div class="ap-intro">
-    <div class="container-wide">
-      <SectionHead label={aidPhasesText.sectionLabel} title={aidPhasesText.sectionTitle} sub={aidPhasesText.sectionSub} />
+<section class="ap-section" id="aid-phases">
+  <!-- Section title spans full width above the grid -->
+  <div class="container-wide">
+    <div class="td-section-head">
+      <span class="td-sh-label">{aidPhasesText.sectionLabel}</span>
+      <h3 class="td-sh-title">{aidPhasesText.sectionTitle}</h3>
+      <p class="td-sh-sub">{aidPhasesText.sectionSub}</p>
     </div>
   </div>
 
@@ -183,29 +196,59 @@
 <style>
   /* ── Section ──────────────────────────────────────────────────────────── */
   .ap-section {
-    padding: 0 0 clamp(3rem, 8vw, 6rem);
+    padding: clamp(1rem, 3vw, 2rem) 0 clamp(1.5rem, 4vw, 3rem);
   }
 
-  /* ── Intro splash — full viewport, header centered, page-down safe ────── */
-  .ap-intro {
-    min-height: calc(var(--vh, 1vh) * 100);
+  /* ── Inline section head — sits in the narrative column ──────────────── */
+  .td-section-head {
+    padding: clamp(1.5rem, 3vh, 2.5rem) 0 clamp(1.5rem, 3vh, 2rem);
+    border-bottom: 1px solid rgba(90, 50, 15, 0.18);
+    margin-bottom: clamp(1rem, 2vh, 1.5rem);
     display: flex;
-    align-items: center;
-    padding: clamp(2rem, 5vw, 4rem) 0;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .td-sh-label {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #9b2a21;
+  }
+  .td-sh-title {
+    font-family: var(--font-disp);
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1a0e05;
+    margin: 0;
+  }
+  .td-sh-sub {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #4a3018;
+    opacity: 0.75;
+    margin: 0;
   }
 
   /* ── Two-column layout: wide grid | narrow narrative ─────────────────── */
   .td-layout {
     display: grid;
-    grid-template-columns: 1fr 24ch;
+    grid-template-columns: 1fr 26ch;
     gap: 3rem 2.5rem;
     align-items: start;
     direction: rtl;
   }
 
+  @media (min-width: 1400px) {
+    .td-layout { grid-template-columns: 1fr 32ch; gap: 4rem 3.5rem; }
+  }
+
   .td-sticky {
     position: sticky;
-    top: calc(70px + 22vh);
+    top: calc(var(--vh, 1vh) * 15);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -263,7 +306,8 @@
   /* ── Waffle grid ──────────────────────────────────────────────────────── */
   .td-grid-wrap {
     position: relative;
-    max-height: calc(var(--vh, 1vh) * 100 - 70px - 22vh - 4rem);
+    /* Fit within viewport: 100vh minus nav (56px), sticky top offset (2vh+56px), info bar (~5rem), scale note (~1.5rem) */
+    max-height: calc(var(--vh, 1vh) * 68 - 4rem);
     overflow: hidden;
   }
 
@@ -370,11 +414,13 @@
   }
 
   /* ── Narrative steps ──────────────────────────────────────────────────── */
-  .td-narrative { padding: 2rem 0 8rem; }
+  /* Bottom padding keeps phase 6 pinned at the top long enough for the
+     IntersectionObserver to register it before the sticky panel releases. */
+  .td-narrative { padding: 1rem 0 calc(var(--vh, 1vh) * 40); }
 
   .td-step {
-    padding: 2.5rem 0;
-    min-height: calc(var(--vh, 1vh) * 100);
+    padding: 1.5rem 0;
+    min-height: calc(var(--vh, 1vh) * 55);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -439,6 +485,11 @@
     margin: 0;
   }
 
+  /* ── Laptop / small desktop (1100px and below) ───────────────────────── */
+  @media (max-width: 1100px) {
+    .td-layout { grid-template-columns: 1fr 22ch; gap: 2.5rem 2rem; }
+  }
+
   /* ── Tablet (900px and below) ─────────────────────────────────────────── */
   @media (max-width: 900px) {
     .td-layout { grid-template-columns: 1fr 20ch; gap: 2rem 1.5rem; }
@@ -449,18 +500,18 @@
   @media (max-width: 700px) {
     .td-layout { grid-template-columns: 1fr; gap: 0; }
     .td-sticky { position: sticky; top: 56px; z-index: 5; }
-    .td-grid { grid-template-columns: repeat(20, 1fr); }
-    .td-grid-wrap { max-height: calc(var(--vh, 1vh) * 100 - 56px - 8rem); }
+    .td-grid { grid-template-columns: repeat(15, 1fr); }
+    .td-grid-wrap { max-height: calc(var(--vh, 1vh) * 50); }
     .td-counter { font-size: clamp(2rem, 7vw, 2.8rem); }
     .td-blockade-num      { font-size: clamp(5rem, 22vw, 10rem); }
     .td-blockade-daylabel { font-size: clamp(1.4rem, 6vw, 3rem); }
     .td-step { min-height: 0; opacity: 1; padding: 1.5rem 0; }
-    .td-narrative { padding: 1rem 0 4rem; }
+    .td-narrative { padding: 1rem 0 calc(var(--vh, 1vh) * 40); }
   }
 
   /* ── Phone (480px and below) ─────────────────────────────────────────── */
   @media (max-width: 480px) {
-    .td-grid { grid-template-columns: repeat(15, 1fr); }
+    .td-grid { grid-template-columns: repeat(10, 1fr); }
     .td-info { flex-wrap: wrap; gap: 0.75rem; }
     .td-counter { font-size: clamp(2rem, 9vw, 2.6rem); }
     .td-blockade-num      { font-size: clamp(4.5rem, 26vw, 8rem); }

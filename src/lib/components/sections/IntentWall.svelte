@@ -415,12 +415,23 @@
   }
   .iw-src-link:hover { color: var(--accent); border-color: var(--accent); }
 
+  /* ── Wide screens: bigger card text ─────────────────────────── */
+  @media (min-width: 1400px) {
+    .iw-grid { gap: 10px; }
+    .iw-col  { gap: 10px; }
+    .iw-phrase { font-size: var(--text-md); }
+    .iw-full-quote { font-size: var(--text-sm); }
+    .iw-card { padding: 0.85rem 1rem 0.75rem; }
+  }
+
   /* ── Mobile ─────────────────────────────────────────────────── */
   @media (max-width: 700px) {
-    .iw-grid { flex-wrap: wrap; }
-    .iw-col  { flex: 1 1 45%; }
+    .iw-grid { flex-wrap: wrap; gap: 6px; }
+    .iw-col  { flex: 1 1 45%; gap: 6px; }
   }
-  @media (max-width: 420px) {
+  @media (max-width: 480px) {
     .iw-col  { flex: 1 1 100%; }
+    .iw-filterbar { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .iw-expand-btn { align-self: flex-start; }
   }
 </style>

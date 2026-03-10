@@ -49,7 +49,7 @@
   }
 
   .pullquote {
-    max-width: 680px;
+    max-width: clamp(600px, 58vw, 800px);
     margin: 0 auto;
     padding: 0 clamp(1.1rem, 5vw, 2.5rem);
     text-align: center;

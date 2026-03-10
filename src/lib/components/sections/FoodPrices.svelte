@@ -8,8 +8,8 @@
   import { foodPrices as foodPricesText } from '$lib/data/story.js';
 
   // ── Chart geometry ────────────────────────────────────────────────────────
-  const W = 600, H = 420;
-  const PAD = { top: 32, right: 56, bottom: 52, left: 12 };
+  const W = 360, H = 252;
+  const PAD = { top: 20, right: 8, bottom: 36, left: 44 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
 
@@ -329,7 +329,7 @@
               {#each [0, 0.25, 0.5, 0.75, 1.0] as frac}
                 {@const y = PAD.top + CH * (1 - frac)}
                 <line x1={PAD.left} y1={y} x2={PAD.left + CW} y2={y} stroke="var(--border)" stroke-width="0.5"/>
-                <text x={PAD.left + CW + 8} y={y + 4} class="fp-axis-label" text-anchor="start">
+                <text x={PAD.left - 4} y={y + 4} class="fp-axis-label" text-anchor="end">
                   {Math.round(maxPrice * frac)}
                 </text>
               {/each}
@@ -430,17 +430,25 @@
 </section>
 
 <style>
-  .fp-section { padding: clamp(2rem, 6vw, 4rem) 0 2rem; }
+  .fp-section { padding: clamp(2rem, 6vw, 4rem) 0 2rem; background: var(--bg-section); }
 
   /* Steps first (right in RTL), chart second (left in RTL) */
   .fp-grid {
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
+    grid-template-columns: 1.2fr 1fr;
     gap: 3rem;
     align-items: start;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+  @media (min-width: 1400px) {
+    .fp-grid { max-width: 1000px; gap: 4rem; grid-template-columns: 1.2fr 1fr; }
+  }
+  @media (max-width: 1100px) {
+    .fp-grid { max-width: 100%; }
   }
   @media (max-width: 700px) {
-    .fp-grid { grid-template-columns: 1fr; gap: 0; }
+    .fp-grid { grid-template-columns: 1fr; gap: 0; max-width: 100%; }
     .fp-sticky { order: -1; }
   }
 
@@ -582,7 +590,7 @@
   /* ── Chart reveal animation ─── */
   @keyframes fp-reveal {
     from { width: 0; }
-    to   { width: 532px; } /* CW = 600 - 12 - 56 */
+    to   { width: 308px; } /* CW = 360 - 8 - 44 */
   }
   :global(.fp-reveal-rect) {
     animation: fp-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -590,7 +598,7 @@
 
   .fp-axis-label {
     font-family: var(--font-ui);
-    font-size: 11px;
+    font-size: 9px;
     fill: var(--text-muted);
   }
 
@@ -663,7 +671,7 @@
 
   .fp-step-title {
     font-family: var(--font-disp);
-    font-size: 1.45rem;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
     font-weight: 700;
     color: var(--text);
     margin-bottom: 0.8rem;
@@ -671,7 +679,7 @@
   }
 
   .fp-step-body {
-    font-size: 0.97rem;
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
     line-height: 1.78;
     color: var(--text);
     margin-bottom: 1.25rem;

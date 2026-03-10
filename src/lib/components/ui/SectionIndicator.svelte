@@ -52,7 +52,7 @@
 <style>
   .section-indicator {
     position: fixed;
-    left: 1.25rem;
+    left: clamp(1.25rem, 1.8vw, 2.5rem);
     top: 50%;
     transform: translateY(-50%);
     z-index: 900;

@@ -19,11 +19,16 @@
 
     // Start zoomed in tight on the girl's face (center of image)
     // then slowly zoom out to reveal the full scene as user scrolls
+    const heroDim = document.getElementById('hero-dim');
+
     if (heroBg) {
-      gsap.set(heroBg, { scale: 3.2, xPercent: 0, yPercent: -8 });
+      gsap.set(heroBg, { scale: 3.2, xPercent: 0, yPercent: 0 });
     }
     if (spotlight) {
       gsap.set(spotlight, { opacity: 1 });
+    }
+    if (heroDim) {
+      gsap.set(heroDim, { opacity: 1 });
     }
 
     // Phase 1: zoom-out + spotlight fade, completes at exactly one Page Down (100vh)
@@ -42,9 +47,12 @@
     if (spotlight) {
       tlZoom.to(spotlight, { opacity: 0, duration: 0.8, ease: 'power1.in' }, 0.1);
     }
+    if (heroDim) {
+      tlZoom.to(heroDim, { opacity: 0, duration: 1, ease: 'power1.inOut' }, 0);
+    }
     if (heroBg) {
       tlZoom.to(heroBg, {
-        scale: 0.63,
+        scale: 1,
         xPercent: 0,
         yPercent: 0,
         duration: 1,
@@ -63,6 +71,7 @@
 <div class="hero-scroll-container">
   <section class="hero">
     <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
+    <div class="hero-dim" id="hero-dim" aria-hidden="true"></div>
     <div class="hero-spotlight" id="hero-spotlight" aria-hidden="true"></div>
     <div class="hero-topo" aria-hidden="true"></div>
     <div class="hero-grain" aria-hidden="true"></div>
@@ -103,12 +112,12 @@
   }
   .hero-scroll-container .hero { position: sticky; top: 0; }
 
-  /* Zoom phase: 100vh of normal-flow scroll space after the sticky hero.
-     scroll-snap-align: start means page-down #1 snaps to the top of this block
-     (i.e. scroll position = 100vh, exactly when zoom-out completes). */
+  /* Zoom phase: 100vh of scroll space. scroll-snap-align: end snaps the bottom
+     of this block to the viewport bottom, landing at scroll = 200vh where the
+     zoom-out is fully complete and the image is fully visible. */
   .hero-phase-zoom {
     height: calc(var(--vh, 1vh) * 100);
-    scroll-snap-align: start;
+    scroll-snap-align: end;
     pointer-events: none;
   }
 
@@ -123,21 +132,29 @@
   }
 
   .hero-bg {
-    position: absolute; inset: -30%;
+    position: absolute; inset: 0;
     background-image: url('/images/hero.jpeg');
-    background-size: cover;
-    background-position: center 35%;
-    transform-origin: 50% 38%;
+    background-size: 120% auto;
+    background-position: center 45%;
+    transform-origin: 50% 45%;
     will-change: transform;
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: rgba(6, 5, 3, 0.55);
+    background: rgba(6, 5, 3, 0.12);
+  }
+
+  /* Dark overlay that lifts as the hero zooms out, brightening the image */
+  .hero-dim {
+    position: absolute; inset: 0; z-index: 1;
+    background: rgba(4, 3, 2, 0.5);
+    pointer-events: none;
+    will-change: opacity;
   }
 
   /* Tight spotlight on face when zoomed in — fades as we zoom out */
   .hero-spotlight {
-    position: absolute; inset: 0; z-index: 1;
+    position: absolute; inset: 0; z-index: 2;
     background: radial-gradient(
       ellipse 18% 24% at 50% 38%,
       transparent 0%,
@@ -159,7 +176,7 @@
   }
   .hero-vignette {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 28%, rgba(0,0,0,0.72) 100%);
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.45) 100%);
     pointer-events: none;
   }
   .hero-fade {
@@ -170,8 +187,8 @@
 
   .hero-content {
     position: relative; z-index: 2;
-    text-align: center; padding: 0 2rem;
-    max-width: 920px;
+    text-align: center; padding: 0 clamp(1rem, 4vw, 3rem);
+    max-width: 1100px;
     /* Shift slightly upward from center to account for the fade gradient at bottom */
     margin-bottom: 8vh;
   }
@@ -200,9 +217,9 @@
   .hero-title :global(em) { font-style: italic; color: var(--accent-light); }
 
   .hero-dek {
-    font-family: var(--font-body); font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    font-family: var(--font-body); font-size: clamp(0.95rem, 1.6vw, 1.3rem);
     font-weight: 400; line-height: 1.65; color: #f0e8d8;
-    max-width: 620px; margin: 0 auto 2.5rem;
+    max-width: 680px; margin: 0 auto 2.5rem;
     text-align: center;
     text-wrap: balance;
     hyphens: auto;
@@ -227,6 +244,12 @@
     .section-label { font-size: 0.72rem; }
     .hero-meta span { font-size: 0.78rem; }
     .scroll-cue span { font-size: 0.68rem; }
+    .hero-dek { max-width: 100%; }
+  }
+
+  @media (max-width: 380px) {
+    .hero-content { padding: 0 0.85rem; }
+    .hero-meta { gap: 0.4rem 0.8rem; }
   }
 
   .scroll-cue {

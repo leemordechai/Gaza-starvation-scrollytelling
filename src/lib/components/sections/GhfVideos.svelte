@@ -63,9 +63,10 @@
   .ghf-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: start;
   }
+  @media (min-width: 1400px) { .ghf-grid { gap: 1.75rem; } }
   @media (max-width: 900px) { .ghf-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 500px) { .ghf-grid { grid-template-columns: 1fr; } }
 

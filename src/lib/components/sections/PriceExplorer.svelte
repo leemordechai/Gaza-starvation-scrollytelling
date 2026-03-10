@@ -5,8 +5,8 @@
   import foodPricesData from '$lib/data/foodPrices.json';
 
   // ── Chart geometry ──────────────────────────────────────────────────────────
-  const W = 640, H = 300;
-  const PAD = { top: 32, right: 24, bottom: 50, left: 62 };
+  const W = 512, H = 336;
+  const PAD = { top: 26, right: 19, bottom: 40, left: 50 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
 
@@ -214,7 +214,7 @@
 </script>
 
 <section class="pe-section section-topo" id="price-explorer">
-  <div class="container-wide">
+  <div class="container-wide pe-outer">
     <SectionHead
       label="מחירים במלחמה"
       title="ומה לגבי מוצרים אחרים?"
@@ -228,12 +228,12 @@
           <button
             class="pe-tab" class:pe-tab--active={activeCategory === 'food'}
             role="tab" aria-selected={activeCategory === 'food'}
-            onclick={() => { activeCategory = 'food'; }}
+            onclick={(e) => { e.preventDefault(); activeCategory = 'food'; }}
           >🍞 מזון</button>
           <button
             class="pe-tab" class:pe-tab--active={activeCategory === 'nonfood'}
             role="tab" aria-selected={activeCategory === 'nonfood'}
-            onclick={() => { activeCategory = 'nonfood'; }}
+            onclick={(e) => { e.preventDefault(); activeCategory = 'nonfood'; }}
           >🧴 אחר</button>
         </div>
 
@@ -397,20 +397,38 @@
     box-sizing: border-box;
   }
 
+  /* Force container to fill section width, then let max-width + auto margin center it */
+  .pe-outer {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .pe-layout {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 1.75rem;
     align-items: start;
+    width: 100%;
+  }
+
+  @media (min-width: 1400px) {
+    .pe-layout { gap: 2.5rem; }
   }
 
   .pe-selector-col {
-    width: clamp(160px, 22vw, 210px);
+    width: clamp(140px, 14vw, 200px);
     position: sticky;
-    top: 2rem;
+    top: calc(var(--vh, 1vh) * 10);
   }
 
-  .pe-chart-col { min-width: 0; }
+  @media (max-width: 640px) {
+    .pe-layout { grid-template-columns: 1fr; gap: 1rem; }
+    .pe-selector-col { width: 100%; position: static; }
+    .pe-pills { flex-direction: row; flex-wrap: wrap; gap: 0.3rem; }
+    .pe-pill { width: auto; }
+  }
+
+  .pe-chart-col { min-width: 0; width: 100%; max-width: 760px; }
 
   /* ── Tabs ── */
   .pe-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
@@ -462,7 +480,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-top: 2px solid var(--accent);
-    padding: 1.25rem 1.25rem 0.75rem;
+    padding: 1.75rem 1.75rem 1.25rem;
   }
 
   .pe-chart-header {
@@ -489,7 +507,7 @@
   }
 
   /* ── SVG wrapper + tooltip ── */
-  .pe-svg-wrap { position: relative; }
+  .pe-svg-wrap { position: relative; width: 100%; }
 
   .pe-svg {
     width: 100%;
@@ -534,7 +552,7 @@
   /* ── Chart reveal animation ── */
   @keyframes pe-reveal {
     from { width: 0; }
-    to   { width: 554px; } /* = CW = 640 - 62 - 24 */
+    to   { width: 443px; } /* CW = 512 - 50 - 19 */
   }
   :global(.pe-reveal-rect) {
     animation: pe-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;

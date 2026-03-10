@@ -462,7 +462,7 @@
   .tr-section { position: relative; }
 
   .tr-header {
-    padding: clamp(2rem, 6vw, 4rem) 0 1.5rem;
+    padding: 0.5rem 0 1.5rem;
   }
 
   .tr-header-label {
@@ -523,7 +523,7 @@
   .tr-card {
     position: absolute;
     bottom: 12%;
-    width: min(320px, calc(50vw - 3rem));
+    width: min(360px, calc(50vw - 3rem));
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-top: 3px solid var(--accent);
@@ -535,6 +535,10 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
     box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+
+  @media (min-width: 1400px) {
+    .tr-card { width: min(420px, calc(50vw - 4rem)); padding: 1.6rem 1.75rem; }
   }
 
   /* Even stops: image is on the left → card appears on the right, pulled toward center */
@@ -567,7 +571,7 @@
 
   .tr-card-title {
     font-family: var(--font-disp);
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
     font-weight: 700;
     color: var(--text);
     margin-bottom: 0.6rem;
@@ -576,7 +580,7 @@
 
   .tr-card-body {
     font-family: var(--font-body);
-    font-size: 0.82rem;
+    font-size: clamp(0.78rem, 1vw, 0.92rem);
     line-height: 1.72;
     color: var(--text-muted);
   }

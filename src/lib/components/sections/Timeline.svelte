@@ -57,7 +57,7 @@
 
   .timeline-track {
     position: relative;
-    max-width: 700px;
+    max-width: min(700px, 100%);
     margin: 0 auto;
     padding: 2rem 0;
     /* Extra padding-right ensures dots/spine are never clipped */

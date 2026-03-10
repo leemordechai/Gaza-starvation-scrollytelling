@@ -40,7 +40,7 @@
 
   .mobile-menu :global(a) {
     font-family: var(--font-ui);
-    font-size: 1.6rem;
+    font-size: clamp(1.15rem, 5vw, 1.6rem);
     font-weight: 800;
     letter-spacing: 0.14em;
     text-transform: uppercase;

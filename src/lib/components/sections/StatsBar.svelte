@@ -60,7 +60,7 @@
   }
   .stat-item {
     text-align: center;
-    padding: 1.5rem;
+    padding: clamp(1.25rem, 2.5vw, 2.25rem);
     border-inline-end: 1px solid var(--border);
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }

@@ -13,7 +13,6 @@
   import Hero from '$lib/components/sections/Hero.svelte';
   import Intro from '$lib/components/sections/Intro.svelte';
   import BodyText from '$lib/components/sections/BodyText.svelte';
-  import StatsBar from '$lib/components/sections/StatsBar.svelte';
   import Timeline from '$lib/components/sections/Timeline.svelte';
   import MeasureSection from '$lib/components/sections/MeasureSection.svelte';
   import Scrollytelling from '$lib/components/sections/Scrollytelling.svelte';
@@ -25,44 +24,23 @@
   import FoodCalculator from '$lib/components/sections/FoodCalculator.svelte';
   import FoodDiversity from '$lib/components/sections/FoodDiversity.svelte';
   import PriceExplorer from '$lib/components/sections/PriceExplorer.svelte';
-  import GhfVideos from '$lib/components/sections/GhfVideos.svelte';
   import IntentWall from '$lib/components/sections/IntentWall.svelte';
-  import NarrativeBlock from '$lib/components/sections/NarrativeBlock.svelte';
   import Analysis from '$lib/components/sections/Analysis.svelte';
   import Footer from '$lib/components/Footer.svelte';
-  import { pullQuote, pullQuote2, bridgeBeforeTimeline, bridgeTrucksMetric, famineDeaths, ghfNarrative, witnessTestimony, introBackground } from '$lib/data/story.js';
+  import { intro, pullQuote, bridgeBeforeTimeline, famineDeaths, witnessTestimony, introBackground, aidBlockade } from '$lib/data/story.js';
   import { sanitizeText } from '$lib/utils/sanitize';
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   const bridge = bridgeBeforeTimeline;
 
-  let activeIntroIdx = $state(-1);
-  let observer: IntersectionObserver | null = null;
   let famineHighlighted = $state(false);
   let famineTitleEl: HTMLElement;
 
   onMount(() => {
-    observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            activeIntroIdx = Number(el.dataset.idx);
-          }
-        });
-      },
-      { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
-    );
-    document.querySelectorAll('.intro-bg-step').forEach(el => observer!.observe(el));
-
     const famineObs = new IntersectionObserver(
       ([entry]) => { famineHighlighted = entry.isIntersecting; },
       { threshold: 0.3 }
     );
     famineObs.observe(famineTitleEl);
-  });
-
-  onDestroy(() => {
-    observer?.disconnect();
   });
 </script>
 
@@ -78,52 +56,41 @@
 <main>
   <Hero />
 
-  <div class="snap-point" aria-hidden="true"></div>
-
-  <Intro />
-
-  <!-- Background context paragraphs — scroll-driven, one at a time -->
-  <div class="intro-bg-steps">
-    {#each introBackground as item, i}
-      <div
-        class="intro-bg-step"
-        class:active={activeIntroIdx === i}
-        data-idx={i}
-      >
-        <div class="container">
-          <p>{@html sanitizeText(item)}</p>
-        </div>
-      </div>
-    {/each}
+  <div class="intro-step" id="background" dir="rtl">
+    <div class="container-prose">
+      <p>{intro.lede}</p>
+    </div>
   </div>
 
-  <div class="snap-point" aria-hidden="true"></div>
+  <div class="intro-step" dir="rtl">
+    <div class="container-prose">
+      <p>{@html sanitizeText(introBackground[0])}</p>
+    </div>
+  </div>
+
+  <div class="intro-step" dir="rtl">
+    <div class="container-prose" use:reveal={{ once: false }}>
+      <p>{@html sanitizeText(introBackground[1])}</p>
+    </div>
+  </div>
 
   <!-- Guterres quote -->
   <PullQuote quote={pullQuote.quote} attribution={pullQuote.attribution} />
 
   <Divider variant="topo" />
 
-  <!-- Bridging paragraphs: intro (as title) + first three items, centered -->
-  <section id="food-characteristics" class="bridge-block bridge-block--centered container">
-    <h3 class="bridge-title">{@html sanitizeText(bridge.intro)}</h3>
-    {#each bridge.items.slice(0, 3) as item}
-      <p>{@html sanitizeText(item)}</p>
-    {/each}
-  </section>
-
-  <!-- Fourth bridge item on its own page-down snap point -->
-  <section class="bridge-block bridge-block--snap container">
-    <p>{@html sanitizeText(bridge.items[3])}</p>
-  </section>
-
-  <Divider variant="fade" />
-
-  <div class="snap-point" aria-hidden="true"></div>
-
   <Timeline />
 
   <div class="snap-point" aria-hidden="true"></div>
+
+  <!-- Intent section header -->
+  <header id="intent-header" class="chapter-head snap-target" dir="rtl">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">הצהרת כוונות</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">בפיהם שלהם: התבטאויות בכירים ישראלים</h2>
+    </div>
+  </header>
 
   <!-- Intent preface — sticky paragraph centered vertically -->
   <div class="intent-preface-scroll" aria-label="רקע">
@@ -140,45 +107,81 @@
 
   <div class="snap-point" aria-hidden="true"></div>
 
-  <!-- GHF narrative (both paragraphs) -->
-  <NarrativeBlock id="ghf-narrative" title={ghfNarrative.title} paragraphs={[ghfNarrative.paragraphBefore, ghfNarrative.paragraphAfter]} />
-
-  <Divider variant="fade" />
-
-  <div class="snap-point" aria-hidden="true"></div>
-
-  <PullQuote quote={pullQuote2.quote} attribution={pullQuote2.attribution} />
-
-  <Divider variant="fade" />
-
-  <div class="snap-point" aria-hidden="true"></div>
-
-  <GhfVideos />
-
-  <div class="snap-point" aria-hidden="true"></div>
-
-  <StatsBar />
-
-  <div class="snap-point" aria-hidden="true"></div>
+  <!-- Reality section header -->
+  <header id="reality-header" class="chapter-head snap-target">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">חיים ומוות בזמן מלחמה</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">הסיוע ההומניטרי לעזה</h2>
+    </div>
+  </header>
 
   <!-- How we measure hunger -->
-  <MeasureSection />
+  <div class="measure-pull">
+    <MeasureSection />
+  </div>
 
   <div class="snap-point" aria-hidden="true"></div>
 
-  <AidPhases />
+  <!-- ── חלק א' ─────────────────────────────────────────────────── -->
+  <header id="chapter-1" class="chapter-head snap-target">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">חלק א׳</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">עורק החיים: כניסת משאיות</h2>
+    </div>
+  </header>
+
+  <!-- Band with section background: grids only -->
+  <div class="ch1-band section-topo">
+    <AidPhases />
+  </div>
+
+  <!-- Three-part bridge before the full time-series chart — outside band, RTL -->
+  <div class="ch1-mid-head snap-target" dir="rtl">
+    <div class="ch1-mid-inner container-wide">
+      <span class="ch1-mid-label">{aidBlockade.sectionLabel}</span>
+      <div class="ch1-mid-rule" aria-hidden="true"></div>
+      <h3 class="ch1-mid-title">{aidBlockade.sectionTitle}</h3>
+      <p class="ch1-mid-sub">{aidBlockade.sectionSub}</p>
+    </div>
+  </div>
 
   <AidTrucks />
 
   <Divider variant="topo" />
 
-  <div class="snap-point" aria-hidden="true"></div>
+  <!-- ── חלק ב' – הדרך לצלחת ──────────────────────────────────── -->
+  <header id="chapter-2" class="chapter-head snap-target">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">חלק ב׳</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">הדרך אל הצלחת</h2>
+    </div>
+  </header>
 
   <TruckRoute />
 
   <div class="section-wipe" use:reveal aria-hidden="true"></div>
 
-  <div class="snap-point" aria-hidden="true"></div>
+  <!-- ── חלק ג' – תנודתיות המחירים ───────────────────────────── -->
+  <header id="chapter-3" class="chapter-head snap-target">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">חלק ג׳</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">כמה עולה לשרוד?</h2>
+    </div>
+  </header>
+
+  <!-- Bridging paragraphs: food availability characteristics -->
+  <section id="food-characteristics" class="bridge-block bridge-block--centered container" dir="rtl" style="padding: 0;">
+    <h3 class="bridge-title">{@html sanitizeText(bridge.intro)}</h3>
+    <ul class="bridge-list">
+      {#each bridge.items.slice(0, 3) as item}
+        <li>{@html sanitizeText(item)}</li>
+      {/each}
+    </ul>
+  </section>
 
   <FoodPrices />
 
@@ -188,9 +191,31 @@
 
   <PriceExplorer />
 
+  <FoodCalculator />
+
   <div class="snap-point" aria-hidden="true"></div>
 
-  <FoodCalculator />
+  <!-- ── חלק ד' – הרכב המזון ──────────────────────────────────── -->
+  <header id="chapter-4" class="chapter-head snap-target">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">חלק ד׳</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">תזונה ורעב בעזה</h2>
+    </div>
+  </header>
+
+  <FoodDiversity />
+
+  <div class="snap-point" aria-hidden="true"></div>
+
+  <!-- ── חלק ה' – תוצאות והשלכות ──────────────────────────────── -->
+  <header id="chapter-5" class="chapter-head snap-target">
+    <div class="chapter-head-inner">
+      <span class="chapter-label">חלק ה׳</span>
+      <div class="chapter-rule" aria-hidden="true"></div>
+      <h2 class="chapter-title">השלכות</h2>
+    </div>
+  </header>
 
   <!-- Famine deaths narrative -->
   <section class="famine-block nb-section snap-target">
@@ -215,10 +240,6 @@
 
   <div class="snap-point" aria-hidden="true"></div>
 
-  <FoodDiversity />
-
-  <div class="snap-point" aria-hidden="true"></div>
-
   <Analysis />
 </main>
 
@@ -235,65 +256,23 @@
     scroll-snap-align: start;
   }
 
-  /* ── Background context scroll steps (before PullQuote) ─── */
-  .intro-bg-steps {
-    margin-top: 0;
-    scroll-snap-align: start;
-  }
-  .intro-bg-step {
-    padding: 3rem 0;
+  /* ── Each intro step: exact viewport height, centered accounting for nav ─── */
+  .intro-step {
     height: calc(var(--vh, 1vh) * 100);
     display: flex;
     align-items: center;
-    opacity: 0.2;
-    transition: opacity 0.5s ease;
+    justify-content: center;
+    /* Offset nav bar (56px) so text appears truly centered in visible area */
+    padding: 56px clamp(1.25rem, 5vw, 3rem) 0;
     scroll-snap-align: start;
   }
-
-  @media (max-width: 600px) {
-    .intro-bg-step {
-      height: auto;
-      min-height: 60vh;
-      padding: 4rem 0;
-    }
-  }
-  .intro-bg-step.active {
-    opacity: 1;
-  }
-  .intro-bg-step p {
-    font-size: clamp(1.15rem, 2vw, 1.45rem);
-    line-height: 1.72;
+  .intro-step p {
+    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    line-height: 1.75;
     color: var(--sand);
-    font-family: var(--font-body);
+    font-family: var(--font-disp);
     font-weight: 400;
-  }
-
-  /* mark.inv inside intro steps: RTL clip-path wipe driven by .active on parent */
-  .intro-bg-step :global(mark.inv) {
-    position: relative;
-    display: inline;
-    background: transparent;
-    color: var(--sand);
-    padding: 0.1em 0 0.1em 0.3em;
-    border-radius: 2px;
-    transition: color 0.3s ease 0.6s;
-    animation: none;
-  }
-  .intro-bg-step :global(mark.inv::before) {
-    content: '';
-    position: absolute;
-    inset: -0.1em 0 -0.1em -0.3em;
-    background: rgba(140, 30, 22, 0.82);
-    border-radius: 2px;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-    z-index: -1;
-  }
-  .intro-bg-step.active :global(mark.inv::before) {
-    clip-path: inset(0 0% 0 0);
-  }
-  .intro-bg-step.active :global(mark.inv) {
-    color: #fff;
+    text-align: right;
   }
 
   .bridge-block {
@@ -308,6 +287,10 @@
     flex-direction: column;
     justify-content: center;
   }
+  .bridge-block--centered[dir='rtl'] {
+    text-align: right;
+    align-items: flex-end;
+  }
   .bridge-block--centered p {
     max-width: 36ch;
     margin-inline: auto;
@@ -321,59 +304,236 @@
   }
   .bridge-title {
     font-family: var(--font-disp);
-    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-size: clamp(1.3rem, 2.5vw, 2.2rem);
     font-weight: 700;
     color: var(--accent-light);
     margin-bottom: 1.8rem;
     line-height: 1.3;
-    max-width: 36ch;
+    max-width: 40ch;
     margin-inline: auto;
   }
+  [dir='rtl'] .bridge-title {
+    margin-inline: 0;
+    text-align: right;
+    max-width: 100%;
+  }
   .bridge-block p {
-    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
     line-height: 1.72;
     color: var(--sand);
     font-family: var(--font-body);
     font-weight: 400;
   }
 
-  /* Intent preface — sticky scroll */
-  .intent-preface-scroll {
-    height: calc(var(--vh, 1vh) * 100);
-    position: relative;
+  .bridge-list {
+    list-style: disc inside;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: right;
+    direction: rtl;
   }
-  .intent-preface-sticky {
-    position: sticky;
-    top: 0;
+  .bridge-list li {
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    line-height: 1.72;
+    color: var(--sand);
+    font-family: var(--font-body);
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Statement of intent — second snap point, exact viewport height, nothing bleeds */
+  .intent-statement {
     height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 clamp(1.25rem, 5vw, 3rem);
     scroll-snap-align: start;
   }
-  .intent-preface-inner {
-    animation: ip-fade-up linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-  .intent-preface-inner p {
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  .intent-statement-inner p {
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
     line-height: 1.9;
     color: var(--text);
     font-family: var(--font-body);
-    max-width: 68ch;
+    font-weight: 300;
+    text-align: right;
   }
-  @keyframes ip-fade-up {
-    from { opacity: 0; transform: translateY(3rem); }
-    to   { opacity: 1; transform: translateY(0); }
+
+  /* Intent preface — pulled up to sit just below the chapter header */
+  .intent-preface-scroll {
+    /* Negative margin closes the gap between the chapter-head bottom and this paragraph */
+    margin-top: calc(var(--vh, 1vh) * -30);
+    padding: clamp(2rem, 4vh, 3rem) 0 clamp(3rem, 6vh, 5rem);
+    position: relative;
+    z-index: 1;
   }
-  /* Fallback for browsers without scroll-timeline support */
-  @supports not (animation-timeline: view()) {
-    .intent-preface-inner {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
+  .intent-preface-inner p {
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+    line-height: 1.9;
+    color: var(--text);
+    font-family: var(--font-body);
+    max-width: 70ch;
+  }
+
+  /* Pull MeasureSection up to bleed below reality header */
+  .measure-pull {
+    margin-top: calc(var(--vh, 1vh) * -30);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Chapter 1 band ── */
+  .ch1-band {
+    background: var(--bg-section);
+    position: relative;
+  }
+  /* Strip inherited dark bg from ap-section inside band */
+  .ch1-band :global(.ap-section) {
+    background: transparent;
+  }
+  /* Dim empty grid cells to suit warm bg */
+  .ch1-band :global(.td-cell) {
+    background: rgba(80, 40, 10, 0.1);
+  }
+  /* Muted text on warm bg */
+  .ch1-band :global(.td-step-body),
+  .ch1-band :global(.td-step-period),
+  .ch1-band :global(.td-step-detail),
+  .ch1-band :global(.td-counter-unit),
+  .ch1-band :global(.td-scale-note) {
+    color: #4a3018;
+  }
+  /* Three-part mid-head */
+  .ch1-mid-head {
+    min-height: calc(var(--vh, 1vh) * 5);
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 0 0;
+    scroll-snap-align: start;
+  }
+  .ch1-mid-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0 clamp(1.25rem, 5vw, 4rem) 0 clamp(3rem, 10vw, 8rem);
+    text-align: right;
+    width: 100%;
+  }
+  .ch1-mid-label {
+    font-family: var(--font-ui);
+    font-size: clamp(0.52rem, 0.75vw, 0.68rem);
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .ch1-mid-rule {
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+  .ch1-mid-title {
+    font-family: var(--font-disp);
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .ch1-mid-sub {
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+    color: var(--text-muted);
+    margin: 0.25rem 0 0;
+    max-width: 56ch;
+    line-height: 1.55;
+    text-align: right;
+  }
+
+  /* ── Chapter headers (חלק א׳–ה׳) ── */
+  .chapter-head {
+    height: calc(var(--vh, 1vh) * 100);
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px clamp(1.25rem, 5vw, 4rem) 0;
+    text-align: center;
+    position: relative;
+    scroll-snap-align: start;
+  }
+  /* Horizontal rule through the center */
+  .chapter-head::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: clamp(1.25rem, 8vw, 8rem);
+    right: clamp(1.25rem, 8vw, 8rem);
+    height: 1px;
+    background: var(--border-mid);
+    transform: translateY(-50%);
+  }
+  /* Content block floats above the rule */
+  .chapter-head-inner {
+    position: relative;
+    background: var(--bg);
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 5vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .chapter-label {
+    font-family: var(--font-ui);
+    font-size: clamp(0.55rem, 0.8vw, 0.72rem);
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .chapter-rule {
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+  .chapter-title {
+    font-family: var(--font-disp);
+    font-size: clamp(1.6rem, 3.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .chapter-head-inner { padding: 1.25rem 1.5rem; }
+    .chapter-head::before { left: 1.25rem; right: 1.25rem; }
+  }
+
+  /* ── Reduce top padding on first section after a chapter header ── */
+  /* Targets the known first-child elements that immediately follow .chapter-head */
+  .chapter-head + :global(.ap-section .ap-intro),
+  .chapter-head + :global(.tr-section .tr-header),
+  .chapter-head + .snap-point + :global(.tr-section .tr-header) {
+    padding-top: 1.5rem;
+  }
+  .chapter-head + .bridge-block,
+  .chapter-head + .bridge-block--centered {
+    padding-top: 1.5rem;
+  }
+  .chapter-head + .famine-block {
+    padding-top: 1.5rem;
+  }
+  :global(.chapter-head + .fd-section .fd-intro) {
+    padding-top: 1.5rem;
   }
 
   /* mark.inv styles and animation live in app.css (global) */
@@ -389,10 +549,14 @@
 
   .famine-title {
     font-family: var(--font-disp);
-    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    font-size: clamp(1.3rem, 2.4vw, 2.4rem);
     font-weight: 800;
     line-height: 1.25;
     margin-bottom: 1.6rem;
+  }
+
+  @media (min-width: 1400px) {
+    .famine-block .nb-p { font-size: 1.12rem; }
   }
 
   .famine-inner {

@@ -314,14 +314,6 @@
 
 <section class="at-section" id="aid-trucks">
   <div class="container-wide">
-    <div class="reveal" use:reveal>
-      <SectionHead
-        label={aidBlockade.sectionLabel}
-        title={aidBlockade.sectionTitle}
-        sub={aidBlockade.sectionSub}
-      />
-    </div>
-
     <!-- Controls -->
     <div class="at-controls reveal" use:reveal>
       <div class="at-toggle-group">
@@ -564,7 +556,7 @@
 <style>
   /* ── Section ───────────────────────────────────────────────────────────── */
   .at-section {
-    padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(1.5rem, 4vw, 3rem);
+    padding: 0 0 clamp(1.5rem, 4vw, 3rem);
   }
 
   /* ── Controls ──────────────────────────────────────────────────────────── */
@@ -904,6 +896,11 @@
     gap: 0.35rem;
     padding-top: 0.25rem;
     min-width: 160px;
+  }
+
+  @media (min-width: 1400px) {
+    .at-legend { min-width: 200px; gap: 0.45rem; }
+    .at-legend-key { font-size: 0.75rem; }
   }
 
   @media (max-width: 720px) {
