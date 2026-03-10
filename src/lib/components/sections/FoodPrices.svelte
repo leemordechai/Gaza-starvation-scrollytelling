@@ -235,17 +235,19 @@
     // Use a narrow central band (-35% top/bottom) so only the step occupying
     // the viewport centre triggers. rootMargin shrinks the intersection root so
     // a step must reach the middle 30% of the screen before activating.
+    const intersecting = new Set<number>();
     const stepObs = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const idx = steps.indexOf(entry.target as HTMLElement);
-            if (idx !== -1) {
-              activeStep = idx;
-              hoverPoint = null;
-              pinnedPoint = null;
-            }
-          }
+          const idx = steps.indexOf(entry.target as HTMLElement);
+          if (idx === -1) continue;
+          if (entry.isIntersecting) intersecting.add(idx);
+          else intersecting.delete(idx);
+        }
+        if (intersecting.size > 0) {
+          activeStep = Math.max(...intersecting);
+          hoverPoint = null;
+          pinnedPoint = null;
         }
       },
       { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
@@ -259,14 +261,18 @@
   onDestroy(() => killScrollTriggers(triggers));
 </script>
 
-<section class="fp-section section-topo" id="food-prices">
+<div class="fp-intro section-topo" id="food-prices">
   <div class="container-wide">
     <SectionHead
       label={foodPricesText.sectionLabel}
       title={foodPricesText.sectionTitle}
       sub={foodPricesText.sectionSub}
     />
+  </div>
+</div>
 
+<section class="fp-section section-topo">
+  <div class="container-wide">
     <div class="fp-grid">
       <!-- Scrolling steps — first in DOM = right column in RTL -->
       <div class="fp-steps">
@@ -430,7 +436,15 @@
 </section>
 
 <style>
-  .fp-section { padding: clamp(2rem, 6vw, 4rem) 0 2rem; background: var(--bg-section); }
+  .fp-intro {
+    min-height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    align-items: center;
+    padding: clamp(2rem, 6vw, 4rem) 0;
+    background: var(--bg-section);
+  }
+
+  .fp-section { padding: 0 0 2rem; background: var(--bg-section); }
 
   /* Steps first (right in RTL), chart second (left in RTL) */
   .fp-grid {
@@ -616,19 +630,18 @@
   .fp-steps { padding: 1rem 0 4rem; }
 
   .fp-step {
-    padding: 1.5rem 0;
+    padding: clamp(2rem, 28vh, 35vh) 0 1.5rem;
     min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     opacity: 0.3;
     transition: opacity 0.45s ease;
   }
 
-  /* Last step (cooking gas) gets extra top space so the chart is visible
-     in its flat pre-spike region before the step scrolls into focus */
+  /* Last step (cooking gas): same top padding as other steps */
   .fp-step:last-child {
-    padding-top: calc(var(--vh, 1vh) * 40);
+    padding-top: clamp(2rem, 28vh, 35vh);
   }
 
   @media (max-width: 700px) {

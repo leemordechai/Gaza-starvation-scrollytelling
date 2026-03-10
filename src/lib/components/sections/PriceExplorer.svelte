@@ -433,7 +433,7 @@
 
 <style>
   .pe-section {
-    padding: clamp(2rem, 6vw, 4rem) 0 2rem;
+    padding: 0.25rem 0 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
