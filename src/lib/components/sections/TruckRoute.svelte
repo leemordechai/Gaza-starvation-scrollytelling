@@ -158,8 +158,9 @@
 </script>
 
 <section class="tr-section" id="truck-route">
-  <!-- Section header — sits above the sticky scroll area -->
-  <div class="tr-header container-wide">
+  <!-- Section header — sits above the sticky scroll area (desktop only;
+       on mobile it is overlaid inside .tr-sticky to eliminate blank space) -->
+  <div class="tr-header tr-header--above container-wide">
     <span class="tr-header-label">{truckRoute.sectionLabel}</span>
     <h2 class="tr-header-title">{truckRoute.sectionTitle}</h2>
     <p class="tr-header-sub">{truckRoute.sectionSub}</p>
@@ -167,6 +168,12 @@
 
   <div class="tr-scroll-container" bind:this={scrollContainer}>
     <div class="tr-sticky">
+      <!-- Mobile header overlay — visible only on small screens -->
+      <div class="tr-header tr-header--overlay">
+        <span class="tr-header-label">{truckRoute.sectionLabel}</span>
+        <h2 class="tr-header-title">{truckRoute.sectionTitle}</h2>
+        <p class="tr-header-sub">{truckRoute.sectionSub}</p>
+      </div>
       <svg
         class="tr-svg"
         bind:this={svgEl}
@@ -461,8 +468,29 @@
 <style>
   .tr-section { position: relative; }
 
-  .tr-header {
+  /* Above-the-map header: visible on desktop, hidden on mobile */
+  .tr-header--above {
     padding: 0.5rem 0 1.5rem;
+  }
+  /* Overlay header: hidden on desktop, visible on mobile (positioned over map top) */
+  .tr-header--overlay {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    /* Hide the external header that creates blank space on mobile */
+    .tr-header--above { display: none; }
+    /* Show and position the overlay header inside the sticky panel */
+    .tr-header--overlay {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      padding: calc(56px + 0.5rem) clamp(1rem, 4vw, 1.5rem) 1rem;
+      background: linear-gradient(to bottom, rgba(245,240,238,0.96) 0%, rgba(245,240,238,0.92) 60%, transparent 100%);
+    }
   }
 
   .tr-header-label {

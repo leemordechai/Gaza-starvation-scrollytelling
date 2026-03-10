@@ -258,15 +258,23 @@
 
   /* ── Each intro step: exact viewport height, centered accounting for nav ─── */
   .intro-step {
-    height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     align-items: center;
     justify-content: center;
     /* Offset nav bar (56px) so text appears truly centered in visible area */
-    padding: 56px clamp(1.25rem, 5vw, 3rem) 0;
+    padding: 56px clamp(1.25rem, 5vw, 3rem) clamp(2rem, 4vh, 3rem);
     scroll-snap-align: start;
     /* Allow the reveal translateY(28px) animation to show outside bounds */
     overflow: visible;
+  }
+  /* On mobile: switch to top-aligned so long text blocks don't clip
+     below the viewport. The container grows with content (min-height). */
+  @media (max-width: 600px) {
+    .intro-step {
+      align-items: flex-start;
+      padding-top: max(4.5rem, calc(56px + 4vh));
+    }
   }
   .intro-step p {
     font-size: clamp(1.3rem, 2.4vw, 1.9rem);
@@ -372,7 +380,9 @@
     z-index: 1;
   }
   @media (max-width: 600px) {
-    .intent-preface-scroll { margin-top: calc(var(--vh, 1vh) * -15); }
+    /* On mobile, remove negative pull to prevent the preface text from peeking
+       at the viewport bottom edge when landing on the intent header. */
+    .intent-preface-scroll { margin-top: 0; }
   }
   .intent-preface-inner p {
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
@@ -389,7 +399,9 @@
     z-index: 1;
   }
   @media (max-width: 600px) {
-    .measure-pull { margin-top: calc(var(--vh, 1vh) * -15); }
+    /* On mobile, don't pull MeasureSection into the chapter header — it causes
+       the first paragraph to clip at the viewport bottom edge on page-down. */
+    .measure-pull { margin-top: 0; }
   }
 
   /* ── Chapter 1 band ── */

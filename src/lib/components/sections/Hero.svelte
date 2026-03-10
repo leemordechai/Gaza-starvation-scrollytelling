@@ -122,10 +122,17 @@
   }
 
   /* Dwell phase: another 100vh so the hero stays sticky and fully revealed
-     before it scrolls away into the intro steps. */
+     before it scrolls away into the intro steps.
+     On mobile (≤768px) reduce to 30vh — the zoom completes in the first 100vh,
+     and a full extra viewport of frozen image feels like a "duplicate frame". */
   .hero-phase-dwell {
     height: calc(var(--vh, 1vh) * 100);
     pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    .hero-phase-dwell {
+      height: calc(var(--vh, 1vh) * 30);
+    }
   }
 
   .hero {
