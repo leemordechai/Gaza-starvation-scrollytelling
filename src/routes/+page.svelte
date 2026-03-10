@@ -258,12 +258,12 @@
 
   /* ── Each intro step: exact viewport height, centered accounting for nav ─── */
   .intro-step {
-    height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     align-items: center;
     justify-content: center;
     /* Offset nav bar (56px) so text appears truly centered in visible area */
-    padding: 56px clamp(1.25rem, 5vw, 3rem) 0;
+    padding: 56px clamp(1.25rem, 5vw, 3rem) clamp(1.5rem, 3vw, 2rem);
     scroll-snap-align: start;
   }
   .intro-step p {
