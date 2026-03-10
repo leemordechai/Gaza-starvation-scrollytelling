@@ -101,8 +101,11 @@
     </div>
   </section>
 
-  <!-- Zoom phase: 100vh of scroll space. Page-down #1 snaps to start of this block. -->
+  <!-- Zoom phase: 100vh of scroll space — animation runs during this scroll. -->
   <div class="hero-phase-zoom" aria-hidden="true"></div>
+  <!-- Dwell phase: another 100vh so the hero stays sticky + fully revealed
+       after zoom completes, before scrolling away into the intro steps. -->
+  <div class="hero-phase-dwell" aria-hidden="true"></div>
 </div>
 
 <style>
@@ -112,12 +115,16 @@
   }
   .hero-scroll-container .hero { position: sticky; top: 0; }
 
-  /* Zoom phase: 100vh of scroll space. scroll-snap-align: end snaps the bottom
-     of this block to the viewport bottom, landing at scroll = 200vh where the
-     zoom-out is fully complete and the image is fully visible. */
+  /* Zoom phase: 100vh — GSAP animation runs during this scroll (3.2×→1×). */
   .hero-phase-zoom {
     height: calc(var(--vh, 1vh) * 100);
-    scroll-snap-align: end;
+    pointer-events: none;
+  }
+
+  /* Dwell phase: another 100vh so the hero stays sticky and fully revealed
+     before it scrolls away into the intro steps. */
+  .hero-phase-dwell {
+    height: calc(var(--vh, 1vh) * 100);
     pointer-events: none;
   }
 

@@ -33,9 +33,6 @@ body {
   line-height: 1.75;
   overflow-x: hidden;
 }
-html {
-  overflow-x: hidden;
-}
 ::selection { background: var(--accent); color: #fff; }
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
