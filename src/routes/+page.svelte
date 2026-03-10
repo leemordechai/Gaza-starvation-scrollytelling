@@ -369,6 +369,9 @@
     position: relative;
     z-index: 1;
   }
+  @media (max-width: 600px) {
+    .intent-preface-scroll { margin-top: calc(var(--vh, 1vh) * -15); }
+  }
   .intent-preface-inner p {
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
     line-height: 1.9;
@@ -382,6 +385,9 @@
     margin-top: calc(var(--vh, 1vh) * -30);
     position: relative;
     z-index: 1;
+  }
+  @media (max-width: 600px) {
+    .measure-pull { margin-top: calc(var(--vh, 1vh) * -15); }
   }
 
   /* ── Chapter 1 band ── */

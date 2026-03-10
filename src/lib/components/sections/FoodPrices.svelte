@@ -590,7 +590,7 @@
   /* ── Chart reveal animation ─── */
   @keyframes fp-reveal {
     from { width: 0; }
-    to   { width: 308px; } /* CW = 360 - 8 - 44 */
+    to   { width: 9999px; }
   }
   :global(.fp-reveal-rect) {
     animation: fp-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;

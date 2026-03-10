@@ -313,7 +313,10 @@
     line-height: 1.6;
   }
 
-  @media (max-width: 480px) {
-    .fc-card { padding: 1.25rem 1.25rem 1.25rem; }
+  @media (max-width: 600px) {
+    .fc-card { padding: 1.25rem 1.25rem 1.5rem; }
+    .fc-input-row { padding: 0 0.75rem; }
+    .fc-input { font-size: 1.3rem; padding: 0.75rem 0; }
+    .fc-title { font-size: clamp(1.5rem, 6vw, 2.2rem); }
   }
 </style>

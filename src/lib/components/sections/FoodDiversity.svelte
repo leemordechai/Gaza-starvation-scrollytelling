@@ -284,8 +284,10 @@
       position: sticky;
       top: 56px;
       z-index: 5;
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
     }
+    /* Hide source note on mobile — saves vertical space in sticky panel */
+    .fd-sticky .fd-source { display: none; }
   }
 
   .fd-viz {

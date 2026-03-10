@@ -81,7 +81,7 @@
   .nav-links a:hover { color: var(--accent); }
   .nav-links a.active { color: var(--accent); }
   .nav-links a.visited { color: rgba(196, 162, 74, 0.5); }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .nav-links { display: none; }
   }
   @media (max-width: 600px) {

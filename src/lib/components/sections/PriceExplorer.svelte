@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import SectionHead from '$lib/components/ui/SectionHead.svelte';
   import { viewport } from '$lib/actions/viewport';
   import explorerData from '$lib/data/priceExplorer.json';
@@ -204,6 +205,43 @@
 
   function handleMouseLeave() { hoverPoint = null; baselineHover = false; }
 
+  // ── Touch support ────────────────────────────────────────────────────────────
+  let pinnedPoint = $state<HoverPoint>(null);
+  let isTouchDevice = $state(false);
+
+  onMount(() => {
+    isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+  });
+
+  function handlePointerDown(e: PointerEvent) {
+    if (!isTouchDevice) return;
+    e.preventDefault();
+    if (!svgEl) return;
+    const rect = svgEl.getBoundingClientRect();
+    const scaleX = W / rect.width;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    if (!currentItem?.series?.length) return;
+    const visible = visibleSeries;
+    let nearest: SeriesPoint | null = null;
+    let minDist = Infinity;
+    for (const pt of visible) {
+      const dist = Math.abs(xPos(pt.period) - mouseX);
+      if (dist < minDist) { minDist = dist; nearest = pt; }
+    }
+    const candidate = (nearest && minDist < 30) ? {
+      svgX: xPos(nearest.period),
+      svgY: yPos(nearest.price, maxPrice),
+      price: nearest.price,
+      period: nearest.period,
+    } : null;
+    if (!candidate) { pinnedPoint = null; hoverPoint = null; return; }
+    if (candidate.period === pinnedPoint?.period) {
+      pinnedPoint = null; hoverPoint = null;
+    } else {
+      pinnedPoint = candidate; hoverPoint = candidate;
+    }
+  }
+
   // ── Format period ───────────────────────────────────────────────────────────
   function formatPeriod(p: string): string {
     const monthNames = ['ינו׳','פבר׳','מרץ','אפר׳','מאי','יוני','יולי','אוג׳','ספט׳','אוק׳','נוב׳','דצמ׳'];
@@ -270,6 +308,8 @@
               aria-label="תרשים מחיר {hebrewNames[activeCommodity] ?? activeCommodity}"
               onmousemove={handleMouseMove}
               onmouseleave={handleMouseLeave}
+              onpointerdown={handlePointerDown}
+              style={isTouchDevice ? 'cursor:pointer; touch-action:pan-y;' : ''}
             >
               <!-- Static defs (gradient, domain clip) -->
               <defs>
@@ -381,6 +421,9 @@
             {/if}
           </div>
 
+          {#if isTouchDevice && !pinnedPoint}
+            <p class="pe-tap-hint">הקש על הגרף לצפייה בנתונים</p>
+          {/if}
           <p class="pe-source">WFP Market Monitor · ממוצע ממשלות עזה · ש"ח</p>
         </div>
       </div>
@@ -552,7 +595,7 @@
   /* ── Chart reveal animation ── */
   @keyframes pe-reveal {
     from { width: 0; }
-    to   { width: 443px; } /* CW = 512 - 50 - 19 */
+    to   { width: 9999px; }
   }
   :global(.pe-reveal-rect) {
     animation: pe-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -578,6 +621,17 @@
     direction: rtl;
     box-shadow: 0 1px 6px rgba(0,0,0,0.1);
     z-index: 5;
+  }
+
+  .pe-tap-hint {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0.4rem 0;
+    opacity: 0.7;
+    pointer-events: none;
+    letter-spacing: 0.04em;
   }
 
   .pe-source {

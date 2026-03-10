@@ -254,6 +254,10 @@
     gap: 0.75rem;
   }
 
+  @media (max-width: 900px) {
+    .td-sticky { top: calc(var(--vh, 1vh) * 10); }
+  }
+
   /* ── Info bar ─────────────────────────────────────────────────────────── */
   .td-info {
     display: flex;
