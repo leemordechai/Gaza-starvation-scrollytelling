@@ -70,6 +70,11 @@
       // Track which steps are currently intersecting
       const intersecting = new Set<HTMLElement>();
 
+      // On mobile (≤700px) the sticky panel occupies the top ~45% of screen,
+      // so use rootMargin to treat only the middle band as "active" zone.
+      const isMobile = window.innerWidth <= 700;
+      const rootMargin = isMobile ? '-5% 0px -40% 0px' : '0px';
+
       const stepObs = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -88,7 +93,7 @@
           }
           if (best !== -1) activePhase = best;
         },
-        { threshold: 0.15 }
+        { threshold: 0.15, rootMargin }
       );
 
       stepEls.forEach(el => stepObs.observe(el));
@@ -503,13 +508,15 @@
   /* ── Small tablet / large phone (700px and below) ────────────────────── */
   @media (max-width: 700px) {
     .td-layout { grid-template-columns: 1fr; gap: 0; }
-    .td-sticky { position: sticky; top: 56px; z-index: 5; }
+    .td-sticky { position: sticky; top: 56px; z-index: 5; background: var(--bg-section, var(--bg)); padding-bottom: 0.5rem; }
     .td-grid { grid-template-columns: repeat(15, 1fr); }
-    .td-grid-wrap { max-height: calc(var(--vh, 1vh) * 50); }
+    .td-grid-wrap { max-height: calc(var(--vh, 1vh) * 40); }
     .td-counter { font-size: clamp(2rem, 7vw, 2.8rem); }
     .td-blockade-num      { font-size: clamp(5rem, 22vw, 10rem); }
     .td-blockade-daylabel { font-size: clamp(1.4rem, 6vw, 3rem); }
-    .td-step { min-height: 0; opacity: 1; padding: 1.5rem 0; }
+    /* Keep steps tall enough for IntersectionObserver to fire per step */
+    .td-step { min-height: calc(var(--vh, 1vh) * 60); opacity: 0.3; padding: 1.5rem 0; }
+    .td-step--active { opacity: 1; }
     .td-narrative { padding: 1rem 0 calc(var(--vh, 1vh) * 40); }
   }
 

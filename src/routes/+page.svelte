@@ -69,7 +69,7 @@
   </div>
 
   <div class="intro-step" dir="rtl">
-    <div class="container-prose" use:reveal={{ once: false }}>
+    <div class="container-prose reveal reveal-no-fade" use:reveal={{ once: false, threshold: 0.05 }}>
       <p>{@html sanitizeText(introBackground[1])}</p>
     </div>
   </div>
@@ -174,7 +174,7 @@
   </header>
 
   <!-- Bridging paragraphs: food availability characteristics -->
-  <section id="food-characteristics" class="bridge-block bridge-block--centered container" dir="rtl" style="padding: 0;">
+  <section id="food-characteristics" class="bridge-block bridge-block--centered container" dir="rtl">
     <h3 class="bridge-title">{@html sanitizeText(bridge.intro)}</h3>
     <ul class="bridge-list">
       {#each bridge.items.slice(0, 3) as item}
@@ -290,7 +290,7 @@
   }
   .bridge-block--centered {
     text-align: center;
-    padding: 4rem 0;
+    padding-block: 4rem;
     scroll-snap-align: start;
     min-height: calc(var(--vh, 1vh) * 100);
     display: flex;

@@ -646,11 +646,12 @@
 
   @media (max-width: 700px) {
     .fp-step {
-      min-height: 0;
-      opacity: 1;
+      min-height: calc(var(--vh, 1vh) * 60);
+      opacity: 0.3;
       padding: 1.75rem 0;
       border-bottom: 1px solid var(--border);
     }
+    .fp-step--active { opacity: 1; }
     .fp-step:last-child {
       border-bottom: none;
       padding-top: 1.75rem;

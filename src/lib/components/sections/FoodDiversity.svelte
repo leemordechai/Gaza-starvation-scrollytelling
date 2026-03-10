@@ -58,6 +58,11 @@
     const stepEls = Array.from(document.querySelectorAll('.fd-step')) as HTMLElement[];
     const visible = new Set<number>();
 
+    // On mobile the sticky viz occupies the top ~50% of screen; use rootMargin
+    // so steps only activate when they reach the visible narrative area below.
+    const isMobile = window.innerWidth <= 760;
+    const rootMargin = isMobile ? '-5% 0px -40% 0px' : '0px';
+
     const stepObs = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -74,7 +79,7 @@
           activeStep = Math.min(...visible);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3, rootMargin }
     );
     stepEls.forEach(el => stepObs.observe(el));
 
@@ -625,7 +630,7 @@
 
   @media (max-width: 760px) {
     .fd-narrative {
-      padding: 1.5rem 0 4rem;
+      padding: 1.5rem 0 calc(var(--vh, 1vh) * 40);
     }
   }
 
@@ -648,12 +653,13 @@
 
   @media (max-width: 760px) {
     .fd-step {
-      min-height: 0;
+      min-height: calc(var(--vh, 1vh) * 60);
       animation: none;
-      opacity: 1;
+      opacity: 0.3;
       padding: 1.75rem 0;
       border-bottom: 1px solid var(--border);
     }
+    .fd-step.active { opacity: 1; }
     .fd-step:last-child { border-bottom: none; }
   }
 
