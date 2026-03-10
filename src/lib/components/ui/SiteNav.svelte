@@ -65,22 +65,23 @@
 
   .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: 1.75rem;
     list-style: none;
   }
   .nav-links a {
     font-family: var(--font-ui);
-    font-size: 0.68rem;
+    font-size: 0.63rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: rgba(180, 160, 130, 0.75);
+    color: rgba(220, 200, 170, 0.92);
     text-decoration: none;
     transition: color 0.2s;
+    white-space: nowrap;
   }
-  .nav-links a:hover { color: var(--accent); }
-  .nav-links a.active { color: var(--accent); }
-  .nav-links a.visited { color: rgba(196, 162, 74, 0.5); }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a.active { color: var(--accent-light); }
+  .nav-links a.visited { color: rgba(196, 162, 74, 0.65); }
   @media (max-width: 767px) {
     .nav-links { display: none; }
   }
