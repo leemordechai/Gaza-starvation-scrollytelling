@@ -60,9 +60,7 @@
   onMount(() => {
     if (!browser) return;
 
-    const setVh = () => document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-    setVh();
-    window.addEventListener('resize', setVh, { passive: true });
+    // --vh is managed globally in +layout.svelte. No local setter needed.
 
     initGsap().then(result => {
       if (!result) return;
@@ -79,8 +77,6 @@
         triggers.push(st);
       });
     });
-
-    return () => window.removeEventListener('resize', setVh);
   });
 
   onDestroy(() => {

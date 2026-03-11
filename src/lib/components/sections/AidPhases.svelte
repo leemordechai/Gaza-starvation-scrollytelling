@@ -40,7 +40,9 @@
 
   function cellDelay(cellIdx: number, activeCount: number): number {
     if (activeCount === 0) return 0;
-    return Math.round((cellIdx / GRID_TOTAL) * 800);
+    // Shorter animation window on mobile to reduce GPU load
+    const maxDelay = typeof window !== 'undefined' && window.innerWidth <= 700 ? 300 : 800;
+    return Math.round((cellIdx / GRID_TOTAL) * maxDelay);
   }
 
   // ── Counter animation on phase change ────────────────────────────────────
@@ -54,9 +56,8 @@
   onMount(() => {
     if (!browser) return;
 
-    const setVh = () => document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-    setVh();
-    window.addEventListener('resize', setVh, { passive: true });
+    // --vh is managed globally in +layout.svelte (width-gated, debounced).
+    // No local setter needed.
 
     initGsap().then(result => {
       if (!result) return;
@@ -102,8 +103,6 @@
       const fakeKill = { kill: () => stepObs.disconnect() } as any;
       triggers.push(fakeKill);
     });
-
-    return () => window.removeEventListener('resize', setVh);
   });
 
   onDestroy(() => {

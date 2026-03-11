@@ -81,6 +81,21 @@ body {
   contain: layout style;
 }
 
+/* content-visibility: auto skips paint/layout for off-screen sections,
+   significantly reducing mobile scroll jank. Not applied to .tr-section
+   or .hero because GSAP needs their layout always available. */
+@media (max-width: 768px) {
+  .fp-section,
+  .fd-section,
+  .pe-section,
+  .at-section,
+  .timeline-section,
+  .analysis-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 100vh;
+  }
+}
+
 /* ===================================
    PAGE-DOWN FRIENDLINESS
    Each major section occupies at least one full viewport so pressing

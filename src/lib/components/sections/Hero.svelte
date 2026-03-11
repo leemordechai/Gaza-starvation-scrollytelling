@@ -32,12 +32,15 @@
     }
 
     // Phase 1: zoom-out + spotlight fade, completes at exactly one Page Down (100vh)
+    // On mobile use scrub:true (no lag) so the animation tracks finger position
+    // directly — avoids the follow-through that causes perceived jumping.
+    const isMobile = window.innerWidth <= 768;
     const tlZoom = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero-scroll-container',
         start: 'top top',
         end: '+=100vh',
-        scrub: 1.2,
+        scrub: isMobile ? true : 1.2,
       }
     });
 
@@ -151,7 +154,10 @@
     background-size: 120% auto;
     background-position: center 45%;
     transform-origin: 50% 45%;
-    will-change: transform;
+  }
+  @media (min-width: 769px) {
+    /* will-change is costly on low-memory mobile devices — only enable on desktop */
+    .hero-bg { will-change: transform; }
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
@@ -163,7 +169,6 @@
     position: absolute; inset: 0; z-index: 1;
     background: rgba(4, 3, 2, 0.5);
     pointer-events: none;
-    will-change: opacity;
   }
 
   /* Tight spotlight on face when zoomed in — fades as we zoom out */
@@ -176,7 +181,11 @@
       rgba(3, 2, 1, 0.92) 100%
     );
     pointer-events: none;
-    will-change: opacity;
+  }
+
+  @media (min-width: 769px) {
+    .hero-dim     { will-change: opacity; }
+    .hero-spotlight { will-change: opacity; }
   }
 
   .hero-topo {
