@@ -71,11 +71,6 @@
       // Track which steps are currently intersecting
       const intersecting = new Set<HTMLElement>();
 
-      // On mobile (≤700px) the sticky panel occupies the top ~45% of screen,
-      // so use rootMargin to treat only the middle band as "active" zone.
-      const isMobile = window.innerWidth <= 700;
-      const rootMargin = isMobile ? '-5% 0px -40% 0px' : '0px';
-
       const stepObs = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -94,7 +89,7 @@
           }
           if (best !== -1) activePhase = best;
         },
-        { threshold: 0.15, rootMargin }
+        { threshold: 0.05 }
       );
 
       stepEls.forEach(el => stepObs.observe(el));
@@ -514,7 +509,7 @@
     .td-blockade-num      { font-size: clamp(5rem, 22vw, 10rem); }
     .td-blockade-daylabel { font-size: clamp(1.4rem, 6vw, 3rem); }
     /* Keep steps tall enough for IntersectionObserver to fire per step */
-    .td-step { min-height: calc(var(--vh, 1vh) * 60); opacity: 0.3; padding: 1.5rem 0; }
+    .td-step { min-height: calc(var(--vh, 1vh) * 50); opacity: 0.3; transition: opacity 0.25s ease; padding: 1.5rem 0; }
     .td-step--active { opacity: 1; }
     .td-narrative { padding: 1rem 0 calc(var(--vh, 1vh) * 40); }
   }

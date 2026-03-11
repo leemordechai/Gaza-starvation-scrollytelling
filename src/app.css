@@ -81,14 +81,13 @@ body {
   contain: layout style;
 }
 
-/* content-visibility: auto skips paint/layout for off-screen sections,
-   significantly reducing mobile scroll jank. Not applied to .tr-section
-   or .hero because GSAP needs their layout always available. */
+/* content-visibility: auto skips paint/layout for off-screen sections.
+   ONLY safe for sections that have no IntersectionObserver-driven reveals
+   or chart visibility triggers — IO callbacks are suppressed inside
+   content-visibility:auto containers until they near the viewport.
+   .at-section and .ap-section are excluded because they use IO for
+   chart reveal and step activation. */
 @media (max-width: 768px) {
-  .fp-section,
-  .fd-section,
-  .pe-section,
-  .at-section,
   .timeline-section,
   .analysis-section {
     content-visibility: auto;

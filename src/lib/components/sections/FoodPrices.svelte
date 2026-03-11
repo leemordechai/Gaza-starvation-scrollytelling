@@ -646,7 +646,7 @@
 
   @media (max-width: 700px) {
     .fp-step {
-      min-height: calc(var(--vh, 1vh) * 60);
+      min-height: calc(var(--vh, 1vh) * 50);
       opacity: 0.3;
       padding: 1.75rem 0;
       border-bottom: 1px solid var(--border);
