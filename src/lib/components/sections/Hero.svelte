@@ -99,7 +99,7 @@
     </div>
 
     <div class="scroll-cue" id="scroll-cue">
-      <span>גלול</span>
+      <span class="cue-label">לחוויה מיטבית, גלול למטה</span>
       <div class="cue-arrow"></div>
     </div>
   </section>
@@ -276,22 +276,28 @@
   }
 
   .scroll-cue {
-    position: absolute; bottom: 2rem; left: 50%;
+    position: absolute; bottom: 2.5rem; left: 50%;
     transform: translateX(-50%); display: flex;
-    flex-direction: column; align-items: center; gap: 6px;
+    flex-direction: column; align-items: center; gap: 10px;
     animation: cuebounce 2.8s ease-in-out infinite;
   }
   @keyframes cuebounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    55% { transform: translateX(-50%) translateY(7px); }
+    55% { transform: translateX(-50%) translateY(8px); }
   }
-  .scroll-cue span {
-    font-family: var(--font-ui); font-size: 0.55rem;
-    letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted);
+  .cue-label {
+    font-family: var(--font-ui); font-size: 0.72rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(240, 230, 200, 0.82);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
   }
   .cue-arrow {
-    width: 16px; height: 16px;
-    border-right: 1px solid var(--accent); border-bottom: 1px solid var(--accent);
-    transform: rotate(45deg); opacity: 0.55;
+    width: 20px; height: 20px;
+    border-right: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent);
+    transform: rotate(45deg); opacity: 0.75;
+  }
+  @media (max-width: 600px) {
+    .cue-label { font-size: 0.65rem; letter-spacing: 0.12em; }
   }
 </style>

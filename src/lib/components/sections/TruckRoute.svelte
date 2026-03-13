@@ -20,9 +20,10 @@
     { x: 650, y: 1560, w: 290, h: 170 },
   ];
 
-  // Gaps of 1/7 ≈ 0.143 so each stop-to-stop is exactly one page-down
-  // at the default scroll height of 7 × window.innerHeight
-  const STOP_FRACS = [0.10, 0.243, 0.386, 0.529, 0.671, 0.814];
+  // Multiplier = 8 → 7 × vh of travel after the sticky vh.
+  // Fracs at n/8 give each stop exactly one page-down landing zone:
+  //   page-down #N lands at N×vh → progress = N/7 ≈ n/8 + small lead-in.
+  const STOP_FRACS = [0.125, 0.25, 0.375, 0.5, 0.625, 0.75];
 
   let svgEl: SVGSVGElement;
   let routePathEl: SVGPathElement;
@@ -38,7 +39,7 @@
 
     function setHeight() {
       const w = window.innerWidth;
-      const multiplier = w <= 700 ? 4.5 : w <= 1024 ? 5.5 : 7;
+      const multiplier = w <= 700 ? 5 : w <= 1024 ? 6 : 8;
       scrollContainer.style.height = window.innerHeight * multiplier + 'px';
     }
     setHeight();
@@ -116,7 +117,7 @@
 
         let newStop = -1;
         for (let i = STOP_FRACS.length - 1; i >= 0; i--) {
-          if (progress >= STOP_FRACS[i] - 0.03) { newStop = i; break; }
+          if (progress >= STOP_FRACS[i] - 0.09) { newStop = i; break; }
         }
         activeStop = newStop;
       }
@@ -525,10 +526,17 @@
 
   .tr-sticky {
     position: sticky;
-    top: 0;
-    height: calc(var(--vh, 1vh) * 100);
+    top: 60px;
+    height: calc(var(--vh, 1vh) * 100 - 60px);
     min-height: 500px;
     overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .tr-sticky {
+      top: 54px;
+      height: calc(var(--vh, 1vh) * 100 - 54px);
+    }
   }
 
   .tr-svg {

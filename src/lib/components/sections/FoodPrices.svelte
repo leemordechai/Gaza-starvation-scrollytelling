@@ -410,9 +410,12 @@
             {#each events as ev, ei}
               {@const midXPct = ((ev.x1 + ev.x2) / 2 / W * 100).toFixed(1)}
               {@const topPct  = (PAD.top / H * 100).toFixed(1)}
+              {@const isCeasefire = ev.label.includes('הפסקת')}
               <div
                 class="fp-band-label"
                 class:fp-band-label--low={ei % 2 === 1}
+                class:fp-band-label--ceasefire={isCeasefire}
+                class:fp-band-label--blockade={!isCeasefire}
                 style="left:{midXPct}%; top:{topPct}%;"
               >{ev.label}</div>
             {/each}
@@ -549,6 +552,8 @@
   .fp-band-label--low {
     transform: translateX(-50%) translateY(calc(-200% - 6px));
   }
+  .fp-band-label--ceasefire { color: #4aaa6a; }
+  .fp-band-label--blockade  { color: #c04030; }
 
   /* ── Baseline hover tooltip ─── */
   .fp-baseline-tooltip {
@@ -630,7 +635,7 @@
   .fp-steps { padding: 1rem 0 4rem; }
 
   .fp-step {
-    padding: clamp(2rem, 28vh, 35vh) 0 1.5rem;
+    padding: clamp(1.5rem, 12vh, 18vh) 0 1.5rem;
     min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
@@ -641,7 +646,7 @@
 
   /* Last step (cooking gas): same top padding as other steps */
   .fp-step:last-child {
-    padding-top: clamp(2rem, 28vh, 35vh);
+    padding-top: clamp(1.5rem, 12vh, 18vh);
   }
 
   @media (max-width: 700px) {

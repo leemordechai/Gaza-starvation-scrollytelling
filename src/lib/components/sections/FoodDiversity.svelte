@@ -70,11 +70,22 @@
           }
         }
         if (visible.size > 0) {
-          // Pick the lowest-index visible step — the one the user is reading
-          activeStep = Math.min(...visible);
+          // Pick the visible step whose center is closest to the viewport center.
+          // This handles page-down correctly: when two steps are partially visible,
+          // whichever one is more centered wins — so the viz always matches what
+          // the user is actually reading.
+          const midVh = window.innerHeight / 2;
+          let bestIdx = -1;
+          let bestDist = Infinity;
+          for (const idx of visible) {
+            const rect = stepEls[idx].getBoundingClientRect();
+            const dist = Math.abs((rect.top + rect.bottom) / 2 - midVh);
+            if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
+          }
+          if (bestIdx !== -1) activeStep = bestIdx;
         }
       },
-      { threshold: 0.05 }
+      { threshold: [0.05, 0.5] }
     );
     stepEls.forEach(el => stepObs.observe(el));
 

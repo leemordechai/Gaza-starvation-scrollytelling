@@ -45,16 +45,21 @@
 
   .closing-statement {
     margin-bottom: 0;
+    text-align: center;
   }
 
   .closing-inner {
     position: relative;
     display: inline-block;
-    padding: 0.35rem 0.85rem;
+    padding: 0.5rem 1.1rem;
     border-radius: 2px;
     color: var(--text);
     transition: color 0.3s ease 0.6s;
     z-index: 0;
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.5;
+    font-family: var(--font-disp);
   }
   .closing-inner::before {
     content: '';

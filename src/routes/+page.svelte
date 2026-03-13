@@ -277,7 +277,7 @@
     }
   }
   .intro-step p {
-    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    font-size: clamp(1.1rem, 1.65vw, 1.45rem);
     line-height: 1.75;
     color: var(--sand);
     font-family: var(--font-disp);

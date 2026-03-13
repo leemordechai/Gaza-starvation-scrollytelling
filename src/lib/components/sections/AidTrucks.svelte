@@ -645,6 +645,16 @@
     padding-top: 2rem;
   }
 
+  /* On desktop: cap chart height so it fits in ~80vh */
+  @media (min-width: 721px) {
+    .at-chart-container {
+      max-height: calc(var(--vh, 1vh) * 72);
+    }
+    .at-chart {
+      max-height: calc(var(--vh, 1vh) * 72);
+    }
+  }
+
   .at-chart {
     display: block;
     width: 100%;
@@ -896,6 +906,13 @@
     gap: 0.35rem;
     padding-top: 0.25rem;
     min-width: 160px;
+  }
+
+  @media (min-width: 721px) {
+    .at-legend {
+      max-height: calc(var(--vh, 1vh) * 72);
+      overflow-y: auto;
+    }
   }
 
   @media (min-width: 1400px) {

@@ -10,7 +10,7 @@
     { "label": "ג׳ — מחיר ההישרדות", "href": "#chapter-3" },
     { "label": "ד׳ — תזונה ורעב", "href": "#chapter-4" },
     { "label": "ה׳ — השלכות", "href": "#chapter-5" },
-    { "label": "ניתוח", "href": "#analysis" }
+    { "label": "אחרית דבר", "href": "#analysis" }
   ],
   "indicators": [
     { "label": "רקע", "target": "#background" },
@@ -22,6 +22,6 @@
     { "label": "ג׳ — מחיר ההישרדות", "target": "#chapter-3" },
     { "label": "ד׳ — תזונה ורעב", "target": "#chapter-4" },
     { "label": "ה׳ — השלכות", "target": "#chapter-5" },
-    { "label": "ניתוח", "target": "#analysis" }
+    { "label": "אחרית דבר", "target": "#analysis" }
   ]
 }
