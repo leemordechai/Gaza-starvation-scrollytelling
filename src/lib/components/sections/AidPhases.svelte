@@ -79,18 +79,30 @@
             }
           }
         },
-        { rootMargin: '-25% 0px -75% 0px', threshold: 0 }
+        { rootMargin: '-75% 0px -25% 0px', threshold: 0 }
       );
 
-      const desktopObs = makeObs(desktopEls);
-      desktopEls.forEach(el => desktopObs.observe(el));
+      // Only activate the observer matching the current layout.
+      // CSS-hidden elements (display:none) still exist in DOM and can fire IO,
+      // so we must not observe both layouts simultaneously.
+      const mq = window.matchMedia('(max-width: 700px)');
 
-      const mobileObs = makeObs(mobileEls);
-      mobileEls.forEach(el => mobileObs.observe(el));
+      let activeObs: IntersectionObserver | null = null;
+
+      const activate = (isMobile: boolean) => {
+        activeObs?.disconnect();
+        const els = isMobile ? mobileEls : desktopEls;
+        activeObs = makeObs(els);
+        els.forEach(el => activeObs!.observe(el));
+      };
+
+      const onMqChange = (e: MediaQueryListEvent) => activate(e.matches);
+
+      activate(mq.matches);
+      mq.addEventListener('change', onMqChange);
 
       triggers.push(
-        { kill: () => desktopObs.disconnect() } as any,
-        { kill: () => mobileObs.disconnect() } as any,
+        { kill: () => { activeObs?.disconnect(); mq.removeEventListener('change', onMqChange); } } as any,
       );
     });
   });
@@ -149,6 +161,7 @@
           <div class="ap-mob-blockade-overlay">
             <span class="ap-mob-blockade-num">79</span>
             <span class="ap-mob-blockade-label">יום</span>
+            <span class="ap-mob-blockade-sub">אפס משאיות</span>
           </div>
         {/if}
       </div>
@@ -577,6 +590,7 @@
     /* wrapper around the grid so overlay can be absolute within it */
     .ap-mob-grid-wrap {
       position: relative;
+      overflow: visible;
     }
 
     .ap-mob-info {
@@ -674,20 +688,35 @@
 
     .ap-mob-blockade-num {
       font-family: var(--font-ui);
-      font-size: clamp(2.5rem, 15vw, 5rem);
+      font-size: clamp(3rem, 20vw, 7rem);
       font-weight: 900;
       color: #8b1a10;
       line-height: 1;
+      text-shadow: 0 0 40px rgba(139, 26, 16, 0.25);
     }
 
     .ap-mob-blockade-label {
       font-family: var(--font-ui);
-      font-size: clamp(0.9rem, 5vw, 1.6rem);
+      font-size: clamp(1rem, 6vw, 2rem);
       font-weight: 700;
       color: #8b1a10;
       opacity: 0.75;
       align-self: flex-end;
       padding-bottom: 0.1em;
+    }
+
+    .ap-mob-blockade-sub {
+      position: absolute;
+      bottom: 12%;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: var(--font-ui);
+      font-size: clamp(0.65rem, 2.5vw, 0.9rem);
+      font-weight: 700;
+      color: #8b1a10;
+      opacity: 0.6;
+      letter-spacing: 0.08em;
+      pointer-events: none;
     }
 
     /* ── Scrolling text steps ── */
