@@ -484,9 +484,17 @@
 
   @media (max-width: 700px) {
     .fp-sticky {
-      position: static;
+      position: sticky;
+      top: 56px; /* below nav */
       height: auto;
-      padding: 1rem 0;
+      padding: 0.5rem 0 0.75rem;
+      z-index: 10;
+      background: var(--bg-section);
+      /* chart takes ~45vh so steps are visible below */
+      max-height: calc(var(--vh, 1vh) * 45);
+      justify-content: flex-start;
+      /* subtle bottom shadow to separate chart from scrolling steps */
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
     }
   }
 
@@ -651,15 +659,17 @@
 
   @media (max-width: 700px) {
     .fp-step {
-      min-height: calc(var(--vh, 1vh) * 50);
+      /* tall enough so one step fills the lower half of the screen */
+      min-height: calc(var(--vh, 1vh) * 55);
       opacity: 0.3;
-      padding: 1.75rem 0;
+      padding: 1.5rem 0 1.5rem;
       border-bottom: 1px solid var(--border);
+      /* push content down so it's readable below the sticky chart */
+      justify-content: center;
     }
     .fp-step--active { opacity: 1; }
     .fp-step:last-child {
       border-bottom: none;
-      padding-top: 1.75rem;
     }
   }
 

@@ -58,6 +58,14 @@
     const stepEls = Array.from(document.querySelectorAll('.fd-step')) as HTMLElement[];
     const visible = new Set<number>();
 
+    // On mobile the sticky chart takes ~45vh at the top, so text lives in the
+    // bottom ~55vh. We want activation when a step's top crosses the 20% mark
+    // (i.e. 20% from the top of the *visible* area below the chart).
+    // rootMargin "-20% 0px -60% 0px" means: fire when the element is inside
+    // the band between 20% and 40% of the viewport height.
+    const isMobile = window.innerWidth <= 760;
+    const rootMargin = isMobile ? '-20% 0px -60% 0px' : '-10% 0px -40% 0px';
+
     const stepObs = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -85,7 +93,7 @@
           if (bestIdx !== -1) activeStep = bestIdx;
         }
       },
-      { threshold: [0.05, 0.5] }
+      { threshold: [0, 0.1, 0.5], rootMargin }
     );
     stepEls.forEach(el => stepObs.observe(el));
 
@@ -295,7 +303,10 @@
       position: sticky;
       top: 56px;
       z-index: 5;
-      padding-bottom: 0.5rem;
+      padding-bottom: 0;
+      /* Cap height so chart takes ~42vh and text gets the remaining ~55vh */
+      max-height: calc(var(--vh, 1vh) * 42);
+      overflow: hidden;
     }
     /* Hide source note on mobile — saves vertical space in sticky panel */
     .fd-sticky .fd-source { display: none; }
@@ -315,9 +326,12 @@
 
   @media (max-width: 760px) {
     .fd-viz {
-      padding: 1rem 1rem 0.75rem;
+      padding: 0.65rem 0.85rem 0.5rem;
       background: var(--bg-card);
       border-color: var(--border);
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
     }
   }
 
@@ -570,6 +584,12 @@
   @media (max-width: 760px) {
     .fd-val { font-size: 0.6rem; width: 24px; }
     .fd-divider-label { font-size: 0.58rem; opacity: 0.75; }
+    /* Tighter grid rows to fit chart in ~42vh */
+    .fd-grid { gap: 0.22rem; }
+    .fd-cell { aspect-ratio: 1.8; max-width: 28px; border-radius: 2px; }
+    .fd-score { margin-bottom: 0.65rem; }
+    .fd-score-value { font-size: 1.25rem; }
+    .fd-period { margin-bottom: 0.6rem; }
   }
 
   /* ===== Day labels ===== */
@@ -636,7 +656,7 @@
 
   @media (max-width: 760px) {
     .fd-narrative {
-      padding: 1.5rem 0 calc(var(--vh, 1vh) * 40);
+      padding: 0 0 calc(var(--vh, 1vh) * 30);
     }
   }
 
@@ -659,11 +679,11 @@
 
   @media (max-width: 760px) {
     .fd-step {
-      min-height: calc(var(--vh, 1vh) * 50);
+      min-height: calc(var(--vh, 1vh) * 55);
       animation: none;
-      opacity: 0.3;
-      transition: opacity 0.25s ease;
-      padding: 1.75rem 0;
+      opacity: 0.18;
+      transition: opacity 0.3s ease;
+      padding: 1.25rem 1rem;
       border-bottom: 1px solid var(--border);
     }
     .fd-step.active { opacity: 1; }

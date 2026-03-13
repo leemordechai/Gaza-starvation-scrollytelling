@@ -79,7 +79,7 @@
             }
           }
         },
-        { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
+        { rootMargin: '-25% 0px -75% 0px', threshold: 0 }
       );
 
       const desktopObs = makeObs(desktopEls);

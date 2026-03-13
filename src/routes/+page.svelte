@@ -297,6 +297,12 @@
     flex-direction: column;
     justify-content: center;
   }
+  @media (max-width: 700px) {
+    .bridge-block--centered {
+      min-height: auto;
+      padding-block: clamp(3rem, 8vh, 5rem);
+    }
+  }
   .bridge-block--centered[dir='rtl'] {
     text-align: right;
     align-items: flex-end;
