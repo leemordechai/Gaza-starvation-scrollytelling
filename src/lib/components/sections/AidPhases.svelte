@@ -61,39 +61,37 @@
 
     initGsap().then(result => {
       if (!result) return;
-      const { ScrollTrigger } = result;
 
-      // Use IntersectionObserver for step activation — avoids GSAP init-time
-      // misfires that happen when triggers are created while the section is
-      // already partially scrolled.
-      const stepEls = Array.from(document.querySelectorAll('.td-step'));
+      // Desktop steps (.td-step) + mobile steps (.ap-mob-step) both drive activePhase.
+      // Using a single observer so activePhase is always in sync regardless of layout.
+      const desktopEls = Array.from(document.querySelectorAll<HTMLElement>('.td-step'));
+      const mobileEls  = Array.from(document.querySelectorAll<HTMLElement>('.ap-mob-step'));
 
-      // Track which steps are currently intersecting
-      const intersecting = new Set<HTMLElement>();
-
-      // Fire when a step's top edge crosses the 40% mark from the top of the viewport.
-      // isIntersecting=true means the step just entered that zone (scrolling down into it).
-      // Keep activePhase at whatever last fired — don't reset between steps.
-      const stepObs = new IntersectionObserver(
+      const makeObs = (els: HTMLElement[]) => new IntersectionObserver(
         (entries) => {
           const sorted = [...entries].sort((a, b) =>
-            stepEls.indexOf(a.target as HTMLElement) - stepEls.indexOf(b.target as HTMLElement)
+            els.indexOf(a.target as HTMLElement) - els.indexOf(b.target as HTMLElement)
           );
           for (const entry of sorted) {
             if (entry.isIntersecting) {
-              const idx = stepEls.indexOf(entry.target as HTMLElement);
-              if (idx !== -1) activePhase = idx;
+              const idx = els.indexOf(entry.target as HTMLElement);
+              if (idx >= 0) activePhase = idx;
             }
           }
         },
         { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
       );
 
-      stepEls.forEach(el => stepObs.observe(el));
+      const desktopObs = makeObs(desktopEls);
+      desktopEls.forEach(el => desktopObs.observe(el));
 
-      // Store cleanup on the triggers array (we repurpose it for the observer)
-      const fakeKill = { kill: () => stepObs.disconnect() } as any;
-      triggers.push(fakeKill);
+      const mobileObs = makeObs(mobileEls);
+      mobileEls.forEach(el => mobileObs.observe(el));
+
+      triggers.push(
+        { kill: () => desktopObs.disconnect() } as any,
+        { kill: () => mobileObs.disconnect() } as any,
+      );
     });
   });
 
@@ -112,59 +110,62 @@
     </div>
   </div>
 
-  <!-- ── Mobile layout: 6 full-screen cards (grid on top, text below) ──── -->
+  <!-- ── Mobile layout: sticky grid + scrolling text steps ────────────── -->
   <div class="ap-mobile-cards">
-    {#each phases as phase, i}
-      {@const phaseShuf = shuffles[i]}
-      <div class="ap-mob-card" class:ap-mob-card--blockade={phase.isBlockade}>
 
-        <!-- Grid -->
-        <div class="ap-mob-grid-wrap">
-          <div class="ap-mob-info" style="--phase-color: {phase.color};">
-            <span class="ap-mob-tag" style="color:{phase.color}; border-color:{phase.color}40;">{phase.tag}</span>
-            <div class="ap-mob-counter-row">
-              <span class="ap-mob-counter" style="color:{phase.color};">{phase.avgPerDay}</span>
-              <span class="ap-mob-counter-unit">משאיות / יום</span>
-            </div>
-          </div>
+    <!-- Sticky grid: stays fixed at top, updates as text steps scroll past -->
+    <div class="ap-mob-sticky">
+      <div class="ap-mob-info" style="--phase-color: {current.color};">
+        <span class="ap-mob-tag" style="color:{current.color}; border-color:{current.color}40;">{current.tag}</span>
+        <div class="ap-mob-counter-row">
+          <span class="ap-mob-counter" style="color:{current.color};">{current.avgPerDay}</span>
+          <span class="ap-mob-counter-unit">משאיות / יום</span>
+        </div>
+      </div>
+      <div class="ap-mob-grid-wrap">
+        {#key activePhase}
           <div
             class="ap-mob-grid"
             style="--cols: 20;"
             role="img"
-            aria-label="{phase.activeCount} מתוך {GRID_TOTAL} משאיות ביום"
+            aria-label="{current.activeCount} מתוך {GRID_TOTAL} משאיות ביום"
           >
             {#each Array(GRID_TOTAL) as _, cellIdx}
-              {@const truckIdx = phaseShuf[cellIdx]}
-              {@const active = truckIdx < phase.activeCount}
+              {@const truckIdx = shuffle[cellIdx]}
+              {@const active = truckIdx < current.activeCount}
               <span
                 class="ap-mob-cell"
                 class:ap-mob-cell--active={active}
-                class:ap-mob-cell--blockade={phase.isBlockade && !active}
+                class:ap-mob-cell--blockade={isBlockade && !active}
               >
                 {#if active}
-                  <img class="ap-mob-truck" src="/images/truck-sketch.png" alt="" aria-hidden="true" loading="lazy" />
+                  <img class="ap-mob-truck" src="/images/truck-sketch.png" alt="" aria-hidden="true" />
                 {/if}
               </span>
             {/each}
           </div>
-          {#if phase.isBlockade}
-            <div class="ap-mob-blockade-overlay">
-              <span class="ap-mob-blockade-num">79</span>
-              <span class="ap-mob-blockade-label">יום</span>
-            </div>
-          {/if}
-        </div>
+        {/key}
+        {#if isBlockade}
+          <div class="ap-mob-blockade-overlay">
+            <span class="ap-mob-blockade-num">79</span>
+            <span class="ap-mob-blockade-label">יום</span>
+          </div>
+        {/if}
+      </div>
+    </div>
 
-        <!-- Text -->
-        <div class="ap-mob-text">
+    <!-- Scrolling text steps: each drives activePhase via IntersectionObserver -->
+    <div class="ap-mob-steps">
+      {#each phases as phase, i}
+        <div class="ap-mob-step" data-mob-step={i}>
           <span class="ap-mob-period">{phase.period}</span>
           <h3 class="ap-mob-heading" style="color:{phase.color};">{phase.annotation}</h3>
           <p class="ap-mob-body">{phase.narrative}</p>
           <p class="ap-mob-detail">{phase.detail}</p>
         </div>
+      {/each}
+    </div>
 
-      </div>
-    {/each}
   </div>
 
   <div class="container-wide ap-desktop-layout">
@@ -553,40 +554,39 @@
   .ap-mobile-cards { display: none; }
 
   /* ── Small tablet / large phone (700px and below) ────────────────────── */
-  /* Mobile: 6 full-screen cards (grid on top, text below). No sticky.      */
+  /* Mobile: sticky grid at top (updates via IO), text steps scroll below.  */
   @media (max-width: 700px) {
-    /* Hide desktop two-column layout */
     .ap-desktop-layout { display: none; }
 
-    /* Show mobile cards */
     .ap-mobile-cards {
-      display: flex;
-      flex-direction: column;
+      display: block;
       padding: 0 1rem;
     }
 
-    .ap-mob-card {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      padding: 1rem 0 2rem;
-      border-top: 1px solid var(--border, #e8dbd8);
+    /* ── Sticky grid panel ── */
+    .ap-mob-sticky {
+      position: sticky;
+      top: 54px; /* below nav */
+      z-index: 10;
+      background: var(--bg, #fdf8f3);
+      border-bottom: 1px solid var(--border, #e8dbd8);
+      padding: 0.5rem 0 0.4rem;
+      /* needed for blockade overlay absolute positioning */
     }
-    .ap-mob-card:first-child { border-top: none; }
 
-    /* Grid section: fills available width, fixed aspect for predictable height */
+    /* wrapper around the grid so overlay can be absolute within it */
     .ap-mob-grid-wrap {
       position: relative;
-      flex: 0 0 auto;
     }
 
     .ap-mob-info {
       display: flex;
       align-items: baseline;
       gap: 1rem;
-      padding-bottom: 0.4rem;
+      padding-bottom: 0.35rem;
       border-bottom: 2px solid var(--phase-color, #7ab3d4);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
+      transition: border-color 0.4s ease;
     }
 
     .ap-mob-tag {
@@ -609,23 +609,25 @@
 
     .ap-mob-counter {
       font-family: var(--font-ui);
-      font-size: clamp(1.8rem, 8vw, 2.6rem);
+      font-size: clamp(1.6rem, 7vw, 2.2rem);
       font-weight: 900;
       line-height: 1;
       font-variant-numeric: tabular-nums;
+      transition: color 0.4s ease;
     }
 
     .ap-mob-counter-unit {
       font-family: var(--font-ui);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
       color: var(--text-muted);
     }
 
+    /* Grid: 20 cols, cells sized so full grid fits in ~40vw height */
     .ap-mob-grid {
       display: grid;
       grid-template-columns: repeat(var(--cols, 20), 1fr);
-      gap: 2px;
+      gap: 1.5px;
       width: 100%;
     }
 
@@ -641,12 +643,8 @@
 
     .ap-mob-cell--active {
       background: transparent;
-      opacity: 1;
-    }
-
-    .ap-mob-cell--blockade {
-      background: rgba(139, 26, 16, 0.12);
-      opacity: 0.25;
+      opacity: 0;
+      animation: ap-mob-pop 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
     .ap-mob-truck {
@@ -656,6 +654,13 @@
       display: block;
       mix-blend-mode: multiply;
     }
+
+    .ap-mob-cell--blockade {
+      background: rgba(139, 26, 16, 0.12);
+      opacity: 0.25;
+    }
+
+    @keyframes ap-mob-pop { from { opacity: 0; } to { opacity: 1; } }
 
     .ap-mob-blockade-overlay {
       position: absolute;
@@ -669,7 +674,7 @@
 
     .ap-mob-blockade-num {
       font-family: var(--font-ui);
-      font-size: clamp(3rem, 20vw, 6rem);
+      font-size: clamp(2.5rem, 15vw, 5rem);
       font-weight: 900;
       color: #8b1a10;
       line-height: 1;
@@ -677,7 +682,7 @@
 
     .ap-mob-blockade-label {
       font-family: var(--font-ui);
-      font-size: clamp(1rem, 6vw, 2rem);
+      font-size: clamp(0.9rem, 5vw, 1.6rem);
       font-weight: 700;
       color: #8b1a10;
       opacity: 0.75;
@@ -685,15 +690,22 @@
       padding-bottom: 0.1em;
     }
 
-    /* Text section below the grid */
-    .ap-mob-text {
-      flex: 1;
+    /* ── Scrolling text steps ── */
+    .ap-mob-steps {
+      padding-bottom: calc(var(--vh, 1vh) * 30);
+    }
+
+    .ap-mob-step {
+      min-height: calc(var(--vh, 1vh) * 55);
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 0.5rem;
-      padding-top: 1.2rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border, #e8dbd8);
     }
+
+    .ap-mob-step:first-child { border-top: none; }
 
     .ap-mob-period {
       font-family: var(--font-ui);
@@ -706,7 +718,7 @@
 
     .ap-mob-heading {
       font-family: var(--font-ui);
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 900;
       line-height: 1.1;
       margin: 0;
