@@ -41,7 +41,7 @@
     if (isMobile) {
       if (heroBg) gsap.set(heroBg, { scale: 1 });
       if (spotlight) gsap.set(spotlight, { opacity: 0 });
-      if (heroDim) gsap.set(heroDim, { opacity: 0 });
+      // Keep heroDim visible on mobile — it provides the dark overlay on the photo
       return;
     }
 
@@ -167,13 +167,21 @@
     justify-content: center;
     overflow: hidden;
   }
+  @media (max-width: 768px) {
+    /* On mobile remove min-height so hero is exactly one viewport tall */
+    .hero { min-height: unset; }
+  }
 
   .hero-bg {
     position: absolute; inset: 0;
     background-image: url('/images/hero.jpeg');
     background-size: 120% auto;
     background-position: center 45%;
+    background-repeat: no-repeat;
     transform-origin: 50% 45%;
+  }
+  @media (max-width: 768px) {
+    .hero-bg { background-size: cover; }
   }
   @media (min-width: 769px) {
     /* will-change is costly on low-memory mobile devices — only enable on desktop */
