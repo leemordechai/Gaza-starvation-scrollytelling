@@ -222,6 +222,23 @@
     <p class="tr-header-sub">{truckRoute.sectionSub}</p>
   </div>
 
+  <!-- ── Mobile layout: stacked photo+text cards, no sticky ───────────── -->
+  <div class="tr-mobile-cards">
+    {#each truckRoute.stops as stop, i}
+      <div class="tr-mob-card">
+        <div class="tr-mob-img">
+          <img src="/images/scene-{i+1}-{SCENE_SLUGS[i]}.webp" alt={stop.title} loading="lazy" />
+        </div>
+        <div class="tr-mob-text">
+          <span class="tr-mob-label">{stop.label}</span>
+          <h3 class="tr-mob-title">{stop.title}</h3>
+          <p class="tr-mob-body">{stop.body}</p>
+        </div>
+      </div>
+    {/each}
+  </div>
+
+  <!-- ── Desktop layout: sticky SVG map + scrolling cards ─────────────── -->
   <div class="tr-scroll-container" bind:this={scrollContainer}>
     <div class="tr-sticky">
       <!-- Mobile header overlay — visible only on small screens -->
@@ -533,20 +550,75 @@
     display: none;
   }
 
+  /* ── Mobile card stack: hidden on desktop ──────────────────────────── */
+  .tr-mobile-cards { display: none; }
+
   @media (max-width: 768px) {
-    /* Hide the external header that creates blank space on mobile */
+    /* Hide the desktop sticky layout entirely */
     .tr-header--above { display: none; }
-    /* Show and position the overlay header inside the sticky panel */
-    .tr-header--overlay {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 3;
-      padding: calc(56px + 0.5rem) clamp(1rem, 4vw, 1.5rem) 1rem;
-      background: linear-gradient(to bottom, rgba(245,240,238,0.96) 0%, rgba(245,240,238,0.92) 60%, transparent 100%);
+    .tr-scroll-container { display: none; }
+
+    /* Show mobile card stack */
+    .tr-mobile-cards {
+      display: flex;
+      flex-direction: column;
     }
+
+    .tr-mob-card {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tr-mob-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #e8e0dc;
+    }
+    .tr-mob-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tr-mob-text {
+      padding: 1.25rem clamp(1rem, 5vw, 1.5rem) 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background: var(--bg);
+    }
+
+    .tr-mob-label {
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .tr-mob-title {
+      font-family: var(--font-disp);
+      font-size: clamp(1.1rem, 5vw, 1.35rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .tr-mob-body {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin: 0.2rem 0 0;
+    }
+
+    /* Keep the overlay header hidden — not needed on mobile */
+    .tr-header--overlay { display: none; }
   }
 
   .tr-header-label {

@@ -6,7 +6,7 @@
   import foodPricesData from '$lib/data/foodPrices.json';
 
   // ── Chart geometry ──────────────────────────────────────────────────────────
-  const W = 512, H = 440;
+  const W = 512, H = 360;
   const PAD = { top: 26, right: 19, bottom: 40, left: 50 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
@@ -565,6 +565,7 @@
   .pe-svg {
     width: 100%;
     height: auto;
+    max-height: calc(var(--vh, 1vh) * 50);
     display: block;
     overflow: visible;
     cursor: crosshair;
