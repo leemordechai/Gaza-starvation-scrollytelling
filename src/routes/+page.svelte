@@ -268,14 +268,6 @@
     /* Allow the reveal translateY(28px) animation to show outside bounds */
     overflow: visible;
   }
-  /* On mobile: switch to top-aligned so long text blocks don't clip
-     below the viewport. The container grows with content (min-height). */
-  @media (max-width: 600px) {
-    .intro-step {
-      align-items: flex-start;
-      padding-top: max(4.5rem, calc(56px + 4vh));
-    }
-  }
   .intro-step p {
     font-size: clamp(1.1rem, 1.65vw, 1.45rem);
     line-height: 1.75;
@@ -542,6 +534,26 @@
   @media (max-width: 480px) {
     .chapter-head-inner { padding: 1.25rem 1.5rem; }
     .chapter-head::before { left: 1.25rem; right: 1.25rem; }
+  }
+
+  /* ── Mobile: compact chapter headers and intro steps ── */
+  @media (max-width: 768px) {
+    .chapter-head {
+      height: auto;
+      min-height: 0;
+      padding-block: clamp(3rem, 10vh, 5rem);
+    }
+    .intro-step {
+      min-height: 0;
+      padding-block: clamp(2.5rem, 8vh, 4rem);
+    }
+  }
+  /* Narrow mobile: top-align intro text + nav clearance (after 768px rule so padding-top wins) */
+  @media (max-width: 600px) {
+    .intro-step {
+      align-items: flex-start;
+      padding-top: max(4.5rem, calc(56px + 4vh));
+    }
   }
 
   /* ── Reduce top padding on first section after a chapter header ── */

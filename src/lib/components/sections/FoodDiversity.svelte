@@ -304,9 +304,6 @@
       top: 56px;
       z-index: 5;
       padding-bottom: 0;
-      /* Cap height so chart takes ~42vh and text gets the remaining ~55vh */
-      max-height: calc(var(--vh, 1vh) * 42);
-      overflow: hidden;
     }
     /* Hide source note on mobile — saves vertical space in sticky panel */
     .fd-sticky .fd-source { display: none; }
