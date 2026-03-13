@@ -304,7 +304,7 @@ mark.inv {
 /* On mobile, clip-path on multi-line inline elements clips the bounding box
    incorrectly in Chromium — the second wrapped line disappears. Use a fade
    instead to guarantee both lines are visible. */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   mark.inv {
     animation: mark-fade 0.9s ease 0.2s both paused;
   }

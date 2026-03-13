@@ -86,19 +86,27 @@
     color: #fff;
   }
 
-  /* On mobile, clip-path on ::before is unreliable — switch to background-color fade */
-  @media (max-width: 600px) {
+  /* On mobile, ::before clip-path + z-index:-1 on inline elements is broken
+     in Android Chrome/WebKit — shows as a vertical red line on the left edge.
+     Also, app.css sets animation:mark-fade paused (opacity:0 at frame 0) which
+     causes the element to be invisible until .shown is added — but MeasureSection
+     uses inv-shown, not .shown, so it would stay invisible/flash.
+     Override everything: no animation, no pseudo, direct bg transition. */
+  @media (max-width: 768px) {
     .measure-body :global(mark.inv) {
+      display: inline;
       background: transparent;
       color: var(--text);
+      opacity: 1 !important;
+      animation: none !important;
       transition: background 0.9s ease 0.2s, color 0.9s ease 0.2s;
     }
     .measure-body :global(mark.inv::before) {
-      display: none;
+      display: none !important;
     }
     .measure-body :global(mark.inv.inv-shown) {
-      background: rgba(140, 30, 22, 0.82);
-      color: #fff;
+      background: rgba(140, 30, 22, 0.82) !important;
+      color: #fff !important;
     }
   }
 </style>

@@ -35,12 +35,22 @@
     // On mobile use scrub:true (no lag) so the animation tracks finger position
     // directly — avoids the follow-through that causes perceived jumping.
     const isMobile = window.innerWidth <= 768;
+
+    // On mobile: no zoom animation — hero exits immediately on first swipe.
+    // Skip GSAP entirely to avoid vh-unit resolution issues on iOS Safari.
+    if (isMobile) {
+      if (heroBg) gsap.set(heroBg, { scale: 1 });
+      if (spotlight) gsap.set(spotlight, { opacity: 0 });
+      if (heroDim) gsap.set(heroDim, { opacity: 0 });
+      return;
+    }
+
     const tlZoom = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero-scroll-container',
         start: 'top top',
-        end: isMobile ? '+=10vh' : '+=100vh',
-        scrub: isMobile ? true : 1.2,
+        end: '+=100vh',
+        scrub: 1.2,
       }
     });
 
@@ -307,7 +317,7 @@
   }
   @media (max-width: 768px) {
     .scroll-cue {
-      bottom: 3.5rem; /* above iOS home indicator */
+      bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
       gap: 12px;
     }
     .cue-label {
