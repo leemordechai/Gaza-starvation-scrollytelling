@@ -9,7 +9,7 @@
   // Sections with IDs = major section tops.
   // Scrollytelling steps = the individual narrative cards within sticky sections.
   const STEP_SELECTORS = [
-    'section[id]:not(#aid-trucks):not(#truck-route)', // named sections
+    'section[id]:not(#aid-trucks):not(#truck-route):not(#timeline)', // named sections
     '.chapter-head',         // chapter headers (100vh, content centered)
     '.tr-header',            // TruckRoute section header
     '.hero-scroll-container',// hero (zoomed-in start)
@@ -92,10 +92,7 @@
     const hi = currentY + vh * 1.4; // prefer nearby anchors first
     const near = anchors.find(a => a >= lo && a <= hi);
     if (near !== undefined) return near;
-    // No nearby anchor — jump to the next anchor regardless of distance
-    const farNext = anchors.find(a => a >= lo);
-    if (farNext !== undefined) return farNext;
-    // No anchor ahead at all — raw viewport scroll
+    // No nearby anchor — raw viewport scroll (don't jump over long sections)
     return currentY + (vh - NAV_H);
   }
 

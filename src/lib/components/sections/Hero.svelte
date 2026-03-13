@@ -39,13 +39,14 @@
       scrollTrigger: {
         trigger: '.hero-scroll-container',
         start: 'top top',
-        end: '+=100vh',
+        end: isMobile ? '+=10vh' : '+=100vh',
         scrub: isMobile ? true : 1.2,
       }
     });
 
     if (scrollCue) {
-      tlZoom.to(scrollCue, { opacity: 0, duration: 0.05, ease: 'none' }, 0);
+      gsap.set(scrollCue, { opacity: 1 });
+      tlZoom.to(scrollCue, { opacity: 0, duration: 0.12, ease: 'none' }, 0.08);
     }
     if (spotlight) {
       tlZoom.to(spotlight, { opacity: 0, duration: 0.8, ease: 'power1.in' }, 0.1);
@@ -99,7 +100,7 @@
     </div>
 
     <div class="scroll-cue" id="scroll-cue">
-      <span class="cue-label">לחוויה מיטבית, גלול למטה</span>
+      <span class="cue-label">לחוויה מיטבית, נא לגלול למטה</span>
       <div class="cue-arrow"></div>
     </div>
   </section>
@@ -123,18 +124,23 @@
     height: calc(var(--vh, 1vh) * 100);
     pointer-events: none;
   }
+  /* On mobile, eliminate the zoom/dwell phases — hero exits after one swipe */
+  @media (max-width: 768px) {
+    .hero-phase-zoom {
+      height: 0;
+    }
+  }
 
   /* Dwell phase: another 100vh so the hero stays sticky and fully revealed
      before it scrolls away into the intro steps.
-     On mobile (≤768px) reduce to 30vh — the zoom completes in the first 100vh,
-     and a full extra viewport of frozen image feels like a "duplicate frame". */
+     On mobile eliminate dwell entirely — keeps the page-down count to one. */
   .hero-phase-dwell {
     height: calc(var(--vh, 1vh) * 100);
     pointer-events: none;
   }
   @media (max-width: 768px) {
     .hero-phase-dwell {
-      height: calc(var(--vh, 1vh) * 30);
+      height: 0;
     }
   }
 
@@ -280,6 +286,8 @@
     transform: translateX(-50%); display: flex;
     flex-direction: column; align-items: center; gap: 10px;
     animation: cuebounce 2.8s ease-in-out infinite;
+    opacity: 1;
+    z-index: 3;
   }
   @keyframes cuebounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -297,7 +305,20 @@
     border-right: 1.5px solid var(--accent); border-bottom: 1.5px solid var(--accent);
     transform: rotate(45deg); opacity: 0.75;
   }
-  @media (max-width: 600px) {
-    .cue-label { font-size: 0.65rem; letter-spacing: 0.12em; }
+  @media (max-width: 768px) {
+    .scroll-cue {
+      bottom: 3.5rem; /* above iOS home indicator */
+      gap: 12px;
+    }
+    .cue-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: rgba(255, 248, 235, 0.92);
+    }
+    .cue-arrow {
+      width: 24px; height: 24px;
+      border-width: 2px;
+      opacity: 0.9;
+    }
   }
 </style>

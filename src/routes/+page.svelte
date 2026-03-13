@@ -374,8 +374,8 @@
   /* Intent preface — pulled up to sit just below the chapter header */
   .intent-preface-scroll {
     /* Negative margin closes the gap between the chapter-head bottom and this paragraph */
-    margin-top: calc(var(--vh, 1vh) * -30);
-    padding: clamp(2rem, 4vh, 3rem) 0 clamp(3rem, 6vh, 5rem);
+    margin-top: calc(var(--vh, 1vh) * -15);
+    padding: clamp(1rem, 2vh, 2rem) 0 clamp(2rem, 4vh, 3rem);
     position: relative;
     z-index: 1;
   }

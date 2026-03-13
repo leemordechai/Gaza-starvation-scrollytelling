@@ -71,25 +71,22 @@
       // Track which steps are currently intersecting
       const intersecting = new Set<HTMLElement>();
 
+      // Fire when a step's top edge crosses the 40% mark from the top of the viewport.
+      // isIntersecting=true means the step just entered that zone (scrolling down into it).
+      // Keep activePhase at whatever last fired — don't reset between steps.
       const stepObs = new IntersectionObserver(
         (entries) => {
-          for (const entry of entries) {
-            const el = entry.target as HTMLElement;
+          const sorted = [...entries].sort((a, b) =>
+            stepEls.indexOf(a.target as HTMLElement) - stepEls.indexOf(b.target as HTMLElement)
+          );
+          for (const entry of sorted) {
             if (entry.isIntersecting) {
-              intersecting.add(el);
-            } else {
-              intersecting.delete(el);
+              const idx = stepEls.indexOf(entry.target as HTMLElement);
+              if (idx !== -1) activePhase = idx;
             }
           }
-          // Pick the lowest-index intersecting step (topmost visible = current phase)
-          let best = -1;
-          for (const el of intersecting) {
-            const idx = stepEls.indexOf(el);
-            if (idx !== -1 && (best === -1 || idx < best)) best = idx;
-          }
-          if (best !== -1) activePhase = best;
         },
-        { threshold: 0.05 }
+        { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
       );
 
       stepEls.forEach(el => stepObs.observe(el));
@@ -178,7 +175,33 @@
       <!-- ── Scrolling narrative ─────────────────────────────────────────── -->
       <div class="td-narrative">
         {#each phases as phase, i}
+          {@const MOBILE_TOTAL = 200}
+          {@const mobileActive = Math.round((phase.activeCount / GRID_TOTAL) * MOBILE_TOTAL)}
           <div class="td-step" class:td-step--active={activePhase === i} class:td-step--blockade={phase.isBlockade}>
+
+            <!-- Mobile-only inline grid for this phase -->
+            <div class="td-step-grid-wrap" aria-hidden="true">
+              <div class="td-step-info" style="--step-color: {phase.color};">
+                <span class="td-step-counter" style="color:{phase.color};">{phase.avgPerDay}</span>
+                <span class="td-step-counter-unit">משאיות / יום</span>
+              </div>
+              <!-- Mobile grid: 200 cells (10 cols × 20 rows) for compact display -->
+            <div class="td-step-grid" role="img" aria-label="{mobileActive} מתוך {MOBILE_TOTAL} משאיות">
+                {#each Array(MOBILE_TOTAL) as _, cellIdx}
+                  {@const active = cellIdx < mobileActive}
+                  <span
+                    class="td-step-cell"
+                    class:td-step-cell--active={active}
+                    class:td-step-cell--blockade={phase.isBlockade && !active}
+                  >
+                    {#if active}
+                      <img class="td-step-truck" src="/images/truck-sketch.png" alt="" aria-hidden="true" />
+                    {/if}
+                  </span>
+                {/each}
+              </div>
+            </div>
+
             <span class="td-step-tag" style="color: {phase.color}; border-color: {phase.color}40;">{phase.tag}</span>
             <span class="td-step-period">{phase.period}</span>
             <h3 class="td-step-heading" style="color: {phase.color};">{phase.annotation}</h3>
@@ -309,8 +332,6 @@
   /* ── Waffle grid ──────────────────────────────────────────────────────── */
   .td-grid-wrap {
     position: relative;
-    /* Fit within viewport: 100vh minus nav (56px), sticky top offset (2vh+56px), info bar (~5rem), scale note (~1.5rem) */
-    max-height: calc(var(--vh, 1vh) * 68 - 4rem);
     overflow: hidden;
   }
 
@@ -416,6 +437,9 @@
     margin: 0;
   }
 
+  /* Mobile inline grids: hidden on desktop, shown on mobile via media query */
+  .td-step-grid-wrap { display: none; }
+
   /* ── Narrative steps ──────────────────────────────────────────────────── */
   /* Bottom padding keeps phase 6 pinned at the top long enough for the
      IntersectionObserver to register it before the sticky panel releases. */
@@ -500,18 +524,92 @@
   }
 
   /* ── Small tablet / large phone (700px and below) ────────────────────── */
+  /* Mobile: single-column, no sticky. Each step is a self-contained card   */
+  /* with its own mini-grid above the text. Grid updates via IO on the step. */
   @media (max-width: 700px) {
-    .td-layout { grid-template-columns: 1fr; gap: 0; }
-    .td-sticky { position: sticky; top: 56px; z-index: 5; background: var(--bg-section, var(--bg)); padding-bottom: 0.5rem; }
-    .td-grid { grid-template-columns: repeat(15, 1fr); }
-    .td-grid-wrap { max-height: calc(var(--vh, 1vh) * 40); }
-    .td-counter { font-size: clamp(2rem, 7vw, 2.8rem); }
-    .td-blockade-num      { font-size: clamp(5rem, 22vw, 10rem); }
-    .td-blockade-daylabel { font-size: clamp(1.4rem, 6vw, 3rem); }
-    /* Keep steps tall enough for IntersectionObserver to fire per step */
-    .td-step { min-height: calc(var(--vh, 1vh) * 50); opacity: 0.3; transition: opacity 0.25s ease; padding: 1.5rem 0; }
-    .td-step--active { opacity: 1; }
-    .td-narrative { padding: 1rem 0 calc(var(--vh, 1vh) * 40); }
+    .td-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* Hide the shared sticky panel — mobile uses per-step inline grids */
+    .td-sticky { display: none; }
+
+    .td-narrative { padding: 0 0 2rem; }
+
+    .td-step {
+      min-height: auto;
+      opacity: 1;
+      padding: 2rem 0 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0.6rem;
+      border-top: 1px solid var(--border);
+    }
+    .td-step:first-child { border-top: none; }
+
+    /* Per-step inline grid shown only on mobile */
+    .td-step-grid-wrap {
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .td-step-info {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--step-color, #7ab3d4);
+      margin-bottom: 0.5rem;
+    }
+    .td-step-counter {
+      font-family: var(--font-ui);
+      font-size: clamp(2rem, 9vw, 2.8rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--step-color, #7ab3d4);
+      font-variant-numeric: tabular-nums;
+    }
+    .td-step-counter-unit {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .td-step-grid-wrap {
+      max-height: 130px;
+      overflow: hidden;
+    }
+    .td-step-grid {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 2px;
+      width: 100%;
+    }
+    .td-step-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--border, #e8dbd8);
+      border-radius: 1px;
+      opacity: 0.18;
+    }
+    .td-step-cell--active {
+      background: transparent;
+      opacity: 1;
+    }
+    .td-step-cell--blockade {
+      background: rgba(139, 26, 16, 0.12);
+      opacity: 0.25;
+    }
+    .td-step-truck {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      mix-blend-mode: multiply;
+    }
   }
 
   /* ── Phone (480px and below) ─────────────────────────────────────────── */

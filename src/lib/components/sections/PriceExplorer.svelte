@@ -6,7 +6,7 @@
   import foodPricesData from '$lib/data/foodPrices.json';
 
   // ── Chart geometry ──────────────────────────────────────────────────────────
-  const W = 512, H = 336;
+  const W = 512, H = 440;
   const PAD = { top: 26, right: 19, bottom: 40, left: 50 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
@@ -406,9 +406,12 @@
             {#each events as ev, ei}
               {@const midXPct = ((ev.x1 + ev.x2) / 2 / W * 100).toFixed(1)}
               {@const topPct  = (PAD.top / H * 100).toFixed(1)}
+              {@const isCeasefire = ev.label.includes('הפסקת')}
               <div
                 class="pe-band-label"
                 class:pe-band-label--low={ei % 2 === 1}
+                class:pe-band-label--ceasefire={isCeasefire}
+                class:pe-band-label--blockade={!isCeasefire}
                 style="left:{midXPct}%; top:{topPct}%;"
               >{ev.label}</div>
             {/each}
@@ -462,6 +465,13 @@
     width: clamp(140px, 14vw, 200px);
     position: sticky;
     top: calc(var(--vh, 1vh) * 10);
+  }
+
+  @media (min-width: 641px) {
+    .pe-pills {
+      max-height: calc(var(--vh, 1vh) * 68);
+      overflow-y: auto;
+    }
   }
 
   @media (max-width: 640px) {
@@ -559,6 +569,7 @@
     overflow: visible;
     cursor: crosshair;
   }
+
 
   /* HTML tooltip — RTL-native */
   .pe-tooltip {
@@ -659,6 +670,8 @@
   .pe-band-label--low {
     transform: translateX(-50%) translateY(calc(-200% - 6px));
   }
+  .pe-band-label--ceasefire { color: #4aaa6a; }
+  .pe-band-label--blockade  { color: #c04030; }
 
   @media (max-width: 640px) {
     .pe-layout { grid-template-columns: 1fr; gap: 1rem; }

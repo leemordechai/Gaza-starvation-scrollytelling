@@ -44,7 +44,7 @@
 
   // ── Chart geometry ─────────────────────────────────────────────────────────
   const W = 880;
-  const H = 360;
+  const H = 480;
   const PAD = { top: 58, right: 24, bottom: 44, left: 62 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top  - PAD.bottom;
@@ -376,7 +376,7 @@
           <!-- Ceasefire highlight bands (rendered first, behind everything) -->
           {#each ceasefireBands as band, bi}
             {@const bandW = band.x2 - band.x1}
-            {@const labelX = Math.max(PAD.left + bandW / 2, Math.min(band.midX, W - PAD.right - bandW / 2))}
+            {@const labelX = Math.min(band.midX, W - PAD.right - 20)}
             {@const anchor = 'middle'}
             <rect
               x={band.x1}
@@ -643,17 +643,9 @@
     border-radius: 3px;
     overflow: visible;
     padding-top: 2rem;
+    box-sizing: border-box;
   }
 
-  /* On desktop: cap chart height so it fits in ~80vh */
-  @media (min-width: 721px) {
-    .at-chart-container {
-      max-height: calc(var(--vh, 1vh) * 72);
-    }
-    .at-chart {
-      max-height: calc(var(--vh, 1vh) * 72);
-    }
-  }
 
   .at-chart {
     display: block;
@@ -745,7 +737,7 @@
     pointer-events: none;
   }
 
-  .at-ceasefire-label {
+  :global(.at-ceasefire-label) {
     font-family: var(--font-ui);
     font-size: 8px;
     font-weight: 700;
@@ -755,7 +747,7 @@
     pointer-events: none;
   }
 
-  .at-ceasefire-tick {
+  :global(.at-ceasefire-tick) {
     stroke: #4aaa6a;
     stroke-width: 1;
     opacity: 0.4;
@@ -769,7 +761,7 @@
     pointer-events: none;
   }
 
-  .at-gap-label {
+  :global(.at-gap-label) {
     font-family: var(--font-ui);
     font-size: 10px;
     font-weight: 700;

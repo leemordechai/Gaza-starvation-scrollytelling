@@ -17,7 +17,7 @@
           mark.classList.remove('inv-shown');
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
     obs.observe(markPara);
     return () => obs.disconnect();
@@ -84,5 +84,21 @@
   }
   .measure-body :global(mark.inv.inv-shown) {
     color: #fff;
+  }
+
+  /* On mobile, clip-path on ::before is unreliable — switch to background-color fade */
+  @media (max-width: 600px) {
+    .measure-body :global(mark.inv) {
+      background: transparent;
+      color: var(--text);
+      transition: background 0.9s ease 0.2s, color 0.9s ease 0.2s;
+    }
+    .measure-body :global(mark.inv::before) {
+      display: none;
+    }
+    .measure-body :global(mark.inv.inv-shown) {
+      background: rgba(140, 30, 22, 0.82);
+      color: #fff;
+    }
   }
 </style>

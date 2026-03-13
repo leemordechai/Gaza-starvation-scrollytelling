@@ -20,9 +20,9 @@
     { x: 650, y: 1560, w: 290, h: 170 },
   ];
 
-  // Multiplier = 8 → 7 × vh of travel after the sticky vh.
-  // Fracs at n/8 give each stop exactly one page-down landing zone:
-  //   page-down #N lands at N×vh → progress = N/7 ≈ n/8 + small lead-in.
+  // Multiplier = 9 → 8 × vh of travel after the sticky vh.
+  // One page-down = 1/8 = 0.125 = exactly the gap between fracs.
+  // Page-down #N lands at progress = N/8, activating stop N immediately.
   const STOP_FRACS = [0.125, 0.25, 0.375, 0.5, 0.625, 0.75];
 
   let svgEl: SVGSVGElement;
@@ -39,11 +39,42 @@
 
     function setHeight() {
       const w = window.innerWidth;
-      const multiplier = w <= 700 ? 5 : w <= 1024 ? 6 : 8;
+      const multiplier = w <= 700 ? 6 : w <= 1024 ? 7 : 9;
       scrollContainer.style.height = window.innerHeight * multiplier + 'px';
     }
+    // Also repositions sentinels after resize (called once sentinelEls are created below)
+    function repositionSentinels(els: HTMLElement[]) {
+      const sentinelH = window.innerHeight * 0.6;
+      els.forEach((el, i) => {
+        el.style.top = (STOP_FRACS[i] * parseFloat(scrollContainer.style.height)) + 'px';
+        el.style.height = sentinelH + 'px';
+      });
+    }
     setHeight();
-    window.addEventListener('resize', setHeight, { passive: true });
+
+    // Create sentinel divs imperatively — all styles inline to bypass Svelte CSS scoping.
+    // 60vh tall so a full page-down cannot jump clean past a sentinel.
+    const sentinelEls: HTMLElement[] = STOP_FRACS.map((frac, i) => {
+      const el = document.createElement('div');
+      el.setAttribute('data-stop', String(i));
+      el.setAttribute('aria-hidden', 'true');
+      el.style.cssText = [
+        'position: absolute',
+        'left: 0',
+        'width: 100%',
+        `height: ${window.innerHeight * 0.6}px`,
+        `top: ${frac * parseFloat(scrollContainer.style.height)}px`,
+        'pointer-events: none',
+      ].join(';');
+      scrollContainer.appendChild(el);
+      return el;
+    });
+
+    function onResize() {
+      setHeight();
+      repositionSentinels(sentinelEls);
+    }
+    window.addEventListener('resize', onResize, { passive: true });
 
     const result = await initGsap();
     if (!result) return;
@@ -88,13 +119,13 @@
       activeStop = -1;
     }
 
+    // GSAP: truck animation scrub only — no step activation here
     const st = ScrollTrigger.create({
       trigger: scrollContainer,
       start: 'top top',
       end: 'bottom bottom',
       scrub: 0.5,
       invalidateOnRefresh: true,
-      onEnter: () => { activeStop = -1; },
       onLeaveBack: () => { resetTruck(); },
       onUpdate: (self: any) => {
         const progress = self.progress;
@@ -114,15 +145,37 @@
         svgEl.setAttribute('viewBox', `0 ${panY} ${VB_W} ${VB_H}`);
 
         trailPathEl.style.strokeDashoffset = String(pathLen - dist);
-
-        let newStop = -1;
-        for (let i = STOP_FRACS.length - 1; i >= 0; i--) {
-          if (progress >= STOP_FRACS[i] - 0.09) { newStop = i; break; }
-        }
-        activeStop = newStop;
       }
     });
     triggers.push(st);
+
+    // IntersectionObserver: step activation.
+    // Each entry fires when a sentinel crosses the activation line (50% of viewport from top).
+    // rootMargin '-50% 0px -50% 0px' = a 0px-tall line at the viewport midpoint.
+    // When a sentinel crosses that line (entering = scrolling into it, leaving = scrolling past):
+    //   - entering from below (scrolling down): activate this stop
+    //   - exiting above (scrolling down past): activate the next stop if any, else keep current
+    // We track the last sentinel that crossed the midline going downward.
+    let lastCrossed = -1;
+    const stepObs = new IntersectionObserver(
+      (entries) => {
+        // Sort by sentinel index so we process in order
+        const sorted = [...entries].sort((a, b) =>
+          Number(a.target.getAttribute('data-stop')) - Number(b.target.getAttribute('data-stop'))
+        );
+        for (const entry of sorted) {
+          const idx = Number(entry.target.getAttribute('data-stop'));
+          if (entry.isIntersecting) {
+            // Sentinel is crossing the midline — activate it
+            lastCrossed = idx;
+            activeStop = idx;
+          }
+        }
+        // If nothing intersects midline, keep activeStop (don't reset to -1 between sentinels)
+      },
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+    );
+    sentinelEls.forEach(el => stepObs.observe(el));
 
     // Use IntersectionObserver to detect when section scrolls into view from above,
     // ensuring truck always starts at position 0
@@ -150,8 +203,10 @@
     }, 300);
 
     return () => {
-      window.removeEventListener('resize', setHeight);
+      window.removeEventListener('resize', onResize);
       resetObs.disconnect();
+      stepObs.disconnect();
+      sentinelEls.forEach(el => el.remove());
     };
   });
 
@@ -179,7 +234,7 @@
         class="tr-svg"
         bind:this={svgEl}
         viewBox="0 0 {VB_W} {VB_H}"
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio="xMidYMid slice"
         role="img"
         aria-label={truckRoute.sectionSub}
       >
@@ -523,6 +578,16 @@
   }
 
   .tr-scroll-container { position: relative; }
+
+  /* Invisible scroll sentinels for IntersectionObserver step activation.
+     60vh tall so a full page-down can never jump clean past a sentinel. */
+  .tr-sentinel {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    pointer-events: none;
+  }
 
   .tr-sticky {
     position: sticky;
