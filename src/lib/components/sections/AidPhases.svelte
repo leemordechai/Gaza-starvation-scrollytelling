@@ -112,7 +112,62 @@
     </div>
   </div>
 
-  <div class="container-wide">
+  <!-- ── Mobile layout: 6 full-screen cards (grid on top, text below) ──── -->
+  <div class="ap-mobile-cards">
+    {#each phases as phase, i}
+      {@const phaseShuf = shuffles[i]}
+      <div class="ap-mob-card" class:ap-mob-card--blockade={phase.isBlockade}>
+
+        <!-- Grid -->
+        <div class="ap-mob-grid-wrap">
+          <div class="ap-mob-info" style="--phase-color: {phase.color};">
+            <span class="ap-mob-tag" style="color:{phase.color}; border-color:{phase.color}40;">{phase.tag}</span>
+            <div class="ap-mob-counter-row">
+              <span class="ap-mob-counter" style="color:{phase.color};">{phase.avgPerDay}</span>
+              <span class="ap-mob-counter-unit">משאיות / יום</span>
+            </div>
+          </div>
+          <div
+            class="ap-mob-grid"
+            style="--cols: 20;"
+            role="img"
+            aria-label="{phase.activeCount} מתוך {GRID_TOTAL} משאיות ביום"
+          >
+            {#each Array(GRID_TOTAL) as _, cellIdx}
+              {@const truckIdx = phaseShuf[cellIdx]}
+              {@const active = truckIdx < phase.activeCount}
+              <span
+                class="ap-mob-cell"
+                class:ap-mob-cell--active={active}
+                class:ap-mob-cell--blockade={phase.isBlockade && !active}
+              >
+                {#if active}
+                  <img class="ap-mob-truck" src="/images/truck-sketch.png" alt="" aria-hidden="true" loading="lazy" />
+                {/if}
+              </span>
+            {/each}
+          </div>
+          {#if phase.isBlockade}
+            <div class="ap-mob-blockade-overlay">
+              <span class="ap-mob-blockade-num">79</span>
+              <span class="ap-mob-blockade-label">יום</span>
+            </div>
+          {/if}
+        </div>
+
+        <!-- Text -->
+        <div class="ap-mob-text">
+          <span class="ap-mob-period">{phase.period}</span>
+          <h3 class="ap-mob-heading" style="color:{phase.color};">{phase.annotation}</h3>
+          <p class="ap-mob-body">{phase.narrative}</p>
+          <p class="ap-mob-detail">{phase.detail}</p>
+        </div>
+
+      </div>
+    {/each}
+  </div>
+
+  <div class="container-wide ap-desktop-layout">
     <div class="td-layout">
 
       <!-- ── Sticky visualization ───────────────────────────────────────── -->
@@ -175,33 +230,7 @@
       <!-- ── Scrolling narrative ─────────────────────────────────────────── -->
       <div class="td-narrative">
         {#each phases as phase, i}
-          {@const MOBILE_TOTAL = 200}
-          {@const mobileActive = Math.round((phase.activeCount / GRID_TOTAL) * MOBILE_TOTAL)}
           <div class="td-step" class:td-step--active={activePhase === i} class:td-step--blockade={phase.isBlockade}>
-
-            <!-- Mobile-only inline grid for this phase -->
-            <div class="td-step-grid-wrap" aria-hidden="true">
-              <div class="td-step-info" style="--step-color: {phase.color};">
-                <span class="td-step-counter" style="color:{phase.color};">{phase.avgPerDay}</span>
-                <span class="td-step-counter-unit">משאיות / יום</span>
-              </div>
-              <!-- Mobile grid: 200 cells (10 cols × 20 rows) for compact display -->
-            <div class="td-step-grid" role="img" aria-label="{mobileActive} מתוך {MOBILE_TOTAL} משאיות">
-                {#each Array(MOBILE_TOTAL) as _, cellIdx}
-                  {@const active = cellIdx < mobileActive}
-                  <span
-                    class="td-step-cell"
-                    class:td-step-cell--active={active}
-                    class:td-step-cell--blockade={phase.isBlockade && !active}
-                  >
-                    {#if active}
-                      <img class="td-step-truck" src="/images/truck-sketch.png" alt="" aria-hidden="true" />
-                    {/if}
-                  </span>
-                {/each}
-              </div>
-            </div>
-
             <span class="td-step-tag" style="color: {phase.color}; border-color: {phase.color}40;">{phase.tag}</span>
             <span class="td-step-period">{phase.period}</span>
             <h3 class="td-step-heading" style="color: {phase.color};">{phase.annotation}</h3>
@@ -437,9 +466,6 @@
     margin: 0;
   }
 
-  /* Mobile inline grids: hidden on desktop, shown on mobile via media query */
-  .td-step-grid-wrap { display: none; }
-
   /* ── Narrative steps ──────────────────────────────────────────────────── */
   /* Bottom padding keeps phase 6 pinned at the top long enough for the
      IntersectionObserver to register it before the sticky panel releases. */
@@ -523,71 +549,88 @@
     .td-step { min-height: calc(var(--vh, 1vh) * 100); }
   }
 
+  /* ── Mobile cards: hidden on desktop ─────────────────────────────────── */
+  .ap-mobile-cards { display: none; }
+
   /* ── Small tablet / large phone (700px and below) ────────────────────── */
-  /* Mobile: single-column, no sticky. Each step is a self-contained card   */
-  /* with its own mini-grid above the text. Grid updates via IO on the step. */
+  /* Mobile: 6 full-screen cards (grid on top, text below). No sticky.      */
   @media (max-width: 700px) {
-    .td-layout {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
+    /* Hide desktop two-column layout */
+    .ap-desktop-layout { display: none; }
 
-    /* Hide the shared sticky panel — mobile uses per-step inline grids */
-    .td-sticky { display: none; }
-
-    .td-narrative { padding: 0 0 2rem; }
-
-    .td-step {
-      min-height: auto;
-      opacity: 1;
-      padding: 2rem 0 3rem;
+    /* Show mobile cards */
+    .ap-mobile-cards {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      gap: 0.6rem;
-      border-top: 1px solid var(--border);
+      padding: 0 1rem;
     }
-    .td-step:first-child { border-top: none; }
 
-    /* Per-step inline grid shown only on mobile */
-    .td-step-grid-wrap {
-      display: block;
-      margin-bottom: 1rem;
+    .ap-mob-card {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 0 2rem;
+      border-top: 1px solid var(--border, #e8dbd8);
     }
-    .td-step-info {
+    .ap-mob-card:first-child { border-top: none; }
+
+    /* Grid section: fills available width, fixed aspect for predictable height */
+    .ap-mob-grid-wrap {
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .ap-mob-info {
       display: flex;
       align-items: baseline;
       gap: 1rem;
       padding-bottom: 0.4rem;
-      border-bottom: 2px solid var(--step-color, #7ab3d4);
+      border-bottom: 2px solid var(--phase-color, #7ab3d4);
       margin-bottom: 0.5rem;
     }
-    .td-step-counter {
+
+    .ap-mob-tag {
       font-family: var(--font-ui);
-      font-size: clamp(2rem, 9vw, 2.8rem);
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid;
+      border-radius: 2px;
+    }
+
+    .ap-mob-counter-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .ap-mob-counter {
+      font-family: var(--font-ui);
+      font-size: clamp(1.8rem, 8vw, 2.6rem);
       font-weight: 900;
       line-height: 1;
-      color: var(--step-color, #7ab3d4);
       font-variant-numeric: tabular-nums;
     }
-    .td-step-counter-unit {
+
+    .ap-mob-counter-unit {
       font-family: var(--font-ui);
       font-size: 0.72rem;
       font-weight: 600;
       color: var(--text-muted);
     }
-    .td-step-grid-wrap {
-      max-height: 130px;
-      overflow: hidden;
-    }
-    .td-step-grid {
+
+    .ap-mob-grid {
       display: grid;
-      grid-template-columns: repeat(20, 1fr);
+      grid-template-columns: repeat(var(--cols, 20), 1fr);
       gap: 2px;
       width: 100%;
     }
-    .td-step-cell {
-      aspect-ratio: 1;
+
+    .ap-mob-cell {
+      aspect-ratio: 935 / 655;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -595,20 +638,95 @@
       border-radius: 1px;
       opacity: 0.18;
     }
-    .td-step-cell--active {
+
+    .ap-mob-cell--active {
       background: transparent;
       opacity: 1;
     }
-    .td-step-cell--blockade {
+
+    .ap-mob-cell--blockade {
       background: rgba(139, 26, 16, 0.12);
       opacity: 0.25;
     }
-    .td-step-truck {
+
+    .ap-mob-truck {
       width: 100%;
       height: 100%;
       object-fit: contain;
       display: block;
       mix-blend-mode: multiply;
+    }
+
+    .ap-mob-blockade-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2em;
+      pointer-events: none;
+    }
+
+    .ap-mob-blockade-num {
+      font-family: var(--font-ui);
+      font-size: clamp(3rem, 20vw, 6rem);
+      font-weight: 900;
+      color: #8b1a10;
+      line-height: 1;
+    }
+
+    .ap-mob-blockade-label {
+      font-family: var(--font-ui);
+      font-size: clamp(1rem, 6vw, 2rem);
+      font-weight: 700;
+      color: #8b1a10;
+      opacity: 0.75;
+      align-self: flex-end;
+      padding-bottom: 0.1em;
+    }
+
+    /* Text section below the grid */
+    .ap-mob-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+      padding-top: 1.2rem;
+    }
+
+    .ap-mob-period {
+      font-family: var(--font-ui);
+      font-size: 0.62rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      opacity: 0.7;
+      letter-spacing: 0.04em;
+    }
+
+    .ap-mob-heading {
+      font-family: var(--font-ui);
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .ap-mob-body {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .ap-mob-detail {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      opacity: 0.6;
+      letter-spacing: 0.07em;
+      margin: 0;
     }
   }
 
