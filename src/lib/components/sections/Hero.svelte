@@ -128,6 +128,10 @@
     scroll-snap-align: start;
   }
   .hero-scroll-container .hero { position: sticky; top: 0; }
+  @media (max-width: 768px) {
+    /* On mobile: no sticky — hero scrolls away normally like a regular element */
+    .hero-scroll-container .hero { position: relative; }
+  }
 
   /* Zoom phase: 100vh — GSAP animation runs during this scroll (3.2×→1×). */
   .hero-phase-zoom {
