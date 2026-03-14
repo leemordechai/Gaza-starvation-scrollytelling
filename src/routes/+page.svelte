@@ -393,18 +393,12 @@
     text-align: right;
   }
 
-  /* Intent preface — pulled up to sit just below the chapter header */
+  /* Intent preface — sits directly below the chapter header, no bleed-up */
   .intent-preface-scroll {
-    /* Negative margin closes the gap between the chapter-head bottom and this paragraph */
-    margin-top: calc(var(--vh, 1vh) * -15);
+    margin-top: 0;
     padding: clamp(1rem, 2vh, 2rem) 0 clamp(2rem, 4vh, 3rem);
     position: relative;
     z-index: 1;
-  }
-  @media (max-width: 600px) {
-    /* On mobile, remove negative pull to prevent the preface text from peeking
-       at the viewport bottom edge when landing on the intent header. */
-    .intent-preface-scroll { margin-top: 0; }
   }
   .intent-preface-inner p {
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
@@ -416,14 +410,9 @@
 
   /* Pull MeasureSection up to bleed below reality header */
   .measure-pull {
-    margin-top: calc(var(--vh, 1vh) * -30);
+    margin-top: 0;
     position: relative;
     z-index: 1;
-  }
-  @media (max-width: 600px) {
-    /* On mobile, don't pull MeasureSection into the chapter header — it causes
-       the first paragraph to clip at the viewport bottom edge on page-down. */
-    .measure-pull { margin-top: 0; }
   }
 
   /* ── Chapter 1 band ── */
