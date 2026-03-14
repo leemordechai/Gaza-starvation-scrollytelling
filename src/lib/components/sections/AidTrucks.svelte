@@ -557,6 +557,7 @@
     </div>
 
     <p class="at-source">מקור: {aidBlockade.source}</p>
+    <p class="at-source-note">{aidBlockade.sourceNote}</p>
   </div>
 </section>
 
@@ -1059,6 +1060,16 @@
     letter-spacing: 0.04em;
     margin-top: 0.8rem;
     opacity: 0.7;
+  }
+
+  .at-source-note {
+    font-family: var(--font-ui);
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+    margin-top: 0.25rem;
+    opacity: 0.55;
+    font-style: italic;
   }
 
   .at-tap-hint {
