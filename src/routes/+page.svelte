@@ -309,8 +309,6 @@
   }
   @media (max-width: 700px) {
     .bridge-block--centered {
-      min-height: auto;
-      padding-block: clamp(3rem, 8vh, 5rem);
       width: 80%;
       margin-inline: auto;
     }
@@ -549,8 +547,8 @@
     .chapter-head::before { left: 1.25rem; right: 1.25rem; }
   }
 
-  /* ── Mobile: compact chapter headers and intro steps ── */
-  @media (max-width: 768px) {
+  /* ── Tablet + mobile: compact chapter headers and intro steps ── */
+  @media (max-width: 1024px) {
     .chapter-head {
       height: auto;
       min-height: 0;
@@ -560,8 +558,17 @@
       min-height: 0;
       padding-block: clamp(2.5rem, 8vh, 4rem);
     }
+    .bridge-block--centered {
+      height: auto;
+      min-height: 0;
+      padding-block: clamp(3rem, 8vh, 5rem);
+    }
+    .famine-block.nb-section {
+      min-height: 0;
+      padding-block: clamp(2.5rem, 8vh, 4rem);
+    }
   }
-  /* Narrow mobile: top-align intro text + nav clearance (after 768px rule so padding-top wins) */
+  /* Narrow mobile: top-align intro text + nav clearance (after 1024px rule so padding-top wins) */
   @media (max-width: 600px) {
     .intro-step {
       align-items: flex-start;
@@ -591,9 +598,6 @@
 
   /* Famine block layout */
   .famine-block.nb-section { padding: 3rem 0 2rem; min-height: calc(var(--vh, 1vh) * 100); display: flex; align-items: center; }
-  @media (max-width: 768px) {
-    .famine-block.nb-section { min-height: 0; padding-block: clamp(2.5rem, 8vh, 4rem); }
-  }
   .famine-block .nb-p {
     font-size: 1.02rem;
     line-height: 1.82;
