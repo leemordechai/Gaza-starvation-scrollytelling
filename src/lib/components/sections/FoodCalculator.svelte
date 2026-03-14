@@ -1,9 +1,9 @@
 <script lang="ts">
   import { reveal } from '$lib/actions/reveal';
 
-  // Median food price multiplier across all WFP-tracked commodities
-  // Based on Jan 2025 WFP Market Monitor data (peak blockade period)
-  const MULTIPLIER = 8.4;
+  // Median food price multiplier across all WFP-tracked food commodities
+  // Based on Jul 2025 WFP Market Monitor data (actual price peak, W4)
+  const MULTIPLIER = 12;
   const DAILY_WAGE_GAZA = 40; // average daily wage in Gaza, 2022 (NIS)
 
   let monthly = $state(0);
@@ -76,7 +76,7 @@
         </div>
 
         <p class="fc-source">
-          * מחיר מבוסס על עליית מחירי מזון חציונית לפי נתוני WFP, ינואר 2025 (שיא תקופת הסגר)
+          * מחיר מבוסס על עליית מחירי מזון חציונית לפי נתוני WFP, יולי 2025 (שיא המחירים)
         </p>
       </div>
     </div>
