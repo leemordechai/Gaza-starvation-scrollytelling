@@ -557,7 +557,6 @@
     </div>
 
     <p class="at-source">מקור: {aidBlockade.source}</p>
-    <p class="at-source-note">{aidBlockade.sourceNote}</p>
   </div>
 </section>
 
