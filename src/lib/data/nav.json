@@ -7,7 +7,7 @@
     { "label": "סיוע הומניטרי", "href": "#reality-header" },
     { "label": "א׳ — כניסת משאיות", "href": "#chapter-1" },
     { "label": "ב׳ — הדרך אל הצלחת", "href": "#chapter-2" },
-    { "label": "ג׳ — מחיר ההישרדות", "href": "#chapter-3" },
+    { "label": "ג׳ — כמה עולה לשרוד?", "href": "#chapter-3" },
     { "label": "ד׳ — תזונה ורעב", "href": "#chapter-4" },
     { "label": "ה׳ — השלכות", "href": "#chapter-5" },
     { "label": "אחרית דבר", "href": "#analysis" }
@@ -19,7 +19,7 @@
     { "label": "סיוע הומניטרי", "target": "#reality-header" },
     { "label": "א׳ — כניסת משאיות", "target": "#chapter-1" },
     { "label": "ב׳ — הדרך אל הצלחת", "target": "#chapter-2" },
-    { "label": "ג׳ — מחיר ההישרדות", "target": "#chapter-3" },
+    { "label": "ג׳ — כמה עולה לשרוד?", "target": "#chapter-3" },
     { "label": "ד׳ — תזונה ורעב", "target": "#chapter-4" },
     { "label": "ה׳ — השלכות", "target": "#chapter-5" },
     { "label": "אחרית דבר", "target": "#analysis" }

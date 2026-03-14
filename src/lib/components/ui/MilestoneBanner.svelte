@@ -2,9 +2,9 @@
   import { scrollProgress } from '$lib/stores/scroll';
 
   const MILESTONES = [
-    { at: 0.25, label: 'פרק 2 · כלי הנשק של הרעב' },
-    { at: 0.50, label: 'פרק 3 · מחירים ומחסור' },
-    { at: 0.75, label: 'פרק 4 · מה נותר לאכול' },
+    { at: 0.25, label: 'חלק א׳ · עורק החיים: כניסת משאיות' },
+    { at: 0.50, label: 'חלק ב׳ · הדרך אל הצלחת' },
+    { at: 0.75, label: 'חלק ג׳ · כמה עולה לשרוד?' },
   ];
 
   let shownMilestones = $state(new Set<number>());
