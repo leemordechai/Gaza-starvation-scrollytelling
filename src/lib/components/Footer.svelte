@@ -17,7 +17,6 @@
     </div>
     <div class="footer-bottom">
       <p>{footerData.copyright}</p>
-      <p>{footerData.produced}</p>
     </div>
   </div>
 </footer>
