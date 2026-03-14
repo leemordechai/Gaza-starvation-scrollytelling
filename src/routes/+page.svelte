@@ -292,6 +292,10 @@
     overflow: visible;
   }
   /* ── Intro step with side image ── */
+  .intro-step--with-image {
+    align-items: flex-start;
+    padding-top: 10vh;
+  }
   .intro-image-layout {
     display: grid;
     grid-template-columns: 60% 1fr;
@@ -321,7 +325,6 @@
     text-align: right;
   }
   .intro-fig-text {
-    /* Pull text left so it overlaps the white right edge of the image */
     margin-inline-start: -8rem;
     z-index: 1;
     position: relative;
@@ -338,6 +341,10 @@
     margin: 0;
   }
   @media (max-width: 700px) {
+    .intro-step--with-image {
+      align-items: center;
+      padding-top: 56px;
+    }
     .intro-image-layout {
       grid-template-columns: 1fr;
       gap: 1.5rem;
