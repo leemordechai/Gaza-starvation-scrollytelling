@@ -64,7 +64,7 @@
         if (isMobile) {
           navVisible.set(window.scrollY > hh * 0.65);
         } else {
-          navVisible.set(window.scrollY > 40);
+          navVisible.set(window.scrollY > window.innerHeight);
         }
       });
     }
