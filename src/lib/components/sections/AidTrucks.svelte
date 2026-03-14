@@ -43,9 +43,9 @@
   const monthKeys = months.map(m => m.key);
 
   // ── Chart geometry ─────────────────────────────────────────────────────────
-  const W = 880;
-  const H = 480;
-  const PAD = { top: 58, right: 24, bottom: 44, left: 62 };
+  const W = 1100;
+  const H = 380;
+  const PAD = { top: 52, right: 20, bottom: 40, left: 58 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top  - PAD.bottom;
 
@@ -570,26 +570,19 @@
   .at-chart-wrap {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 0;                    /* sidebar shares border with chart */
+    gap: 0;
     align-items: stretch;
     margin-top: 1.5rem;
-    /* Constrain total height so it fits on a laptop screen */
-    max-height: calc(var(--vh, 1vh) * 58);
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-radius: 3px;
     overflow: hidden;
   }
 
-  @media (min-width: 1600px) {
-    .at-chart-wrap { max-height: calc(var(--vh, 1vh) * 65); }
-  }
-
   /* On mobile stack vertically */
   @media (max-width: 700px) {
     .at-chart-wrap {
       grid-template-columns: 1fr;
-      max-height: none;
       border: none;
       background: transparent;
     }
@@ -599,8 +592,7 @@
   .at-chart-container {
     position: relative;
     width: 100%;
-    height: 100%;              /* fills the grid row */
-    min-height: 240px;
+    min-height: 200px;
     overflow: visible;
     box-sizing: border-box;
   }
@@ -608,7 +600,7 @@
   .at-chart {
     display: block;
     width: 100%;
-    height: 100%;              /* fills the container — SVG scales to fit */
+    height: auto;
     cursor: crosshair;
     touch-action: pan-y;
     overflow: visible;
@@ -620,23 +612,23 @@
       border: 1px solid var(--border-mid);
       border-radius: 3px;
     }
-    .at-chart { height: auto; min-height: 220px; }
+    .at-chart { min-height: 200px; }
   }
 
   /* ── Right sidebar: controls + legend ──────────────────────────────────── */
   .at-sidebar {
     display: flex;
     flex-direction: column;
-    width: 170px;
-    border-right: 1px solid var(--border-mid);   /* RTL: right = visual left of chart */
-    padding: 1rem 0.85rem;
+    width: 150px;
+    border-right: 1px solid var(--border-mid);
+    padding: 0.85rem 0.75rem;
     gap: 0;
     overflow-y: auto;
     box-sizing: border-box;
   }
 
   @media (min-width: 1400px) {
-    .at-sidebar { width: 200px; }
+    .at-sidebar { width: 170px; }
   }
 
   @media (max-width: 700px) {
