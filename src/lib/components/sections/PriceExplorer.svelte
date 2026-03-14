@@ -714,5 +714,14 @@
     .pe-tab { padding: 0.55rem 0.7rem; font-size: 0.8rem; min-height: 44px; }
     .pe-section { padding: 2.5rem 0 1.5rem; justify-content: flex-start; }
     .pe-chart-wrap { padding: 0.85rem 0.85rem 0.6rem; }
+
+    /* Larger SVG labels on mobile — viewBox px units scale with SVG size,
+       so we override here to keep them readable on small screens */
+    .pe-axis-label { font-size: 18px; }
+    .pe-axis-unit  { font-size: 19px; }
+    .pe-band-label { font-size: 0.75rem; }
+    :global(.pe-mult-badge) { font-size: 26px; }
+    :global(.pe-mult-num)   { font-size: 32px; }
+    :global(.pe-mult-sub)   { font-size: 16px; }
   }
 </style>
