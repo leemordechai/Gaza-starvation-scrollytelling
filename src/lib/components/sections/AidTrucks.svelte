@@ -314,43 +314,8 @@
 
 <section class="at-section" id="aid-trucks">
   <div class="container-wide">
-    <!-- Controls + chart + legend wrapper (desktop: side-by-side) -->
+    <!-- Chart + right sidebar wrapper -->
     <div class="at-chart-wrap reveal" use:reveal>
-
-      <!-- Controls sidebar (left on desktop, top on mobile) -->
-      <div class="at-controls">
-        <div class="at-toggle-group">
-          <span class="at-toggle-label">פילוח לפי</span>
-          <div class="at-toggle">
-            <button
-              class="at-btn"
-              class:active={mode === 'classification'}
-              onclick={() => { mode = 'classification'; }}
-            >סוג סיוע</button>
-            <button
-              class="at-btn"
-              class:active={mode === 'org'}
-              onclick={() => { mode = 'org'; }}
-            >ארגון תורם</button>
-          </div>
-        </div>
-
-        <div class="at-toggle-group">
-          <span class="at-toggle-label">מדד</span>
-          <div class="at-toggle">
-            <button
-              class="at-btn"
-              class:active={metric === 'trucksPerDay'}
-              onclick={() => { metric = 'trucksPerDay'; }}
-            >משאיות / יום</button>
-            <button
-              class="at-btn"
-              class:active={metric === 'tonsPerDay'}
-              onclick={() => { metric = 'tonsPerDay'; }}
-            >טון / יום</button>
-          </div>
-        </div>
-      </div>
 
       <!-- SVG chart -->
       <div class="at-chart-container" use:viewport={{ onEnter: () => { chartVisible = true; }, onLeave: () => { chartVisible = false; revealCounter++; }, threshold: 0.15 }}>
@@ -526,26 +491,68 @@
         {/if}
       </div>
 
-      <!-- Legend -->
-      <div class="at-legend">
-        <div class="at-legend-total">
-          <span class="at-legend-swatch at-legend-swatch--total"></span>
-          <span class="at-legend-key">סך הכל</span>
+      <!-- Right sidebar: controls + legend unified -->
+      <div class="at-sidebar">
+
+        <!-- Controls -->
+        <div class="at-controls">
+          <div class="at-toggle-group">
+            <span class="at-toggle-label">פילוח לפי</span>
+            <div class="at-toggle">
+              <button
+                class="at-btn"
+                class:active={mode === 'classification'}
+                onclick={() => { mode = 'classification'; }}
+              >סוג סיוע</button>
+              <button
+                class="at-btn"
+                class:active={mode === 'org'}
+                onclick={() => { mode = 'org'; }}
+              >ארגון תורם</button>
+            </div>
+          </div>
+
+          <div class="at-toggle-group">
+            <span class="at-toggle-label">מדד</span>
+            <div class="at-toggle">
+              <button
+                class="at-btn"
+                class:active={metric === 'trucksPerDay'}
+                onclick={() => { metric = 'trucksPerDay'; }}
+              >משאיות / יום</button>
+              <button
+                class="at-btn"
+                class:active={metric === 'tonsPerDay'}
+                onclick={() => { metric = 'tonsPerDay'; }}
+              >טון / יום</button>
+            </div>
+          </div>
         </div>
-        {#each subSeries as sub}
-          <button
-            class="at-legend-item"
-            class:at-legend-item--hovered={hoveredSub === sub.key}
-            class:at-legend-item--dimmed={hoveredSub !== null && hoveredSub !== sub.key}
-            onmouseenter={() => { hoveredSub = sub.key; }}
-            onmouseleave={() => { hoveredSub = null; }}
-            onfocus={() => { hoveredSub = sub.key; }}
-            onblur={() => { hoveredSub = null; }}
-          >
-            <span class="at-legend-swatch" style="background:{getColor(sub.key)};"></span>
-            <span class="at-legend-key">{label(sub.key)}</span>
-          </button>
-        {/each}
+
+        <div class="at-sidebar-divider"></div>
+
+        <!-- Legend -->
+        <div class="at-legend">
+          <div class="at-legend-total">
+            <span class="at-legend-swatch at-legend-swatch--total"></span>
+            <span class="at-legend-key">סך הכל</span>
+          </div>
+          {#each subSeries as sub}
+            <button
+              class="at-legend-item"
+              class:at-legend-item--hovered={hoveredSub === sub.key}
+              class:at-legend-item--dimmed={hoveredSub !== null && hoveredSub !== sub.key}
+              onmouseenter={() => { hoveredSub = sub.key; }}
+              onmouseleave={() => { hoveredSub = null; }}
+              onfocus={() => { hoveredSub = sub.key; }}
+              onblur={() => { hoveredSub = null; }}
+            >
+              <span class="at-legend-swatch" style="background:{getColor(sub.key)};"></span>
+              <span class="at-legend-key">{label(sub.key)}</span>
+            </button>
+          {/each}
+        </div>
+
       </div>
     </div>
 
@@ -559,42 +566,155 @@
     padding: 0 0 clamp(1.5rem, 4vw, 3rem);
   }
 
+  /* ── Chart wrapper: chart | sidebar ───────────────────────────────────── */
+  .at-chart-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;                    /* sidebar shares border with chart */
+    align-items: stretch;
+    margin-top: 1.5rem;
+    /* Constrain total height so it fits on a laptop screen */
+    max-height: calc(var(--vh, 1vh) * 58);
+    background: var(--bg-card);
+    border: 1px solid var(--border-mid);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 1600px) {
+    .at-chart-wrap { max-height: calc(var(--vh, 1vh) * 65); }
+  }
+
+  /* On mobile stack vertically */
+  @media (max-width: 700px) {
+    .at-chart-wrap {
+      grid-template-columns: 1fr;
+      max-height: none;
+      border: none;
+      background: transparent;
+    }
+  }
+
+  /* ── Chart container ────────────────────────────────────────────────────── */
+  .at-chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;              /* fills the grid row */
+    min-height: 240px;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .at-chart {
+    display: block;
+    width: 100%;
+    height: 100%;              /* fills the container — SVG scales to fit */
+    cursor: crosshair;
+    touch-action: pan-y;
+    overflow: visible;
+  }
+
+  @media (max-width: 700px) {
+    .at-chart-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 3px;
+    }
+    .at-chart { height: auto; min-height: 220px; }
+  }
+
+  /* ── Right sidebar: controls + legend ──────────────────────────────────── */
+  .at-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 170px;
+    border-right: 1px solid var(--border-mid);   /* RTL: right = visual left of chart */
+    padding: 1rem 0.85rem;
+    gap: 0;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 1400px) {
+    .at-sidebar { width: 200px; }
+  }
+
+  @media (max-width: 700px) {
+    .at-sidebar {
+      width: 100%;
+      border-right: none;
+      border-top: 1px solid var(--border-mid);
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 0.75rem;
+    }
+  }
+
+  .at-sidebar-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border-mid);
+    margin: 0.9rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .at-sidebar-divider { display: none; }
+  }
+
   /* ── Controls ──────────────────────────────────────────────────────────── */
   .at-controls {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    justify-content: center;
+    gap: 0.9rem;
+  }
+
+  @media (max-width: 700px) {
+    .at-controls {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
   }
 
   .at-toggle-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
+  }
+
+  @media (max-width: 700px) {
+    .at-toggle-group { flex-direction: row; align-items: center; gap: 0.75rem; }
   }
 
   .at-toggle-label {
     font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--text-muted);
+    opacity: 0.6;
   }
 
   .at-toggle {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-mid);
-    border-radius: 3px;
+    border-radius: 2px;
     overflow: hidden;
+  }
+
+  @media (max-width: 700px) {
+    .at-toggle { flex-direction: row; }
   }
 
   .at-btn {
     font-family: var(--font-ui);
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
-    padding: 0.4rem 0.85rem;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.6rem;
     background: transparent;
     color: var(--text-muted);
     border: none;
@@ -618,75 +738,9 @@
     font-weight: 700;
   }
 
-  /* ── Chart wrapper: controls | chart | legend on desktop ───────────────── */
-  .at-chart-wrap {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1.5rem;
-    align-items: start;
-    margin-top: 1.5rem;
-  }
-
-  /* On medium screens drop legend below chart */
-  @media (max-width: 900px) {
-    .at-chart-wrap {
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto;
-    }
-    .at-legend {
-      grid-column: 1 / -1;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 0.4rem 1rem;
-    }
-  }
-
-  /* On mobile stack everything vertically */
-  @media (max-width: 600px) {
-    .at-chart-wrap {
-      grid-template-columns: 1fr;
-    }
-    .at-controls {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .at-toggle { flex-direction: row; }
+  @media (max-width: 700px) {
     .at-btn { border-top: none; border-left: 1px solid var(--border-mid); padding: 0.6rem 0.85rem; font-size: 0.78rem; min-height: 44px; }
     .at-btn:first-child { border-left: none; }
-    .at-toggle-group { flex-direction: row; align-items: center; gap: 0.75rem; }
-  }
-
-  /* ── Chart container (relative for tooltip) ────────────────────────────── */
-  .at-chart-container {
-    position: relative;
-    width: 100%;
-    min-height: 240px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-mid);
-    border-radius: 3px;
-    overflow: visible;
-    padding-top: 2rem;
-    box-sizing: border-box;
-  }
-
-
-  .at-chart {
-    display: block;
-    width: 100%;
-    height: auto;
-    min-height: 220px;
-    /* Cap height on laptop screens so the chart fits without scrolling.
-       viewBox is 880×480 (aspect ~1.83:1), so max-height drives max-width too. */
-    max-height: calc(var(--vh, 1vh) * 62);
-    cursor: crosshair;
-    touch-action: pan-y;
-    overflow: visible;
-  }
-
-  /* On large monitors the cap can be a bit taller */
-  @media (min-width: 1600px) {
-    .at-chart { max-height: calc(var(--vh, 1vh) * 70); }
   }
 
   /* ── SVG elements ──────────────────────────────────────────────────────── */
@@ -943,24 +997,10 @@
   .at-legend {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    padding-top: 0.25rem;
-    min-width: 160px;
+    gap: 0.3rem;
   }
 
-  @media (min-width: 721px) {
-    .at-legend {
-      max-height: calc(var(--vh, 1vh) * 72);
-      overflow-y: auto;
-    }
-  }
-
-  @media (min-width: 1400px) {
-    .at-legend { min-width: 200px; gap: 0.45rem; }
-    .at-legend-key { font-size: 0.75rem; }
-  }
-
-  @media (max-width: 720px) {
+  @media (max-width: 700px) {
     .at-legend {
       flex-direction: row;
       flex-wrap: wrap;
