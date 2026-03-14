@@ -67,20 +67,26 @@
       const desktopEls = Array.from(document.querySelectorAll<HTMLElement>('.td-step'));
       const mobileEls  = Array.from(document.querySelectorAll<HTMLElement>('.ap-mob-step'));
 
-      const makeObs = (els: HTMLElement[]) => new IntersectionObserver(
-        (entries) => {
-          const sorted = [...entries].sort((a, b) =>
-            els.indexOf(a.target as HTMLElement) - els.indexOf(b.target as HTMLElement)
-          );
-          for (const entry of sorted) {
-            if (entry.isIntersecting) {
+      const makeObs = (els: HTMLElement[]) => {
+        // Track which steps are currently intersecting the zone.
+        // Fire when top of step crosses the 25% line from top (entering upper quarter).
+        // Always pick the highest-indexed visible step so page-down lands on next step.
+        const visible = new Set<number>();
+        return new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
               const idx = els.indexOf(entry.target as HTMLElement);
-              if (idx >= 0) activePhase = idx;
+              if (idx < 0) continue;
+              if (entry.isIntersecting) visible.add(idx);
+              else visible.delete(idx);
             }
-          }
-        },
-        { rootMargin: '-75% 0px -25% 0px', threshold: 0 }
-      );
+            if (visible.size > 0) {
+              activePhase = Math.max(...visible);
+            }
+          },
+          { rootMargin: '-25% 0px -75% 0px', threshold: 0 }
+        );
+      };
 
       // Only activate the observer matching the current layout.
       // CSS-hidden elements (display:none) still exist in DOM and can fire IO,
@@ -159,9 +165,13 @@
         {/key}
         {#if isBlockade}
           <div class="ap-mob-blockade-overlay">
-            <span class="ap-mob-blockade-num">79</span>
-            <span class="ap-mob-blockade-label">יום</span>
-            <span class="ap-mob-blockade-sub">אפס משאיות</span>
+            <div class="ap-mob-blockade-inner">
+              <div class="ap-mob-blockade-row">
+                <span class="ap-mob-blockade-num">79</span>
+                <span class="ap-mob-blockade-label">יום</span>
+              </div>
+              <span class="ap-mob-blockade-sub">אפס משאיות</span>
+            </div>
           </div>
         {/if}
       </div>
@@ -587,10 +597,14 @@
       /* needed for blockade overlay absolute positioning */
     }
 
-    /* wrapper around the grid so overlay can be absolute within it */
+    /* wrapper: stacks grid + overlay in same cell via CSS grid */
     .ap-mob-grid-wrap {
-      position: relative;
-      overflow: visible;
+      display: grid;
+      grid-template-areas: "stack";
+    }
+
+    .ap-mob-grid-wrap > * {
+      grid-area: stack;
     }
 
     .ap-mob-info {
@@ -677,13 +691,26 @@
     @keyframes ap-mob-pop { from { opacity: 0; } to { opacity: 1; } }
 
     .ap-mob-blockade-overlay {
-      position: absolute;
-      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.2em;
       pointer-events: none;
+      z-index: 2;
+    }
+
+    .ap-mob-blockade-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2em;
+    }
+
+    .ap-mob-blockade-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.15em;
+      line-height: 1;
     }
 
     .ap-mob-blockade-num {
@@ -701,22 +728,17 @@
       font-weight: 700;
       color: #8b1a10;
       opacity: 0.75;
-      align-self: flex-end;
-      padding-bottom: 0.1em;
+      padding-bottom: 0.08em;
     }
 
     .ap-mob-blockade-sub {
-      position: absolute;
-      bottom: 12%;
-      left: 0; right: 0;
-      text-align: center;
       font-family: var(--font-ui);
       font-size: clamp(0.65rem, 2.5vw, 0.9rem);
       font-weight: 700;
       color: #8b1a10;
       opacity: 0.6;
       letter-spacing: 0.08em;
-      pointer-events: none;
+      text-align: center;
     }
 
     /* ── Scrolling text steps ── */

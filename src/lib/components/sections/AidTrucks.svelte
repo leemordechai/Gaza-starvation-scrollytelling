@@ -682,6 +682,13 @@
     font-size: 9.5px;
   }
 
+  /* On mobile the SVG renders at ~44% of viewBox width → labels are ~4–5px.
+     Bump all SVG text to compensate. Breakpoint matches when chart < ~400px wide. */
+  @media (max-width: 600px) {
+    .at-axis-label--y { font-size: 18px; }
+    .at-axis-label--x { font-size: 17px; }
+  }
+
   /* Total area */
   .at-total-area {
     fill: url(#totalGradient);
@@ -747,6 +754,10 @@
     pointer-events: none;
   }
 
+  @media (max-width: 600px) {
+    :global(.at-ceasefire-label) { font-size: 16px; }
+  }
+
   :global(.at-ceasefire-tick) {
     stroke: #4aaa6a;
     stroke-width: 1;
@@ -771,9 +782,14 @@
     pointer-events: none;
   }
 
-  .at-gap-label--small {
+  :global(.at-gap-label--small) {
     font-size: 8px;
     letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 600px) {
+    :global(.at-gap-label) { font-size: 18px; }
+    :global(.at-gap-label--small) { font-size: 16px; }
   }
 
   /* Tooltip rule + dot */
