@@ -145,11 +145,11 @@
     }
   }
 
-  /* Dwell phase: another 100vh so the hero stays sticky and fully revealed
-     before it scrolls away into the intro steps.
+  /* Dwell phase: short pause (40vh) after zoom completes so the revealed image
+     registers before the hero scrolls away. Kept short so release feels snappy.
      On mobile eliminate dwell entirely — keeps the page-down count to one. */
   .hero-phase-dwell {
-    height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh) * 40);
     pointer-events: none;
   }
   @media (max-width: 768px) {

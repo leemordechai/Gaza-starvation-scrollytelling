@@ -52,10 +52,20 @@
         scrollY.set(window.scrollY);
         docHeight.set(document.documentElement.scrollHeight - window.innerHeight);
 
-        // Nav visibility: show after 65% of hero
-        const hh = heroEl ? (heroEl as HTMLElement).clientHeight : 600;
+        // Nav visibility:
+        // Desktop: hidden at scrollY=0 (page load), appears as soon as the user
+        //   starts scrolling (threshold: 40px — "has the user moved?").
+        //   Hides again if user scrolls back to the very top.
+        // Mobile: show after 65% of visible hero height (existing behaviour).
+        const heroContainer = heroEl as HTMLElement | null;
+        const hh = heroContainer ? heroContainer.clientHeight : 600;
         heroHeight.set(hh);
-        navVisible.set(window.scrollY > hh * 0.65);
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+          navVisible.set(window.scrollY > hh * 0.65);
+        } else {
+          navVisible.set(window.scrollY > 40);
+        }
       });
     }
 
