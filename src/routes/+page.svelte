@@ -292,14 +292,10 @@
     overflow: visible;
   }
   /* ── Intro step with side image ── */
-  .intro-step--with-image {
-    align-items: flex-start;
-    padding-top: 10vh;
-  }
   .intro-image-layout {
     display: grid;
-    grid-template-columns: 60% 1fr;
-    gap: 0;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
     align-items: center;
     width: 100%;
     max-width: 1100px;
@@ -324,13 +320,6 @@
     opacity: 0.7;
     text-align: right;
   }
-  .intro-fig-text {
-    margin-inline-start: -8rem;
-    z-index: 1;
-    position: relative;
-    background: linear-gradient(to right, transparent, var(--bg) 28%);
-    padding: 1.5rem 0 1.5rem 1.5rem;
-  }
   .intro-fig-text p {
     font-size: clamp(1.1rem, 1.65vw, 1.45rem);
     line-height: 1.75;
@@ -341,20 +330,11 @@
     margin: 0;
   }
   @media (max-width: 700px) {
-    .intro-step--with-image {
-      align-items: center;
-      padding-top: 56px;
-    }
     .intro-image-layout {
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
     .intro-fig { order: -1; }
-    .intro-fig-text {
-      margin-inline-start: 0;
-      background: none;
-      padding: 0;
-    }
   }
 
   .intro-step p {
