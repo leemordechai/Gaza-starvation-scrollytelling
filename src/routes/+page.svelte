@@ -479,7 +479,6 @@
     font-size: clamp(0.85rem, 1.2vw, 0.95rem);
     color: var(--text-muted);
     margin: 0.25rem 0 0;
-    max-width: 56ch;
     line-height: 1.55;
     text-align: right;
   }
