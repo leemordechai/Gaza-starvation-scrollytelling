@@ -310,6 +310,9 @@
     display: flex;
     align-items: center;
   }
+  @media (max-width: 768px) {
+    .bridge-block--snap { min-height: 0; padding-block: clamp(2rem, 6vh, 3.5rem); }
+  }
   .bridge-title {
     font-family: var(--font-disp);
     font-size: clamp(1.3rem, 2.5vw, 2.2rem);
@@ -578,6 +581,9 @@
 
   /* Famine block layout */
   .famine-block.nb-section { padding: 3rem 0 2rem; min-height: calc(var(--vh, 1vh) * 100); display: flex; align-items: center; }
+  @media (max-width: 768px) {
+    .famine-block.nb-section { min-height: 0; padding-block: clamp(2.5rem, 8vh, 4rem); }
+  }
   .famine-block .nb-p {
     font-size: 1.02rem;
     line-height: 1.82;

@@ -112,6 +112,19 @@ body {
 .analysis-section {
   min-height: calc(var(--vh, 1vh) * 100);
 }
+@media (max-width: 768px) {
+  .fp-section,
+  .fd-section,
+  .pe-section,
+  .ap-section,
+  .at-section,
+  .timeline-section,
+  .tr-section,
+  .nb-section,
+  .analysis-section {
+    min-height: 0;
+  }
+}
 
 /* ===================================
    SECTION TOPO TEXTURE
@@ -213,8 +226,10 @@ body {
 }
 
 @media (max-width: 600px) {
-  .gap-md  { margin-block: 2.5rem; }
-  .gap-xl  { margin-block: 4rem; }
+  .gap-sm  { margin-block: 1rem; }
+  .gap-md  { margin-block: 1.5rem; }
+  .gap-xl  { margin-block: 2.5rem; }
+  .divider { margin: 1.5rem 0; }
 }
 
 /* ===================================

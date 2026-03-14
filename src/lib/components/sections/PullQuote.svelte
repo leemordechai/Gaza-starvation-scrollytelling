@@ -107,6 +107,12 @@
   }
   .pq-copy:hover { color: var(--accent); border-color: var(--accent); }
 
+  @media (max-width: 768px) {
+    .pullquote-section {
+      min-height: 0;
+      padding-block: clamp(2rem, 6vh, 3.5rem);
+    }
+  }
   @media (max-width: 600px) {
     .pq-copy { width: 2.75rem; height: 2.75rem; font-size: 1.1rem; }
   }

@@ -64,7 +64,7 @@
     // rootMargin "-20% 0px -60% 0px" means: fire when the element is inside
     // the band between 20% and 40% of the viewport height.
     const isMobile = window.innerWidth <= 760;
-    const rootMargin = isMobile ? '-20% 0px -60% 0px' : '-10% 0px -40% 0px';
+    const rootMargin = isMobile ? '-25% 0px -25% 0px' : '-10% 0px -40% 0px';
 
     const stepObs = new IntersectionObserver(
       (entries) => {
@@ -257,6 +257,9 @@
   /* ===== Section ===== */
   .fd-section {
     padding: clamp(2.5rem, 7vw, 5rem) 0 2rem;
+  }
+  @media (max-width: 768px) {
+    .fd-section { padding-block: clamp(1.5rem, 5vh, 2.5rem); }
   }
 
   /* ===== Narrow wrapper (80% of container-wide) ===== */

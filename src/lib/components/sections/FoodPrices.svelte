@@ -446,6 +446,12 @@
     padding: clamp(2rem, 6vw, 4rem) 0;
     background: var(--bg-section);
   }
+  @media (max-width: 768px) {
+    .fp-intro {
+      min-height: 0;
+      padding-block: clamp(2rem, 6vh, 3.5rem);
+    }
+  }
 
   .fp-section { padding: 0 0 2rem; background: var(--bg-section); }
 
