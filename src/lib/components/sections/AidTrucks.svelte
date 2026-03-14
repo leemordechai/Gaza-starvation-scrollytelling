@@ -44,8 +44,8 @@
 
   // ── Chart geometry ─────────────────────────────────────────────────────────
   const W = 1100;
-  const H = 380;
-  const PAD = { top: 52, right: 20, bottom: 40, left: 58 };
+  const H = 420;
+  const PAD = { top: 52, right: 48, bottom: 40, left: 58 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top  - PAD.bottom;
 
@@ -989,7 +989,7 @@
   .at-legend {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.15rem;
   }
 
   @media (max-width: 700px) {
@@ -1003,20 +1003,20 @@
   .at-legend-total {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.4rem;
-    padding-bottom: 0.5rem;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.3rem;
     border-bottom: 1px solid var(--border-mid);
   }
 
   .at-legend-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     cursor: pointer;
     background: none;
     border: none;
-    padding: 0.15rem 0;
+    padding: 0.06rem 0;
     transition: opacity 0.18s;
     text-align: left;
   }
@@ -1030,23 +1030,23 @@
   }
 
   .at-legend-swatch {
-    width: 24px;
-    height: 3px;
-    border-radius: 2px;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
     flex-shrink: 0;
   }
 
   .at-legend-swatch--total {
     background: var(--accent);
-    height: 3px;
-    box-shadow: 0 0 6px rgba(196,162,74,0.5);
+    height: 2px;
+    box-shadow: 0 0 4px rgba(196,162,74,0.5);
   }
 
   .at-legend-key {
     font-family: var(--font-ui);
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--text-muted);
-    line-height: 1.3;
+    line-height: 1.2;
     transition: color 0.15s;
     white-space: nowrap;
   }
