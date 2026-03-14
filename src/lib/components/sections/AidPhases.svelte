@@ -125,6 +125,7 @@
       <span class="td-sh-label">{aidPhasesText.sectionLabel}</span>
       <h3 class="td-sh-title">{aidPhasesText.sectionTitle}</h3>
       <p class="td-sh-sub">{aidPhasesText.sectionSub}</p>
+      <p class="td-sh-source-note">{aidPhasesText.sourceNote}</p>
     </div>
   </div>
 
@@ -306,6 +307,16 @@
     color: #4a3018;
     opacity: 0.75;
     margin: 0;
+  }
+
+  .td-sh-source-note {
+    font-family: var(--font-ui);
+    font-size: 0.58rem;
+    color: #4a3018;
+    opacity: 0.5;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    margin: 0.25rem 0 0;
   }
 
   /* ── Two-column layout: wide grid | narrow narrative ─────────────────── */
