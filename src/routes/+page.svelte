@@ -305,10 +305,14 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+    /* Constrain so the image never exceeds the visible viewport */
+    max-height: calc(var(--vh, 1vh) * 78);
   }
   .intro-fig-img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
+    max-height: calc(var(--vh, 1vh) * 72);
+    object-fit: contain;
     display: block;
     border-radius: 2px;
   }
