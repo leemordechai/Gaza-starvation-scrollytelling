@@ -652,9 +652,17 @@
     width: 100%;
     height: auto;
     min-height: 220px;
+    /* Cap height on laptop screens so the chart fits without scrolling.
+       viewBox is 880×480 (aspect ~1.83:1), so max-height drives max-width too. */
+    max-height: calc(var(--vh, 1vh) * 52);
     cursor: crosshair;
     touch-action: pan-y;
     overflow: visible;
+  }
+
+  /* On large monitors the cap can be a bit taller */
+  @media (min-width: 1600px) {
+    .at-chart { max-height: calc(var(--vh, 1vh) * 60); }
   }
 
   /* ── SVG elements ──────────────────────────────────────────────────────── */
