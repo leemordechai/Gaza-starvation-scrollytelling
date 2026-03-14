@@ -314,43 +314,43 @@
 
 <section class="at-section" id="aid-trucks">
   <div class="container-wide">
-    <!-- Controls -->
-    <div class="at-controls reveal" use:reveal>
-      <div class="at-toggle-group">
-        <span class="at-toggle-label">פילוח לפי</span>
-        <div class="at-toggle">
-          <button
-            class="at-btn"
-            class:active={mode === 'classification'}
-            onclick={() => { mode = 'classification'; }}
-          >סוג סיוע</button>
-          <button
-            class="at-btn"
-            class:active={mode === 'org'}
-            onclick={() => { mode = 'org'; }}
-          >ארגון תורם</button>
-        </div>
-      </div>
-
-      <div class="at-toggle-group">
-        <span class="at-toggle-label">מדד</span>
-        <div class="at-toggle">
-          <button
-            class="at-btn"
-            class:active={metric === 'trucksPerDay'}
-            onclick={() => { metric = 'trucksPerDay'; }}
-          >משאיות / יום</button>
-          <button
-            class="at-btn"
-            class:active={metric === 'tonsPerDay'}
-            onclick={() => { metric = 'tonsPerDay'; }}
-          >טון / יום</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chart + legend wrapper -->
+    <!-- Controls + chart + legend wrapper (desktop: side-by-side) -->
     <div class="at-chart-wrap reveal" use:reveal>
+
+      <!-- Controls sidebar (left on desktop, top on mobile) -->
+      <div class="at-controls">
+        <div class="at-toggle-group">
+          <span class="at-toggle-label">פילוח לפי</span>
+          <div class="at-toggle">
+            <button
+              class="at-btn"
+              class:active={mode === 'classification'}
+              onclick={() => { mode = 'classification'; }}
+            >סוג סיוע</button>
+            <button
+              class="at-btn"
+              class:active={mode === 'org'}
+              onclick={() => { mode = 'org'; }}
+            >ארגון תורם</button>
+          </div>
+        </div>
+
+        <div class="at-toggle-group">
+          <span class="at-toggle-label">מדד</span>
+          <div class="at-toggle">
+            <button
+              class="at-btn"
+              class:active={metric === 'trucksPerDay'}
+              onclick={() => { metric = 'trucksPerDay'; }}
+            >משאיות / יום</button>
+            <button
+              class="at-btn"
+              class:active={metric === 'tonsPerDay'}
+              onclick={() => { metric = 'tonsPerDay'; }}
+            >טון / יום</button>
+          </div>
+        </div>
+      </div>
 
       <!-- SVG chart -->
       <div class="at-chart-container" use:viewport={{ onEnter: () => { chartVisible = true; }, onLeave: () => { chartVisible = false; revealCounter++; }, threshold: 0.15 }}>
@@ -562,16 +562,15 @@
   /* ── Controls ──────────────────────────────────────────────────────────── */
   .at-controls {
     display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin: 2rem 0 1.5rem;
-    align-items: center;
+    flex-direction: column;
+    gap: 1.25rem;
+    justify-content: center;
   }
 
   .at-toggle-group {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .at-toggle-label {
@@ -584,6 +583,7 @@
 
   .at-toggle {
     display: flex;
+    flex-direction: column;
     border: 1px solid var(--border-mid);
     border-radius: 3px;
     overflow: hidden;
@@ -594,14 +594,18 @@
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.06em;
-    padding: 0.3rem 0.85rem;
+    padding: 0.4rem 0.85rem;
     background: transparent;
     color: var(--text-muted);
     border: none;
+    border-top: 1px solid var(--border-mid);
     cursor: pointer;
     transition: background 0.18s, color 0.18s;
     white-space: nowrap;
+    text-align: right;
   }
+
+  .at-btn:first-child { border-top: none; }
 
   .at-btn:hover {
     background: var(--accent-dim);
@@ -614,23 +618,43 @@
     font-weight: 700;
   }
 
-  @media (max-width: 600px) {
-    .at-controls { gap: 1rem; }
-    .at-btn { padding: 0.6rem 0.85rem; font-size: 0.78rem; min-height: 44px; }
-  }
-
-  /* ── Chart wrapper ─────────────────────────────────────────────────────── */
+  /* ── Chart wrapper: controls | chart | legend on desktop ───────────────── */
   .at-chart-wrap {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
     align-items: start;
+    margin-top: 1.5rem;
   }
 
-  @media (max-width: 720px) {
+  /* On medium screens drop legend below chart */
+  @media (max-width: 900px) {
+    .at-chart-wrap {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+    }
+    .at-legend {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+    }
+  }
+
+  /* On mobile stack everything vertically */
+  @media (max-width: 600px) {
     .at-chart-wrap {
       grid-template-columns: 1fr;
     }
+    .at-controls {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .at-toggle { flex-direction: row; }
+    .at-btn { border-top: none; border-left: 1px solid var(--border-mid); padding: 0.6rem 0.85rem; font-size: 0.78rem; min-height: 44px; }
+    .at-btn:first-child { border-left: none; }
+    .at-toggle-group { flex-direction: row; align-items: center; gap: 0.75rem; }
   }
 
   /* ── Chart container (relative for tooltip) ────────────────────────────── */
@@ -654,7 +678,7 @@
     min-height: 220px;
     /* Cap height on laptop screens so the chart fits without scrolling.
        viewBox is 880×480 (aspect ~1.83:1), so max-height drives max-width too. */
-    max-height: calc(var(--vh, 1vh) * 52);
+    max-height: calc(var(--vh, 1vh) * 62);
     cursor: crosshair;
     touch-action: pan-y;
     overflow: visible;
@@ -662,7 +686,7 @@
 
   /* On large monitors the cap can be a bit taller */
   @media (min-width: 1600px) {
-    .at-chart { max-height: calc(var(--vh, 1vh) * 60); }
+    .at-chart { max-height: calc(var(--vh, 1vh) * 70); }
   }
 
   /* ── SVG elements ──────────────────────────────────────────────────────── */
@@ -684,10 +708,10 @@
 
   /* Override: SVG px are in the 880-wide viewBox, so need larger nominal size */
   .at-axis-label--y {
-    font-size: 10px;
+    font-size: 13px;
   }
   .at-axis-label--x {
-    font-size: 9.5px;
+    font-size: 12px;
   }
 
   /* On mobile the SVG renders at ~44% of viewBox width → labels are ~4–5px.
@@ -754,7 +778,7 @@
 
   :global(.at-ceasefire-label) {
     font-family: var(--font-ui);
-    font-size: 8px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.05em;
     fill: #4aaa6a;
@@ -782,7 +806,7 @@
 
   :global(.at-gap-label) {
     font-family: var(--font-ui);
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -791,7 +815,7 @@
   }
 
   :global(.at-gap-label--small) {
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.05em;
   }
 
