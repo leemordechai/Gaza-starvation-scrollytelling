@@ -4,7 +4,6 @@
   import SiteNav from '$lib/components/ui/SiteNav.svelte';
   import MobileMenu from '$lib/components/ui/MobileMenu.svelte';
   import SectionIndicator from '$lib/components/ui/SectionIndicator.svelte';
-  import CopyToast from '$lib/components/ui/CopyToast.svelte';
   import Divider from '$lib/components/ui/Divider.svelte';
   import BackToTop from '$lib/components/ui/BackToTop.svelte';
   import MilestoneBanner from '$lib/components/ui/MilestoneBanner.svelte';
@@ -79,15 +78,9 @@
     </div>
   </div>
 
-  <div class="intro-step intro-step--with-image" dir="rtl">
-    <div class="intro-image-layout container-wide">
-      <figure class="intro-fig">
-        <img src="/images/gaza_agriculture_masked.png" alt="השטחים החקלאיים ברצועת עזה לפני המלחמה" class="intro-fig-img" loading="lazy" />
-        <figcaption class="intro-fig-caption">השטחים החקלאיים ברצועת עזה לפני המלחמה, 2023</figcaption>
-      </figure>
-      <div class="intro-fig-text">
-        <p>{@html sanitizeText(introBackground[0])}</p>
-      </div>
+  <div class="intro-step" dir="rtl">
+    <div class="container-prose">
+      <p>{@html sanitizeText(introBackground[0])}</p>
     </div>
   </div>
 
@@ -267,7 +260,6 @@
 </main>
 
 <Footer />
-<CopyToast />
 
 <style>
   /* Scroll snap sentinels */
@@ -291,56 +283,6 @@
     /* Allow the reveal translateY(28px) animation to show outside bounds */
     overflow: visible;
   }
-  /* ── Intro step with side image ── */
-  .intro-image-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 4vw, 4rem);
-    align-items: center;
-    width: 100%;
-    max-width: 1100px;
-  }
-  .intro-fig {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    /* Constrain so the image never exceeds the visible viewport */
-    max-height: calc(var(--vh, 1vh) * 78);
-  }
-  .intro-fig-img {
-    width: auto;
-    height: 100%;
-    max-height: calc(var(--vh, 1vh) * 72);
-    object-fit: contain;
-    display: block;
-    border-radius: 2px;
-  }
-  .intro-fig-caption {
-    font-family: var(--font-ui);
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    opacity: 0.7;
-    text-align: right;
-  }
-  .intro-fig-text p {
-    font-size: clamp(1.1rem, 1.65vw, 1.45rem);
-    line-height: 1.75;
-    color: var(--sand);
-    font-family: var(--font-disp);
-    font-weight: 400;
-    text-align: right;
-    margin: 0;
-  }
-  @media (max-width: 700px) {
-    .intro-image-layout {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    .intro-fig { order: -1; }
-  }
-
   .intro-step p {
     font-size: clamp(1.1rem, 1.65vw, 1.45rem);
     line-height: 1.75;

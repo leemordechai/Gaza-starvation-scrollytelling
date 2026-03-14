@@ -1,19 +1,11 @@
 <script lang="ts">
   import { reveal } from '$lib/actions/reveal';
-  import { copyToClipboard } from '$lib/utils/clipboard';
-  import { showToast } from '$lib/stores/copyToast';
 
   let { quote, attribution, small = false }: { quote: string; attribution: string; small?: boolean } = $props();
-
-  async function handleCopy() {
-    const ok = await copyToClipboard(quote);
-    if (ok) showToast();
-  }
 </script>
 
 <section class="pullquote-section">
   <div class="pullquote reveal" class:pullquote--small={small} use:reveal>
-    <button class="pq-copy" aria-label="העתק ציטוט" onclick={handleCopy}>&#x2398;</button>
     <blockquote>{quote}</blockquote>
     <cite>{attribution}</cite>
   </div>
@@ -87,33 +79,10 @@
     font-style: normal;
   }
 
-  .pq-copy {
-    position: absolute;
-    top: 0;
-    inset-inline-end: 0.5rem;
-    background: none;
-    border: 1px solid var(--border-mid);
-    color: var(--text-muted);
-    font-size: 1rem;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s, border-color 0.2s;
-    line-height: 1;
-  }
-  .pq-copy:hover { color: var(--accent); border-color: var(--accent); }
-
   @media (max-width: 768px) {
     .pullquote-section {
       min-height: 0;
       padding-block: clamp(2rem, 6vh, 3.5rem);
     }
-  }
-  @media (max-width: 600px) {
-    .pq-copy { width: 2.75rem; height: 2.75rem; font-size: 1.1rem; }
   }
 </style>
