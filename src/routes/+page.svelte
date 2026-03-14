@@ -41,6 +41,23 @@
       { threshold: 0.3 }
     );
     famineObs.observe(famineTitleEl);
+
+    // When PageDown/Space is pressed while the bridge block is visible,
+    // snap to the FoodPrices header instead of jumping past it.
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== 'PageDown' && !(e.key === ' ' && !e.shiftKey)) return;
+      const bridge = document.getElementById('food-characteristics');
+      const target = document.getElementById('food-prices');
+      if (!bridge || !target) return;
+      const br = bridge.getBoundingClientRect();
+      // Only intercept when bridge block is in view (bottom is below viewport top)
+      if (br.bottom > 0 && br.top < window.innerHeight) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   });
 </script>
 
@@ -284,7 +301,8 @@
     text-align: center;
     padding-block: 4rem;
     scroll-snap-align: start;
-    min-height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh) * 100);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -293,8 +311,11 @@
     .bridge-block--centered {
       min-height: auto;
       padding-block: clamp(3rem, 8vh, 5rem);
+      width: 80%;
+      margin-inline: auto;
     }
   }
+
   .bridge-block--centered[dir='rtl'] {
     text-align: right;
     align-items: flex-end;

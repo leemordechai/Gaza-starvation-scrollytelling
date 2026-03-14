@@ -6,7 +6,7 @@
   import foodPricesData from '$lib/data/foodPrices.json';
 
   // ── Chart geometry ──────────────────────────────────────────────────────────
-  const W = 512, H = 360;
+  const W = 960, H = 420;
   const PAD = { top: 26, right: 19, bottom: 40, left: 50 };
   const CW = W - PAD.left - PAD.right;
   const CH = H - PAD.top - PAD.bottom;
@@ -136,6 +136,18 @@
     const mult  = peak / first;
     if (mult < 1.5) return '';
     return `פי ${Math.round(mult)}`;
+  })());
+
+  // ── Peak point SVG coordinates ───────────────────────────────────────────────
+  let peakPoint = $derived((() => {
+    if (!currentItem?.series?.length || !multiplierText) return null;
+    const peakPt = currentItem.series.reduce((a, b) => b.price > a.price ? b : a);
+    // only show if peak is within visible domain
+    if (periodToMs(peakPt.period) < DOMAIN_START) return null;
+    return {
+      x: xPos(peakPt.period),
+      y: yPos(peakPt.price, maxPrice),
+    };
   })());
 
   // ── HTML tooltip position ───────────────────────────────────────────────────
@@ -293,9 +305,6 @@
             {#if currentItem}
               <span class="pe-chart-unit">{currentItem.unit}</span>
             {/if}
-            {#if multiplierText}
-              <span class="pe-multiplier">{multiplierText} מהמחיר לפני המלחמה</span>
-            {/if}
           </div>
 
           <!-- SVG wrapper for tooltip positioning -->
@@ -392,6 +401,31 @@
                 />
                 <circle cx={hoverPoint.svgX} cy={hoverPoint.svgY} r="5" fill="var(--accent)" opacity="0.9"/>
               {/if}
+
+              <!-- Multiplier badge + connector line to peak -->
+              {#if peakPoint && multiplierText && chartVisible}
+                {@const badgeW = 185}
+                {@const badgeH = 58}
+                {@const gap = 16}
+                <!-- Place badge to the right of peak; flip left if too close to right edge -->
+                {@const placeRight = peakPoint.x + gap + badgeW <= W - PAD.right + 10}
+                {@const badgeX = placeRight ? peakPoint.x + gap : peakPoint.x - gap - badgeW}
+                {@const badgeY = Math.max(PAD.top, peakPoint.y - badgeH / 2)}
+                <!-- connector: horizontal from peak dot to badge edge -->
+                {@const lineX1 = placeRight ? peakPoint.x + 6 : peakPoint.x - 6}
+                {@const lineX2 = placeRight ? badgeX : badgeX + badgeW}
+                <!-- badge background -->
+                <rect x={badgeX} y={badgeY} width={badgeW} height={badgeH}
+                  rx="3" fill="var(--bg-card)" stroke="var(--accent-light)" stroke-width="1.5" opacity="0.97"/>
+                <!-- connector line -->
+                <line x1={lineX1} y1={peakPoint.y} x2={lineX2} y2={peakPoint.y}
+                  stroke="var(--accent-light)" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.8"/>
+                <!-- badge text: multiplier on top line, label below -->
+                <text x={badgeX + badgeW / 2} y={badgeY + 26} class="pe-mult-badge" text-anchor="middle">
+                  <tspan class="pe-mult-num">{multiplierText}</tspan>
+                </text>
+                <text x={badgeX + badgeW / 2} y={badgeY + 45} class="pe-mult-sub" text-anchor="middle">מהמחיר לפני המלחמה</text>
+              {/if}
             </svg>
 
             <!-- HTML tooltip — RTL-native -->
@@ -427,8 +461,8 @@
           {#if isTouchDevice && !pinnedPoint}
             <p class="pe-tap-hint">הקש על הגרף לצפייה בנתונים</p>
           {/if}
-          <p class="pe-source">WFP Market Monitor · ממוצע ממשלות עזה · ש"ח</p>
         </div>
+        <p class="pe-source">WFP Market Monitor · ממוצע ממשלות עזה · ש"ח</p>
       </div>
     </div>
   </div>
@@ -451,7 +485,7 @@
 
   .pe-layout {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: clamp(140px, 14vw, 200px) 1fr;
     gap: 1.75rem;
     align-items: start;
     width: 100%;
@@ -481,7 +515,7 @@
     .pe-pill { width: auto; }
   }
 
-  .pe-chart-col { min-width: 0; width: 100%; max-width: 760px; }
+  .pe-chart-col { min-width: 0; width: 100%; }
 
   /* ── Tabs ── */
   .pe-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
@@ -533,39 +567,31 @@
     background: var(--bg-card);
     border: 1px solid var(--border-mid);
     border-top: 2px solid var(--accent);
-    padding: 1.75rem 1.75rem 1.25rem;
+    padding: 0.75rem 1.75rem 1rem;
   }
 
   .pe-chart-header {
     display: flex;
     align-items: baseline;
     gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     flex-wrap: wrap;
   }
 
   .pe-chart-name { font-family: var(--font-disp); font-size: 1.1rem; font-weight: 700; color: var(--sand); }
   .pe-chart-unit { font-family: var(--font-ui); font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.04em; }
 
-  .pe-multiplier {
-    font-family: var(--font-ui);
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: var(--accent-light);
-    margin-right: auto;
-    border: 1px solid var(--accent-light);
-    padding: 0.1rem 0.5rem;
-    border-radius: 2px;
-    opacity: 0.9;
+/* ── SVG wrapper + tooltip ── */
+  .pe-svg-wrap {
+    position: relative;
+    width: 100%;
+    max-height: calc(var(--vh, 1vh) * 58);
+    aspect-ratio: 960 / 420;
   }
-
-  /* ── SVG wrapper + tooltip ── */
-  .pe-svg-wrap { position: relative; width: 100%; }
 
   .pe-svg {
     width: 100%;
-    height: auto;
-    max-height: calc(var(--vh, 1vh) * 50);
+    height: 100%;
     display: block;
     overflow: visible;
     cursor: crosshair;
@@ -613,8 +639,12 @@
     animation: pe-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .pe-axis-label { font-family: var(--font-ui); font-size: 9px; fill: var(--text-muted); }
-  .pe-axis-unit  { font-family: var(--font-ui); font-size: 10px; fill: var(--accent); opacity: 0.7; }
+  .pe-axis-label { font-family: var(--font-ui); font-size: 12px; fill: var(--text-muted); }
+  .pe-axis-unit  { font-family: var(--font-ui); font-size: 13px; fill: var(--accent); opacity: 0.7; }
+
+  :global(.pe-mult-badge) { font-family: var(--font-ui); font-size: 18px; fill: var(--accent-light); font-weight: 800; }
+  :global(.pe-mult-num)   { font-size: 22px; }
+  :global(.pe-mult-sub)   { font-family: var(--font-ui); font-size: 11px; fill: var(--text-muted); }
 
   /* ── Baseline hover tooltip ── */
   .pe-baseline-tooltip {
@@ -651,8 +681,9 @@
     font-size: 0.55rem;
     color: var(--text-muted);
     opacity: 0.6;
-    margin-top: 0.5rem;
-    text-align: center;
+    margin-top: 0.4rem;
+    text-align: left;
+    padding-inline-start: 0.25rem;
   }
 
   /* ── Event band labels ── */
@@ -660,13 +691,14 @@
     position: absolute;
     transform: translateX(-50%) translateY(calc(-100% - 3px));
     font-family: var(--font-ui);
-    font-size: 0.52rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     color: var(--text-muted);
     white-space: nowrap;
     pointer-events: none;
     direction: rtl;
+    text-align: center;
   }
   .pe-band-label--low {
     transform: translateX(-50%) translateY(calc(-200% - 6px));

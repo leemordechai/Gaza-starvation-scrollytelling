@@ -263,11 +263,13 @@
 
 <div class="fp-intro section-topo" id="food-prices">
   <div class="container-wide">
-    <SectionHead
-      label={foodPricesText.sectionLabel}
-      title={foodPricesText.sectionTitle}
-      sub={foodPricesText.sectionSub}
-    />
+    <div class="fp-intro-head" dir="rtl">
+      <SectionHead
+        label={foodPricesText.sectionLabel}
+        title={foodPricesText.sectionTitle}
+        sub={foodPricesText.sectionSub}
+      />
+    </div>
   </div>
 </div>
 
@@ -440,12 +442,42 @@
 
 <style>
   .fp-intro {
-    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: 0;
     display: flex;
     align-items: center;
-    padding: clamp(2rem, 6vw, 4rem) 0;
+    padding: calc(clamp(3rem, 8vh, 6rem) + 10px) 0 clamp(2rem, 5vh, 4rem);
     background: var(--bg-section);
   }
+  /* Mirror fp-grid layout so header sits in the steps column */
+  .fp-intro-head {
+    max-width: 900px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    text-align: right;
+  }
+  /* SectionHead occupies first column (= right/steps side in RTL) */
+  .fp-intro-head :global(header) {
+    grid-column: 1;
+  }
+  @media (min-width: 1400px) {
+    .fp-intro-head { max-width: 1000px; gap: 4rem; }
+  }
+  @media (max-width: 1100px) {
+    .fp-intro-head { max-width: 100%; }
+  }
+  @media (max-width: 700px) {
+    .fp-intro-head { grid-template-columns: 1fr; }
+  }
+
+  /* RTL section head: align text right */
+  .fp-intro :global(.sh-label),
+  .fp-intro :global(.sh-title),
+  .fp-intro :global(.sh-sub) {
+    text-align: right;
+  }
+
   @media (max-width: 768px) {
     .fp-intro {
       min-height: 0;
@@ -649,7 +681,7 @@
   .fp-steps { padding: 1rem 0 4rem; }
 
   .fp-step {
-    padding: clamp(1.5rem, 12vh, 18vh) 0 1.5rem;
+    padding: clamp(1.5rem, 8vh, 12vh) 0 1.5rem;
     min-height: calc(var(--vh, 1vh) * 100);
     display: flex;
     flex-direction: column;
@@ -660,7 +692,7 @@
 
   /* Last step (cooking gas): same top padding as other steps */
   .fp-step:last-child {
-    padding-top: clamp(1.5rem, 12vh, 18vh);
+    padding-top: clamp(1.5rem, 8vh, 12vh);
   }
 
   @media (max-width: 700px) {
