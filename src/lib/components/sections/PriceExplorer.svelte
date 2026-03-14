@@ -716,11 +716,11 @@
     .pe-chart-wrap { padding: 0.85rem 0.85rem 0.6rem; }
 
     /* Adjusted SVG labels on mobile */
-    .pe-axis-label { font-size: 22px; }
-    .pe-axis-unit  { font-size: 23px; }
-    .pe-band-label { font-size: 0.55rem; }
+    .pe-axis-label { font-size: 26px; }
+    .pe-axis-unit  { font-size: 27px; }
+    .pe-band-label { font-size: 0.45rem; }
     :global(.pe-mult-badge) { font-size: 26px; }
     :global(.pe-mult-num)   { font-size: 32px; }
-    :global(.pe-mult-sub)   { font-size: 20px; }
+    :global(.pe-mult-sub)   { font-size: 24px; }
   }
 </style>
