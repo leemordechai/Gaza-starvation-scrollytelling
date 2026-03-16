@@ -109,13 +109,13 @@
       </div>
     </div>
 
-    <p class="photo-credit" id="hero-photo-credit">תור לסיוע הומניטרי באזור המוואסי, 23.12.25 (צילום: דואא אלבז, אקטיבסטילס)</p>
-
     <div class="scroll-cue" id="scroll-cue">
       <span class="cue-label">לחוויה מיטבית, נא לגלול למטה</span>
       <div class="cue-arrow"></div>
     </div>
   </section>
+
+  <p class="photo-credit" id="hero-photo-credit">תור לסיוע הומניטרי באזור המוואסי, 23.12.25 (צילום: דואא אלבז, אקטיבסטילס)</p>
 
   <!-- Zoom phase: 100vh of scroll space — animation runs during this scroll. -->
   <div class="hero-phase-zoom" aria-hidden="true"></div>
@@ -306,17 +306,19 @@
   }
 
   .photo-credit {
-    position: absolute;
-    bottom: 1rem;
-    left: 1.2rem;
+    position: sticky;
+    top: calc(var(--vh, 1vh) * 100 - 2rem);
+    left: 0;
+    margin: 0;
+    padding: 0 1.2rem;
     z-index: 10;
     font-family: var(--font-ui);
     font-size: 0.6rem;
     letter-spacing: 0.04em;
-    color: rgba(200, 190, 170, 0.75);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    color: rgba(200, 190, 170, 0.82);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0,0,0,0.8);
     pointer-events: none;
-    opacity: 1;
+    isolation: isolate;
   }
   @media (max-width: 768px) {
     .photo-credit { font-size: 0.65rem; }
