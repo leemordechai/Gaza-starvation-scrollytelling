@@ -93,7 +93,8 @@
   <!-- Food trucks image — full-viewport step between paragraph and quote -->
   <div class="intro-step intro-photo-step">
     <figure class="intro-photo-fig">
-      <img src="/images/foodtrucks.jpg" alt="תור לסיוע הומניטרי" class="intro-photo-img" loading="lazy" />
+      <img src="/images/foodtrucks.jpg" alt="פלסטינים אוספים סיוע הומניטרי ממשאיות, צפון העיר עזה, יוני 2025" class="intro-photo-img" loading="lazy" />
+      <figcaption class="intro-photo-credit">פלסטינים אוספים סיוע הומניטרי ממשאיות, צפון העיר עזה, יוני 2025. צילום: יוסף זענון/אקטיבסטליס</figcaption>
     </figure>
   </div>
 
@@ -311,6 +312,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
   .intro-photo-img {
     width: 100%;
@@ -318,6 +320,18 @@
     object-fit: cover;
     object-position: center;
     display: block;
+  }
+  .intro-photo-credit {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 1rem;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    pointer-events: none;
   }
 
   .bridge-block {
