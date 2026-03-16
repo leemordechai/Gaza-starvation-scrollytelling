@@ -315,8 +315,8 @@
     font-family: var(--font-ui);
     font-size: 0.6rem;
     letter-spacing: 0.04em;
-    color: #000;
-    text-shadow: none;
+    color: #111;
+    text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 3px rgba(255,255,255,1);
     pointer-events: none;
     isolation: isolate;
   }
