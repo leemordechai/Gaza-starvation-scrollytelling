@@ -90,6 +90,13 @@
     </div>
   </div>
 
+  <!-- Food trucks image — full-viewport step between paragraph and quote -->
+  <div class="intro-step intro-photo-step">
+    <figure class="intro-photo-fig">
+      <img src="/images/foodtrucks.jpg" alt="תור לסיוע הומניטרי" class="intro-photo-img" loading="lazy" />
+    </figure>
+  </div>
+
   <!-- Guterres quote -->
   <PullQuote quote={pullQuote.quote} attribution={pullQuote.attribution} />
 
@@ -290,6 +297,27 @@
     font-family: var(--font-disp);
     font-weight: 400;
     text-align: right;
+  }
+
+  /* ── Full-viewport photo step ── */
+  .intro-photo-step {
+    padding: 0;
+    overflow: hidden;
+  }
+  .intro-photo-fig {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .intro-photo-img {
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100);
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
   .bridge-block {
