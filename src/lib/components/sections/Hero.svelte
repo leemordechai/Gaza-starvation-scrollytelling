@@ -74,6 +74,12 @@
       }, 0);
     }
 
+    const photoCredit = document.getElementById('hero-photo-credit');
+    if (photoCredit) {
+      gsap.set(photoCredit, { opacity: 0 });
+      tlZoom.to(photoCredit, { opacity: 1, duration: 0.3, ease: 'power1.in' }, 0.75);
+    }
+
     triggers.push(tlZoom.scrollTrigger);
   });
 
@@ -108,6 +114,8 @@
         <span>{meta.readTime}</span>
       </div>
     </div>
+
+    <p class="photo-credit" id="hero-photo-credit">תור לסיוע הומניטרי באזור המוואסי, 23.12.25 (צילום: דואא אלבז, אקטיבסטילס)</p>
 
     <div class="scroll-cue" id="scroll-cue">
       <span class="cue-label">לחוויה מיטבית, נא לגלול למטה</span>
@@ -301,6 +309,23 @@
   @media (max-width: 380px) {
     .hero-content { padding: 0 0.85rem; }
     .hero-meta { gap: 0.4rem 0.8rem; }
+  }
+
+  .photo-credit {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.2rem;
+    z-index: 4;
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    color: rgba(200, 190, 170, 0.75);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+    opacity: 0;
+  }
+  @media (max-width: 768px) {
+    .photo-credit { opacity: 1; font-size: 0.65rem; }
   }
 
   .scroll-cue {
