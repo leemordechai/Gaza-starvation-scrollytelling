@@ -309,7 +309,7 @@
     position: absolute;
     bottom: 1rem;
     left: 1.2rem;
-    z-index: 4;
+    z-index: 10;
     font-family: var(--font-ui);
     font-size: 0.6rem;
     letter-spacing: 0.04em;
