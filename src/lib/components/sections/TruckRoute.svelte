@@ -214,14 +214,6 @@
 </script>
 
 <section class="tr-section" id="truck-route">
-  <!-- Section header — sits above the sticky scroll area (desktop only;
-       on mobile it is overlaid inside .tr-sticky to eliminate blank space) -->
-  <div class="tr-header tr-header--above container-wide">
-    <span class="tr-header-label">{truckRoute.sectionLabel}</span>
-    <h2 class="tr-header-title">{truckRoute.sectionTitle}</h2>
-    <p class="tr-header-sub">{truckRoute.sectionSub}</p>
-  </div>
-
   <!-- ── Mobile layout: stacked photo+text cards, no sticky ───────────── -->
   <div class="tr-mobile-cards">
     {#each truckRoute.stops as stop, i}
@@ -541,11 +533,7 @@
 <style>
   .tr-section { position: relative; }
 
-  /* Above-the-map header: hidden — overlay inside sticky panel is used instead */
-  .tr-header--above {
-    display: none;
-  }
-  /* Overlay header: positioned over the top of the SVG map, inside the sticky panel */
+  /* Overlay header: sits over top of the SVG map inside the sticky panel */
   .tr-header--overlay {
     position: absolute;
     top: 0;
@@ -622,7 +610,7 @@
       margin: 0.2rem 0 0;
     }
 
-    /* Hide the overlay header on mobile — stacked cards have their own labels */
+    /* Keep the overlay header hidden — not needed on mobile */
     .tr-header--overlay { display: none; }
   }
 
