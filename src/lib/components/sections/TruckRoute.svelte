@@ -214,6 +214,14 @@
 </script>
 
 <section class="tr-section" id="truck-route">
+  <!-- Section header — sits above the sticky scroll area (desktop only;
+       on mobile it is overlaid inside .tr-sticky to eliminate blank space) -->
+  <div class="tr-header tr-header--above container-wide">
+    <span class="tr-header-label">{truckRoute.sectionLabel}</span>
+    <h2 class="tr-header-title">{truckRoute.sectionTitle}</h2>
+    <p class="tr-header-sub">{truckRoute.sectionSub}</p>
+  </div>
+
   <!-- ── Mobile layout: stacked photo+text cards, no sticky ───────────── -->
   <div class="tr-mobile-cards">
     {#each truckRoute.stops as stop, i}
@@ -533,15 +541,13 @@
 <style>
   .tr-section { position: relative; }
 
-  /* Overlay header: sits over top of the SVG map inside the sticky panel */
+  /* Above-the-map header: visible on desktop, hidden on mobile */
+  .tr-header--above {
+    padding: 0.5rem 0 1.5rem;
+  }
+  /* Overlay header: hidden on desktop, visible on mobile (positioned over map top) */
   .tr-header--overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 3;
-    padding: 1.5rem clamp(1.5rem, 4vw, 3rem) 1.25rem;
-    background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+    display: none;
   }
 
   /* ── Mobile card stack: hidden on desktop ──────────────────────────── */
@@ -549,6 +555,7 @@
 
   @media (max-width: 768px) {
     /* Hide the desktop sticky layout entirely */
+    .tr-header--above { display: none; }
     .tr-scroll-container { display: none; }
 
     /* Show mobile card stack */
