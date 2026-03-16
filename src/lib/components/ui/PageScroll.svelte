@@ -9,7 +9,7 @@
   // Sections with IDs = major section tops.
   // Scrollytelling steps = the individual narrative cards within sticky sections.
   const STEP_SELECTORS = [
-    'section[id]:not(#aid-trucks):not(#truck-route):not(#timeline)', // named sections
+    'section[id]:not(#aid-trucks):not(#truck-route)', // named sections
     '.chapter-head',         // chapter headers (100vh, content centered)
     '.tr-header',            // TruckRoute section header
     '.hero-scroll-container',// hero (zoomed-in start)
@@ -88,6 +88,15 @@
    *      a full readable viewport without the nav obscuring the first line.
    */
   function targetDown(anchors: number[], currentY: number, vh: number): number {
+    // If we're inside the timeline, scroll freely rather than jumping to anchors
+    const timeline = document.getElementById('timeline');
+    if (timeline) {
+      const tTop = timeline.getBoundingClientRect().top + currentY - NAV_H;
+      const tBot = tTop + timeline.offsetHeight;
+      if (currentY >= tTop - 10 && currentY < tBot - vh) {
+        return currentY + (vh - NAV_H);
+      }
+    }
     const lo = currentY + 40;       // ignore anchors we're already past
     const hi = currentY + vh * 1.4; // prefer nearby anchors first
     const near = anchors.find(a => a >= lo && a <= hi);
@@ -105,6 +114,15 @@
    *   2. Otherwise, scroll back by (vh - NAV_H).
    */
   function targetUp(anchors: number[], currentY: number, vh: number): number {
+    // If we're inside the timeline, scroll freely upward
+    const timeline = document.getElementById('timeline');
+    if (timeline) {
+      const tTop = timeline.getBoundingClientRect().top + currentY - NAV_H;
+      const tBot = tTop + timeline.offsetHeight;
+      if (currentY > tTop + 10 && currentY <= tBot) {
+        return Math.max(tTop, currentY - (vh - NAV_H));
+      }
+    }
     const prev = [...anchors].reverse().find(a => a < currentY - 40);
     if (prev !== undefined) return prev;
     return Math.max(0, currentY - (vh - NAV_H));

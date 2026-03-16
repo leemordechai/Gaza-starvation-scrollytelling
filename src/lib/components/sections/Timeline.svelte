@@ -52,7 +52,10 @@
 </section>
 
 <style>
-  .timeline-section { padding: clamp(2.5rem, 7vw, 5rem) 0; }
+  .timeline-section {
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 7vw, 5rem);
+    scroll-margin-top: 56px;
+  }
   .timeline-head { margin-bottom: 1.25rem; }
 
   .timeline-track {
