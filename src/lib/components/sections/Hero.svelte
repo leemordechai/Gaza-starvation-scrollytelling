@@ -74,12 +74,6 @@
       }, 0);
     }
 
-    const photoCredit = document.getElementById('hero-photo-credit');
-    if (photoCredit) {
-      gsap.set(photoCredit, { opacity: 0 });
-      tlZoom.to(photoCredit, { opacity: 1, duration: 0.3, ease: 'power1.in' }, 0.75);
-    }
-
     triggers.push(tlZoom.scrollTrigger);
   });
 
@@ -322,10 +316,10 @@
     color: rgba(200, 190, 170, 0.75);
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
     pointer-events: none;
-    opacity: 0;
+    opacity: 1;
   }
   @media (max-width: 768px) {
-    .photo-credit { opacity: 1; font-size: 0.65rem; }
+    .photo-credit { font-size: 0.65rem; }
   }
 
   .scroll-cue {
