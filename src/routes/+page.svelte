@@ -94,7 +94,7 @@
   <div class="intro-step intro-photo-step">
     <figure class="intro-photo-fig">
       <img src="/images/foodtrucks.jpg" alt="פלסטינים אוספים סיוע הומניטרי ממשאיות, צפון העיר עזה, יוני 2025" class="intro-photo-img" loading="lazy" />
-      <figcaption class="intro-photo-credit">פלסטינים אוספים סיוע הומניטרי ממשאיות, צפון העיר עזה, יוני 2025. צילום: יוסף זענון/אקטיבסטליס</figcaption>
+      <figcaption class="intro-photo-credit">פלסטינים אוספים סיוע הומניטרי ממשאיות, צפון העיר עזה, יוני 2025. צילום: יוסף זענון/אקטיבסטילס</figcaption>
     </figure>
   </div>
 
